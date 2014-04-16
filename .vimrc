@@ -53,6 +53,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'bling/vim-airline'
 Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'a.vim'
 " very useful
 Bundle 'xolox/vim-misc'
@@ -61,12 +62,12 @@ Bundle 'emezeske/manpageview.git'
 Bundle 'majutsushi/tagbar'
 "Bundle 'scrooloose/syntastic'
 Bundle 'spacehi.vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'YankRing.vim'
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'YankRing.vim'
 Bundle 'TaskList.vim'
-Bundle 'airblade/vim-gitgutter.git'
-Bundle 'sjl/gundo.vim.git'
-Bundle 'toggle_words.vim'
+"Bundle 'airblade/vim-gitgutter.git'
+"Bundle 'sjl/gundo.vim.git'
+"Bundle 'toggle_words.vim'
 Bundle 'renamer.vim'
 Bundle 'DoxygenToolkit.vim'
 
@@ -171,7 +172,7 @@ set number              " show the line number for each line
 set mouse=a             " have the mouse enabled all the time
 set formatoptions-=t    " don't auto-indent plaintext
 set history=1024        " keep N lines of command history
-"set cc=80,160
+set cc=80,100
 set ruler               " show the cursor position all the time
 set hlsearch            " highlight searches
 set showmatch           " проверка скобок
@@ -389,8 +390,8 @@ inoremap <A-k> <Esc>:cp<CR>zvzz:cc<CR>a
 
 " --- общение с буфером обмена X-сервера --------------------------------------
 vmap <C-c> "+y
-nmap <C-v> "*p
-imap <C-v> <C-o><C-v>
+nmap <S-Insert> "*p
+imap <S-Insert> <C-o><C-Insert>
 
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
@@ -616,6 +617,8 @@ let g:UltiSnipsExpandTrigger = '<c-\>'
 " youcompleteme related config
 " -----------------------------------------------------------------------------
 let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_echo_current_diagnostic = 1
+let g:ycm_enable_diagnostic_signs = 0
 " -----------------------------------------------------------------------------
 
 
@@ -624,8 +627,8 @@ let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/bundle/YouCompleteMe/.ycm_extra_c
 " -----------------------------------------------------------------------------
 " syntastic related config
 " -----------------------------------------------------------------------------
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_error_symbol = 'x'
+let g:syntastic_warning_symbol = 'w'
 let g:syntastic_mode_map = { 'mode': 'passive',
             \ 'active_filetypes': ['c', 'cpp', 'objc', 'objcpp'],
             \ 'passive_filetypes': [''] }
