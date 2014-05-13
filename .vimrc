@@ -62,7 +62,7 @@ Bundle 'emezeske/manpageview.git'
 Bundle 'majutsushi/tagbar'
 "Bundle 'scrooloose/syntastic'
 Bundle 'spacehi.vim'
-"Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-fugitive'
 "Bundle 'YankRing.vim'
 Bundle 'TaskList.vim'
 "Bundle 'airblade/vim-gitgutter.git'
@@ -70,6 +70,7 @@ Bundle 'TaskList.vim'
 "Bundle 'toggle_words.vim'
 Bundle 'renamer.vim'
 Bundle 'DoxygenToolkit.vim'
+Bundle 'vim-scripts/Conque-GDB.git'
 
 " -----------------------------------------------------------------------------
 
@@ -139,6 +140,7 @@ set list
 set listchars=tab:→\ ,trail:·,extends:»,nbsp:·
 let c_space_errors=1    " Highlight any spaces before tabs, and any whitespace at the end of a line
 
+set autoread            " auto read file that has changed since editing started
 set showmode            " always show what mode we're currently editing in
 set hidden              " hides buffers instead of closing them
 set switchbuf=useopen   " reveal already opened files from the quickfix window
@@ -169,7 +171,7 @@ set cino+=:0            " case: indent
 set cino+=g0            " public: indent
 "set cursorline          " highlight current line
 set number              " show the line number for each line
-set mouse=a             " have the mouse enabled all the time
+"set mouse=a             " have the mouse enabled all the time
 set formatoptions-=t    " don't auto-indent plaintext
 set history=1024        " keep N lines of command history
 set cc=80,100
