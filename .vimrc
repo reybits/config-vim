@@ -131,6 +131,7 @@ set showcmd             " display incomplete commands
 set nobackup
 set noswapfile
 set viminfo='100,<50,s10,h,n~/.vim/viminfo
+set autoread            " W11: autoread file after it changed outside vim
 
 " highlight whitespaces in a convenient way
 set list
@@ -530,7 +531,11 @@ map <F11> <Esc>:A<CR>
 map <C-F12> <Esc>:call MakeTags()<CR>
 command! Maketags call MakeTags()
 function! MakeTags()
-    !ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
+    if has("gui_macvim")
+        !exuberant-ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
+    else
+        !ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
+    endif
 endfunction
 
 " --- indent / unindent lines by Tab / Shift+Tab ------------------------------
