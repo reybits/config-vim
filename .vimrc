@@ -96,9 +96,9 @@ if has("gui_running")
     if has("gui_macvim")
         set guifont=Pragmata:h18
     else
-        set guifont=Pragmata\ 13
+        "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
-        "set guifont=Liberation\ Mono\ 12
+        set guifont=Liberation\ Mono\ 12
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
@@ -618,7 +618,7 @@ let g:UltiSnipsExpandTrigger = '<c-\>'
 " -----------------------------------------------------------------------------
 " youcompleteme related config
 " -----------------------------------------------------------------------------
-let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
 let g:ycm_echo_current_diagnostic = 1
 let g:ycm_enable_diagnostic_signs = 0
 " -----------------------------------------------------------------------------
