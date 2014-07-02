@@ -62,7 +62,7 @@ Bundle 'emezeske/manpageview.git'
 Bundle 'majutsushi/tagbar'
 "Bundle 'scrooloose/syntastic'
 Bundle 'spacehi.vim'
-"Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-fugitive'
 "Bundle 'YankRing.vim'
 Bundle 'TaskList.vim'
 "Bundle 'airblade/vim-gitgutter.git'
@@ -70,6 +70,7 @@ Bundle 'TaskList.vim'
 "Bundle 'toggle_words.vim'
 Bundle 'renamer.vim'
 Bundle 'DoxygenToolkit.vim'
+Bundle 'vim-scripts/Conque-GDB.git'
 
 " -----------------------------------------------------------------------------
 
@@ -95,9 +96,9 @@ if has("gui_running")
     if has("gui_macvim")
         set guifont=Pragmata:h18
     else
-        set guifont=Pragmata\ 13
+        "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
-        "set guifont=Liberation\ Mono\ 12
+        set guifont=Liberation\ Mono\ 12
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
@@ -140,6 +141,7 @@ set list
 set listchars=tab:→\ ,trail:·,extends:»,nbsp:·
 let c_space_errors=1    " Highlight any spaces before tabs, and any whitespace at the end of a line
 
+set autoread            " auto read file that has changed since editing started
 set showmode            " always show what mode we're currently editing in
 set hidden              " hides buffers instead of closing them
 set switchbuf=useopen   " reveal already opened files from the quickfix window
@@ -170,7 +172,7 @@ set cino+=:0            " case: indent
 set cino+=g0            " public: indent
 "set cursorline          " highlight current line
 set number              " show the line number for each line
-set mouse=a             " have the mouse enabled all the time
+"set mouse=a             " have the mouse enabled all the time
 set formatoptions-=t    " don't auto-indent plaintext
 set history=1024        " keep N lines of command history
 set cc=80,100
@@ -621,7 +623,7 @@ let g:UltiSnipsExpandTrigger = '<c-\>'
 " -----------------------------------------------------------------------------
 " youcompleteme related config
 " -----------------------------------------------------------------------------
-let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
 let g:ycm_echo_current_diagnostic = 1
 let g:ycm_enable_diagnostic_signs = 0
 " -----------------------------------------------------------------------------

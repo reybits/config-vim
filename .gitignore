@@ -1,2 +1,8 @@
 .vim/bundle-disabled/
+.vim/bundle/
+.vim/sessions/
+.vim/tags/
 .vim/undofiles/
+.vim/viminfo*
+.vim/viminfz.tmp
+.vim/ycm_extra_conf.pyc
