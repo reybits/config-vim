@@ -16,7 +16,6 @@ if has('vim_starting')
 endif
 
 filetype off " required before vundle or pathogen
-language english
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
@@ -115,7 +114,7 @@ if has("gui_running")
     if has("gui_macvim")
         set guifont=Pragmata:h18
     elseif has('win32') || has('win64')
-        set guifont=lucida_console:h16
+        set guifont=lucida_console:h16:b:cRUSSIAN
     else
         "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
