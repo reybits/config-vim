@@ -114,7 +114,7 @@ if has("gui_running")
     if has("gui_macvim")
         set guifont=Pragmata:h18
     elseif has('win32') || has('win64')
-        set guifont=lucida_console:h16:b:cRUSSIAN
+        set guifont=lucida_console:h14:cRUSSIAN
     else
         "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
@@ -136,10 +136,9 @@ if has("gui_running")
     "colorscheme solarized
 
 elseif (&t_Co == 256 || &t_Co == 88)
-    "colorscheme asmdev
     colorscheme Tomorrow-Night
 else
-    colorscheme asmdev
+    "colorscheme asmdev
 endif
 
 syntax on               " allow syntax highlighting
@@ -168,7 +167,8 @@ set ignorecase          " ignore case when searching
 set smartcase           " ignore case if search pattern is all lowercase, case-sensitive otherwise
 set incsearch           " show search matches as you type
 
-set fencs=utf8,ucs-bom,cp1251   " порядок перебора кодировок при открытии файла
+set encoding=utf-8
+set fencs=utf-8,ucs-bom,cp1251   " порядок перебора кодировок при открытии файла
 set ffs=unix,dos        " порядок перебора fileformats
 set cscopetag           " по Ctrl+] вести себя так же, как по g] (показывать варианты)
 set lazyredraw          " don't update the display while executing macros
@@ -255,7 +255,8 @@ autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 autocmd FileType help NoSpaceHi
 
 " --- show git diff in split window -------------------------------------------
-autocmd FileType gitcommit DiffGitCached | wincmd p
+"autocmd FileType gitcommit DiffGitCached | wincmd p
+autocmd FileType gitcommit if ! &previewwindow && expand('%:t') !~# 'index' | :DiffGitCached | endif
 
 "autocmd! BufRead,BufWrite,BufWritePost,BufNewFile *.org
 "autocmd BufEnter *.org call org#SetOrgFileType()
