@@ -1,83 +1,94 @@
 scriptencoding utf-8
 " ^^ Please leave the above line at the start of the file.
 
-
 "" ----------------------------------------------------------------------------
 ""
 "" Andrey A. Ugolnik / _Andrey_
-"" created: 01.01.2009
-"" modified: 23.07.2013
 ""
 "" ----------------------------------------------------------------------------
 
-" --- Use vim settings, rather then vi settings (much better!) ----------------
-" --- This must be first, because it changes other options as a side effect ---
-set nocompatible
+if has('vim_starting')
+    " --- Use vim settings, rather then vi settings (much better!) ----------------
+    " --- This must be first, because it changes other options as a side effect ---
+    set nocompatible
+
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
 filetype off " required before vundle or pathogen
 
-" --- vundle plugin manager
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " -----------------------------------------------------------------------------
-" vundle managed plugins
+" neobundle managed plugins
 " -----------------------------------------------------------------------------
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle.git'
+NeoBundleFetch 'Shougo/neobundle.vim'
 
-"Bundle 'MarcWeber/vim-addon-mw-utils'
-"Bundle 'Rip-Rip/clang_complete.git'
-"Bundle 'TwitVim.git'
-"Bundle 'bufexplorer.zip'
-"Bundle 'calendar.vim'
-"Bundle 'cscope.vim'
-"Bundle 'errormarker.vim'
-"Bundle 'ervandew/supertab'
-"Bundle 'file-line'
-"Bundle 'garbas/vim-snipmate'
-"Bundle 'gregsexton/gitv'
-"Bundle 'honza/vim-snippets'
-"Bundle 'ifdef.vim'
-"Bundle 'inccomplete'
-"Bundle 'jceb/vim-orgmode'
-"Bundle 'spolu/dwm.vim.git'
-"Bundle 'tomtom/tlib_vim'
-"Bundle 'tpope/vim-git'
+"NeoBundle 'MarcWeber/vim-addon-mw-utils'
+"NeoBundle 'Rip-Rip/clang_complete.git'
+"NeoBundle 'TwitVim.git'
+"NeoBundle 'bufexplorer.zip'
+"NeoBundle 'calendar.vim'
+"NeoBundle 'cscope.vim'
+"NeoBundle 'errormarker.vim'
+"NeoBundle 'ervandew/supertab'
+"NeoBundle 'file-line'
+"NeoBundle 'garbas/vim-snipmate'
+"NeoBundle 'gregsexton/gitv'
+"NeoBundle 'honza/vim-snippets'
+"NeoBundle 'ifdef.vim'
+"NeoBundle 'inccomplete'
+"NeoBundle 'jceb/vim-orgmode'
+"NeoBundle 'spolu/dwm.vim.git'
+"NeoBundle 'tomtom/tlib_vim'
+"NeoBundle 'tpope/vim-git'
 " must have
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'bling/vim-airline'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'a.vim'
+"NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Shougo/neocomplete.vim'
+"NeoBundle 'Shougo/vimproc.vim', {
+            "\ 'build' : {
+            "\     'windows' : 'tools\\update-dll-mingw',
+            "\     'cygwin' : 'make -f make_cygwin.mak',
+            "\     'mac' : 'make -f make_mac.mak',
+            "\     'unix' : 'make -f make_unix.mak',
+            "\    },
+            "\ }
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'a.vim'
 " very useful
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-session'
-Bundle 'emezeske/manpageview.git'
-Bundle 'majutsushi/tagbar'
-"Bundle 'scrooloose/syntastic'
-Bundle 'spacehi.vim'
-Bundle 'tpope/vim-fugitive'
-"Bundle 'YankRing.vim'
-Bundle 'TaskList.vim'
-"Bundle 'airblade/vim-gitgutter.git'
-"Bundle 'sjl/gundo.vim.git'
-"Bundle 'toggle_words.vim'
-Bundle 'renamer.vim'
-Bundle 'DoxygenToolkit.vim'
-Bundle 'vim-scripts/Conque-GDB.git'
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-session'
+NeoBundle 'emezeske/manpageview.git'
+NeoBundle 'majutsushi/tagbar'
+"NeoBundle 'scrooloose/syntastic'
+NeoBundle 'spacehi.vim'
+NeoBundle 'tpope/vim-fugitive'
+"NeoBundle 'YankRing.vim'
+NeoBundle 'TaskList.vim'
+"NeoBundle 'airblade/vim-gitgutter.git'
+"NeoBundle 'sjl/gundo.vim.git'
+"NeoBundle 'toggle_words.vim'
+NeoBundle 'renamer.vim'
+NeoBundle 'DoxygenToolkit.vim'
+NeoBundle 'vim-scripts/Conque-GDB.git'
 
 " -----------------------------------------------------------------------------
 
-
+call neobundle#end()
 
 " --- enable detection, plugins and indenting in one step ---------------------
 filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
 " -----------------------------------------------------------------------------
 
 "set t_Co=256
@@ -95,6 +106,8 @@ if has("gui_running")
 
     if has("gui_macvim")
         set guifont=Pragmata:h18
+    elseif has('win32') || has('win64')
+        set guifont=lucida_console:h16
     else
         "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
@@ -118,11 +131,7 @@ if has("gui_running")
 elseif (&t_Co == 256 || &t_Co == 88)
     "colorscheme asmdev
     colorscheme Tomorrow-Night
-
-    "set background=dark
-    "colorscheme solarized
 else
-    "colorscheme paintbox
     colorscheme asmdev
 endif
 
@@ -615,6 +624,73 @@ let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
 let g:UltiSnipsExpandTrigger = '<c-\>'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+" -----------------------------------------------------------------------------
+
+
+
+
+" -----------------------------------------------------------------------------
+" neocomplete related config
+" -----------------------------------------------------------------------------
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Enable omni completion.
+"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 " -----------------------------------------------------------------------------
 
 
