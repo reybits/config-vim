@@ -16,6 +16,7 @@ if has('vim_starting')
 endif
 
 filetype off " required before vundle or pathogen
+language english
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
@@ -322,11 +323,11 @@ if v:version >= 703
     set undofile " enable persistent undo
 
     " сделаем так, чтобы файлы undo появлялись не в текущей директории, а в нашей
-    if has('win32') || has('win64')
-        let s:undodir=$VIM.'/undofiles'
-    else
+    "if has('win32') || has('win64')
+        "let s:undodir=$VIM.'/undofiles'
+    "else
         let s:undodir=$HOME.'/.vim/undofiles'
-    endif
+    "endif
     let &undodir=s:undodir
 
     "" если каталог не существует, создадим его рекурсивно
@@ -835,6 +836,7 @@ let g:manpageview_multimanpage = 1
 " -----------------------------------------------------------------------------
 "  Session related config
 " -----------------------------------------------------------------------------
+let g:session_directory = '~/.vim/sessions'
 let g:session_autoload = 'yes'
 let g:session_autosave = 'yes'
 let g:session_default_to_last = 1
