@@ -914,7 +914,7 @@ let g:ctrlp_lazy_update = 0
 let g:ctrlp_by_filename = 0
 
 "let g:ctrlp_mruf_include = '\.h$|\.c$\|\.cpp$|\.m$|\.mm$'
-let g:ctrlp_extensions = ['mixed', 'bookmarkdir']
+let g:ctrlp_extensions = ['mixed', 'bookmarkdir', 'funky']
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 "unlet g:ctrlp_custom_ignore
