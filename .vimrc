@@ -119,7 +119,8 @@ if has("gui_running")
     else
         "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
-        set guifont=Liberation\ Mono\ 12
+        "set guifont=Liberation\ Mono\ 12
+        set guifont=Menlo:h18
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
