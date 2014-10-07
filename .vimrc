@@ -44,48 +44,47 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "NeoBundle 'tomtom/tlib_vim'
 "NeoBundle 'tpope/vim-git'
 " must have
+NeoBundle 'bling/vim-airline'
 if has('win32') || has('win64')
     NeoBundle 'Shougo/neocomplete.vim'
 else
     NeoBundle 'Valloric/YouCompleteMe' , {
         \ 'build' : {
-        \     'mac' : './install.sh --clang-completer --system-libclang',
-        \     'unix' : './install.sh --clang-completer --system-libclang',
-        \    },
+        \   'mac' : './install.sh --clang-completer --system-libclang',
+        \   'unix' : './install.sh --clang-completer --system-libclang',
+        \   },
         \ }
 
     NeoBundle 'Shougo/vimproc.vim', {
         \ 'build' : {
-        \     'mac' : 'make -f make_mac.mak',
-        \     'unix' : 'make -f make_unix.mak',
-        \    },
+        \   'mac' : 'make -f make_mac.mak',
+        \   'unix' : 'make -f make_unix.mak',
+        \   },
         \ }
 endif
 
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'tacahiroy/ctrlp-funky'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'a.vim'
+NeoBundleLazy 'kien/ctrlp.vim'
+NeoBundleLazy 'scrooloose/nerdcommenter'
+NeoBundleLazy 'scrooloose/nerdtree'
+NeoBundleLazy 'SirVer/ultisnips'
+NeoBundleLazy 'honza/vim-snippets'
+NeoBundleLazy 'a.vim'
 " very useful
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
-NeoBundle 'emezeske/manpageview.git'
-NeoBundle 'majutsushi/tagbar'
-"NeoBundle 'scrooloose/syntastic'
 NeoBundle 'spacehi.vim'
-NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'renamer.vim'
+"NeoBundle 'DoxygenToolkit.vim'
+"NeoBundle 'scrooloose/syntastic'
 "NeoBundle 'YankRing.vim'
-NeoBundle 'TaskList.vim'
 "NeoBundle 'airblade/vim-gitgutter.git'
 "NeoBundle 'sjl/gundo.vim.git'
 "NeoBundle 'toggle_words.vim'
-NeoBundle 'renamer.vim'
-NeoBundle 'DoxygenToolkit.vim'
-NeoBundle 'vim-scripts/Conque-GDB.git'
+NeoBundleLazy 'emezeske/manpageview.git'
+NeoBundleLazy 'majutsushi/tagbar'
+NeoBundleLazy 'vim-scripts/Conque-GDB.git'
+NeoBundleLazy 'tpope/vim-fugitive'
+NeoBundleLazy 'TaskList.vim'
 
 " -----------------------------------------------------------------------------
 
@@ -98,6 +97,8 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
+" load all lazy plugins
+autocmd FileType c,cpp NeoBundleSource
 " -----------------------------------------------------------------------------
 
 "set t_Co=256
@@ -740,6 +741,7 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 " -----------------------------------------------------------------------------
 "  Task List related config
 " -----------------------------------------------------------------------------
+let g:tlTokenList = ['todo', 'fixme']
 let Tlist_Auto_Update = 1
 let Tlist_Close_On_Select = 1
 let Tlist_Exit_OnlyWindow = 1
@@ -961,14 +963,6 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 "  gitgutter related config
 " -----------------------------------------------------------------------------
   let g:gitgutter_enabled = 0
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  TaskList related config
-" -----------------------------------------------------------------------------
-let g:tlTokenList = ['todo', 'fixme']
 " -----------------------------------------------------------------------------
 
 
