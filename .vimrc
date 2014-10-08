@@ -63,28 +63,30 @@ else
         \ }
 endif
 
-NeoBundleLazy 'kien/ctrlp.vim'
-NeoBundleLazy 'scrooloose/nerdcommenter'
-NeoBundleLazy 'scrooloose/nerdtree'
-NeoBundleLazy 'SirVer/ultisnips'
-NeoBundleLazy 'honza/vim-snippets'
-NeoBundleLazy 'a.vim'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'a.vim'
 " very useful
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'spacehi.vim'
 NeoBundle 'renamer.vim'
+NeoBundle 'TaskList.vim'
+NeoBundle 'emezeske/manpageview.git'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'vim-scripts/Conque-GDB.git'
+NeoBundle 'tpope/vim-fugitive'
+"NeoBundle 'maxbrunsfeld/vim-yankstack'
 "NeoBundle 'DoxygenToolkit.vim'
 "NeoBundle 'scrooloose/syntastic'
 "NeoBundle 'YankRing.vim'
 "NeoBundle 'airblade/vim-gitgutter.git'
 "NeoBundle 'sjl/gundo.vim.git'
 "NeoBundle 'toggle_words.vim'
-NeoBundleLazy 'emezeske/manpageview.git'
-NeoBundleLazy 'majutsushi/tagbar'
-NeoBundleLazy 'vim-scripts/Conque-GDB.git'
-NeoBundleLazy 'tpope/vim-fugitive'
-NeoBundleLazy 'TaskList.vim'
+"NeoBundle 'mhinz/vim-startify'
 
 " -----------------------------------------------------------------------------
 
@@ -97,8 +99,6 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-" load all lazy plugins
-autocmd FileType c,cpp NeoBundleSource
 " -----------------------------------------------------------------------------
 
 "set t_Co=256
