@@ -1,6 +1,9 @@
 scriptencoding utf-8
 " ^^ Please leave the above line at the start of the file.
 
+lan mes en_EN.UTF-8
+set langmenu=en_EN.UTF-8
+
 "" ----------------------------------------------------------------------------
 ""
 "" Andrey A. Ugolnik / _Andrey_
@@ -115,8 +118,10 @@ if has("gui_running")
 
     if has("gui_macvim")
         set guifont=Pragmata:h18
+        colorscheme Tomorrow-Night
     elseif has('win32') || has('win64')
         set guifont=lucida_console:h14:cRUSSIAN
+        colorscheme asmdev
     else
         "set guifont=Pragmata\ 13
         "set guifont=Droid\ Sans\ Mono\ 12
@@ -125,6 +130,7 @@ if has("gui_running")
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
+        colorscheme Tomorrow-Night
     endif
 
     " nice theme collection available at
@@ -132,8 +138,6 @@ if has("gui_running")
     "colorscheme torte
     "colorscheme asu1dark
     "colorscheme paintbox
-    "colorscheme asmdev
-    colorscheme Tomorrow-Night
 
     "set background=dark
     "colorscheme solarized
