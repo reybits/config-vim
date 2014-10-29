@@ -70,7 +70,9 @@ flags = [
 '-I',
 '.',
 '-I',
-'/home/andrey/projects/libs/hgex/include'
+'/Users/andrey/projects/hgex/include',
+'-I',
+'/Library/Developer/CommandLineTools/usr/lib/c++/v1',
 #'-I',
 #'./ClangCompleter',
 #'-isystem',

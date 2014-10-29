@@ -1,9 +1,6 @@
 scriptencoding utf-8
 " ^^ Please leave the above line at the start of the file.
 
-lan mes en_EN.UTF-8
-set langmenu=en_EN.UTF-8
-
 "" ----------------------------------------------------------------------------
 ""
 "" Andrey A. Ugolnik / _Andrey_
@@ -14,6 +11,11 @@ if has('vim_starting')
     " --- Use vim settings, rather then vi settings (much better!) ----------------
     " --- This must be first, because it changes other options as a side effect ---
     set nocompatible
+
+    if has('win32') || has('win64')
+        lan mes en_EN.UTF-8
+        set langmenu=en_EN.UTF-8
+    endif
 
     set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
