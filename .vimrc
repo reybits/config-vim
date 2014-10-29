@@ -103,6 +103,14 @@ NeoBundleCheck
 
 "set t_Co=256
 
+if v:version >= 704
+    " The new Vim regex engine is currently slooooow as hell which makes syntax
+    " highlighting slow, which introduces typing latency.
+    " Consider removing this in the future when the new regex engine becomes
+    " faster.
+    set regexpengine=1
+endif
+
 " --- font used in Gvim -------------------------------------------------------
 if has("gui_running")
     " Remove toolbar, left scrollbar and right scrollbar
@@ -113,15 +121,15 @@ if has("gui_running")
     set guioptions-=R
     set guioptions-=m " remove menubar
 
+    " Русский текст для теста начертания символов
     if has("gui_macvim")
         set guifont=Pragmata:h18
     elseif has('win32') || has('win64')
         set guifont=lucida_console:h14:cRUSSIAN
     else
         "set guifont=Pragmata\ 13
-        "set guifont=Droid\ Sans\ Mono\ 12
+        set guifont=Droid\ Sans\ Mono\ 12
         "set guifont=Liberation\ Mono\ 12
-        set guifont=Menlo:h18
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
@@ -713,8 +721,10 @@ endif
 " youcompleteme related config
 " -----------------------------------------------------------------------------
 let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
-let g:ycm_echo_current_diagnostic = 1
-let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_echo_current_diagnostic = 0
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_identifier_candidate_chars = 3
 " -----------------------------------------------------------------------------
 
 
@@ -973,8 +983,8 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
 let g:airline_paste_symbol = 'ρ'
-let g:airline_linecolumn_prefix = '¶ '
-let g:airline_branch_prefix = '⎇  '
+let g:airline_linecolumn_prefix = '¶'
+let g:airline_branch_prefix = ''
 let g:airline_readonly_symbol = ''
 
 let g:airline_enable_branch = 1
