@@ -118,13 +118,13 @@ endif
 
 " --- font used in Gvim -------------------------------------------------------
 if has("gui_running")
-    " Remove toolbar, left scrollbar and right scrollbar
-    set guioptions-=T
-    set guioptions-=l
-    set guioptions-=L
-    set guioptions-=r
-    set guioptions-=R
+    set guioptions-=T " disable toolbar
+    set guioptions-=l " disable left scroolbar
+    set guioptions-=L " disable left scroolbar
+    set guioptions-=r " disable right scroolbar
+    set guioptions-=R " disable right scroolbar
     set guioptions-=m " remove menubar
+    set guioptions+=c " use console dialogs instead of popup dialogs for simple choices.
 
     " Русский текст для теста начертания символов
     if has("gui_macvim")
