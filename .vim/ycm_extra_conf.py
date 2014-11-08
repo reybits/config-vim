@@ -73,6 +73,8 @@ flags = [
 '/Users/andrey/projects/hgex/include',
 '-I',
 '/Library/Developer/CommandLineTools/usr/lib/c++/v1',
+'-I',
+'/home/andrey/projects/libs/hgex/include',
 #'-I',
 #'./ClangCompleter',
 #'-isystem',

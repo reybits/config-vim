@@ -82,9 +82,9 @@ NeoBundle 'renamer.vim'
 NeoBundle 'TaskList.vim'
 NeoBundle 'emezeske/manpageview.git'
 NeoBundle 'majutsushi/tagbar'
-NeoBundle 'vim-scripts/Conque-GDB.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'mhinz/vim-signify'
+"NeoBundle 'vim-scripts/Conque-GDB.git'
 "NeoBundle 'maxbrunsfeld/vim-yankstack'
 "NeoBundle 'DoxygenToolkit.vim'
 "NeoBundle 'scrooloose/syntastic'
@@ -174,7 +174,6 @@ set list
 set listchars=tab:→\ ,trail:·,extends:»,nbsp:·
 let c_space_errors=1    " Highlight any spaces before tabs, and any whitespace at the end of a line
 
-set autoread            " auto read file that has changed since editing started
 set showmode            " always show what mode we're currently editing in
 set hidden              " hides buffers instead of closing them
 set switchbuf=useopen   " reveal already opened files from the quickfix window
@@ -213,20 +212,12 @@ set cc=80,100
 set ruler               " show the cursor position all the time
 set hlsearch            " highlight searches
 set showmatch           " проверка скобок
-set foldmethod=syntax   " folds defined by syntax highlighting
-set foldlevelstart=10    " set start folding level at file open
-"set foldmethod=manual
+set foldmethod=marker
 "set foldopen&
 "set foldclose=all
 set popt+=syntax:y      " syntax when printing
 set pastetoggle=<F10>   " mode that allow to paste text from clipboard without formating
 set scrolloff=5         " rows number to show while scrolling
-"set paste              " set this mode by default
-" internal keyboard layout switcher Ctrl-^
-"set keymap=russian-jcukenwin
-"set iminsert=0
-"set imsearch=-1
-"set imcmdline
 
 " complete options (disable preview scratch window)
 "set completeopt=menuone,menu,longest,preview
@@ -235,18 +226,18 @@ set pumheight=15        " Limit popup menu height
 
 " --- format od status line ---------------------------------------------------
 set laststatus=2 " always put a status line in, even if there is only one window
-set statusline=
-set statusline+=%-3.3n\                      " buffer number
-set statusline+=%f\                          " file name
-set statusline+=%h%m%r%w                     " flags
-set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
-set statusline+=%{&encoding},                " encoding
-set statusline+=%{&fileformat}]              " file format
-set statusline+=%=                           " right align
-set statusline+=%k\                          " show current keymap
-set statusline+=0x%-8B\                      " current char
-set statusline+=%-14.(%l,%c%V,%{strlen(getline('.'))}%)\  " row / column position
-set statusline+=%<%P                         " position in percent
+"set statusline=
+"set statusline+=%-3.3n\                      " buffer number
+"set statusline+=%f\                          " file name
+"set statusline+=%h%m%r%w                     " flags
+"set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
+"set statusline+=%{&encoding},                " encoding
+"set statusline+=%{&fileformat}]              " file format
+"set statusline+=%=                           " right align
+"set statusline+=%k\                          " show current keymap
+"set statusline+=0x%-8B\                      " current char
+"set statusline+=%-14.(%l,%c%V,%{strlen(getline('.'))}%)\  " row / column position
+"set statusline+=%<%P                         " position in percent
 
 " --- additional tags ---------------------------------------------------------
 "set tags+=~/.vim/tags/cpp
@@ -303,37 +294,37 @@ autocmd VimEnter * redraw
 " --- redate file headers automatically ---------------------------------------
 "autocmd BufWritePre * call RedateHeader()
 
-function! RedateHeader()
-    " Mark the current position, and find the end of the header (if possible)
-    silent! normal! msHmtgg$%
+"function! RedateHeader()
+    "" Mark the current position, and find the end of the header (if possible)
+    "silent! normal! msHmtgg$%
 
-    if &modified
-        set nomodified
+    "if &modified
+        "set nomodified
 
-        let lastline = line('.')
-        if lastline == 1
-            " Header not found, so use fifteen lines or the full file
-            let lastline = Min(15, line('$'))
-        endif
-        " Replace any timestamps discovered, in whatever format
-        silent! execute '1,' . lastline . 's/\m\%(date\|changed\?\|modifi\w\+\):\s\+"\?\zs\%(\a\|\d\|[/, :-.]\)*/\=strftime("%d.%m.%Y")/ie'
-        " Increment the version marker
-        silent! execute '1,' . lastline . "g/[Vv]ersion:/normal! $\<C-a>"
-    endif
+        "let lastline = line('.')
+        "if lastline == 1
+            "" Header not found, so use fifteen lines or the full file
+            "let lastline = Min(15, line('$'))
+        "endif
+        "" Replace any timestamps discovered, in whatever format
+        "silent! execute '1,' . lastline . 's/\m\%(date\|changed\?\|modifi\w\+\):\s\+"\?\zs\%(\a\|\d\|[/, :-.]\)*/\=strftime("%d.%m.%Y")/ie'
+        "" Increment the version marker
+        "silent! execute '1,' . lastline . "g/[Vv]ersion:/normal! $\<C-a>"
+    "endif
 
-    " Restore the marked position
-    silent! normal! 'tzt`s
-endf
+    "" Restore the marked position
+    "silent! normal! 'tzt`s
+"endf
 
-function! Min(number, ...)
-    let result = a:number
-    let index = a:0
-    while index > 0
-        let result = (a:{index} > result) ? result : a:{index}
-        let index = index - 1
-    endwhile
-    return result
-endf
+"function! Min(number, ...)
+    "let result = a:number
+    "let index = a:0
+    "while index > 0
+        "let result = (a:{index} > result) ? result : a:{index}
+        "let index = index - 1
+    "endwhile
+    "return result
+"endf
 " -----------------------------------------------------------------------------
 
 " --- persistent undo ---------------------------------------------------------
@@ -428,7 +419,7 @@ inoremap <A-k> <Esc>:cp<CR>zvzz:cc<CR>a
 
 " --- общение с буфером обмена X-сервера --------------------------------------
 vmap <C-c> "+y
-nmap <S-Insert> "*p
+nmap <S-Insert> "+p
 imap <S-Insert> <C-o><C-Insert>
 
 " --- add highlighting for function definition in C++ -------------------------
@@ -479,12 +470,6 @@ augroup QFixToggle
     autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
 augroup END
 " -----------------------------------------------------------------------------
-
-" --- TwitVim shortcuts -------------------------------------------------------
-"nnoremap <F3> :FriendsTwitter<cr>
-"nnoremap <S-F3> :UserTwitter<cr>
-"nnoremap <A-F3> :RepliesTwitter<cr>
-"nnoremap <C-F3> :DMTwitter<cr>
 
 " --- search world under cursor in all files with current ext -----------------
 "map <F4> :execute "noa vim /" . expand("<cword>") . "/gj **/*" . (expand("%:e")=="" ? "" : "." . expand("%:e")) <Bar> cw<CR>
@@ -543,27 +528,14 @@ map <F4> :execute "noa vim /" . expand("<cword>") . "/gj **/*.h **/*.c **/*.cpp"
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
-" --- show / hide Project window ----------------------------------------------
-"nmap <silent> <F9> <Plug>ToggleProject
-
 " --- клавиши для компиляции --------------------------------------------------
 map <C-F9> <Esc>:make! linux<CR>
-
-" --- find file in current directory tree -------------------------------------
-"map <F10> <Esc>:FufCoverageFile<CR>
 
 " --- run program if supported in Makefile ------------------------------------
 map <C-F10> :!make run<CR>
 
 " --- switch header / release -------------------------------------------------
 map <F11> <Esc>:A<CR>
-"map <F11> <Esc>:FSHere<CR>
-" switching between .h and .cpp files that in the SAME directory.
-"map <F11> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-
-" --- open buffer explorer ----------------------------------------------------
-"map <F12> <Esc>:BufExplorer<CR>
-"map <F12> <Esc>:FufBuffer<CR>
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:call MakeTags()<CR>
@@ -597,29 +569,6 @@ map <C-S-Tab> <Esc>:bp<CR>
 "inoremap ( ()<Esc>i
 "inoremap [ []<Esc>i
 
-" --- Intelligent Home moves to the first non-blank character on the line, ----
-" --- then to the very first character on the line ----------------------------
-nmap <Home> :call HomeButton()<CR>
-imap <Home> <C-O>:call HomeButton()<CR>
-function! HomeButton()
-    if col(".") != 1
-        let current_cursor_column = col(".")
-        execute("normal ^")
-        if col(".") == current_cursor_column
-            execute("normal 0")
-        endif
-    endif
-endfunction
-
-" --- In Normal mode intelligent End moves after the last character on the ----
-" --- line if the line is not empty -------------------------------------------
-nmap <End> :call EndButton()<CR>
-function! EndButton()
-    execute("normal $")
-    if col("$") != 1
-        execute("normal l")
-    endif
-endfunction
 
 
 " --- show encoding menu by F8 ------------------------------------------------
@@ -646,7 +595,7 @@ let Grep_Skip_Dirs='.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
+"let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
 let g:UltiSnipsExpandTrigger = '<c-\>'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
@@ -728,6 +677,7 @@ endif
 " youcompleteme related config
 " -----------------------------------------------------------------------------
 let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_echo_current_diagnostic = 0
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -768,26 +718,6 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 
 
 " -----------------------------------------------------------------------------
-"  OmniCppComplete related config
-" -----------------------------------------------------------------------------
-"let OmniCpp_GlobalScopeSearch = 1
-"let OmniCpp_NamespaceSearch = 1
-"let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-"let OmniCpp_ShowAccess = 1
-"let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-"let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-"let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-"let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-"let OmniCpp_LocalSearchDecl = 1
-"let OmniCpp_SelectFirstItem = 2
-
-"" close automatically the preview window after a completion
-"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-" -----------------------------------------------------------------------------
-
-
-" -----------------------------------------------------------------------------
 " NERDTree related config
 " -----------------------------------------------------------------------------
 let NERDTreeIgnore = ['.*\.o$', '.*\~$', '.*\.out$', '.*\.so$', '.*\.a$']
@@ -795,52 +725,6 @@ let NERDTreeQuitOnOpen = 1          " Quit on opening files from the tree
 let NERDTreeHighlightCursorline = 1 " Highlight the selected entry in the tree
 let NERDTreeChDirMode = 2           " change working directory
 let NERDTreeMinimalUI = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  BufExplorer related config
-" -----------------------------------------------------------------------------
-"let g:bufExplorerShowTabBuffer = 1     " Yes.
-"let g:bufExplorerShowRelativePath = 1  " Show relative paths.
-"let g:bufExplorerShowUnlisted = 1      " Show unlisted buffers.
-"let g:bufExplorerSortBy = 'mru'
-""let g:bufExplorerSortBy = 'name'       " Sort by the buffer's name.
-""let g:bufExplorerSortBy = 'fullpath'   " Sort by full file path name.
-"let g:bufExplorerSplitBelow = 0        " Split new window above current.
-"let g:bufExplorerSplitRight = 1        " Split right.
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" SuperTab option for context aware completion
-" -----------------------------------------------------------------------------
-"let g:SuperTabDefaultCompletionType = "context"
-""let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
-""let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" Clang_complete related options
-" -----------------------------------------------------------------------------
-"let g:clang_complete_auto = 0 " Disable auto popup, use <Tab> to autocomplete
-"let g:clang_complete_copen = 1 " Show clang errors in the quickfix window
-"let g:clang_auto_select = 1
-"let g:clang_complete_macros = 1
-"" This gives access to many more clang features. Furthermore it automatically
-"" caches all includes in memory. Updates after changes in the same file
-"" will therefore be a lot faster.
-"let g:clang_use_library = 1
-"let g:clang_library_path = '/usr/lib64/llvm'
-"" do some snippets magic after a ( or a , inside function call.
-"let g:clang_close_preview = 1
-"let g:clang_snippets = 0
-"let g:clang_sort_algo = 'alpha'
-""let g:clang_user_options = '-I/usr/lib64/clang/3.2/include/ -std=c++0x'
 " -----------------------------------------------------------------------------
 
 
@@ -877,23 +761,6 @@ let g:tagbar_width = 30
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  delimitMate related config
-" -----------------------------------------------------------------------------
-"let delimitMate_autoclose = 0
-" -----------------------------------------------------------------------------
-"
-
-
-" -----------------------------------------------------------------------------
-"  ProtoDef related config
-" -----------------------------------------------------------------------------
-"let g:protodefprotogetter = $VIM.'/bundle/protodef/pullproto.pl'
-" let g:disable_protodef_mapping = 1
 " -----------------------------------------------------------------------------
 
 
@@ -961,25 +828,9 @@ let g:yankring_replace_n_nkey = '<m-n>'
 
 
 " -----------------------------------------------------------------------------
-"  IncComplete related config
-" -----------------------------------------------------------------------------
-"let g:inccomplete_sort = 'ignorecase'
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
 "  ErrorMarker related config
 " -----------------------------------------------------------------------------
 let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  gitgutter related config
-" -----------------------------------------------------------------------------
-  let g:gitgutter_enabled = 0
 " -----------------------------------------------------------------------------
 
 
@@ -996,18 +847,5 @@ let g:airline_readonly_symbol = ''
 
 let g:airline_enable_branch = 1
 let g:airline_enable_tagbar = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  TwitVim related config
-" -----------------------------------------------------------------------------
-"let twitvim_enable_python = 1
-"let twitvim_api_root = "https://api.twitter.com/1"
-"let twitvim_browser_cmd = "firefox"
-"let twitvim_show_header = 0
-"let twitvim_timestamp_format = '%I:%M %p'
-"let twitvim_net_timeout = 30
 " -----------------------------------------------------------------------------
 
