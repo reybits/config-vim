@@ -855,6 +855,9 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_linecolumn_prefix = '¶'
 let g:airline_branch_prefix = ''
 let g:airline_readonly_symbol = ''
+if has('win32') || has('win64')
+    let g:airline_symbols.linenr = ''
+endif
 
 let g:airline_enable_branch = 1
 let g:airline_enable_tagbar = 1
