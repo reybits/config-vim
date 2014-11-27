@@ -129,7 +129,7 @@ if has("gui_running")
 
     " Русский текст для теста начертания символов
     if has("gui_macvim")
-        set guifont=Pragmata:h18
+        set guifont=Melno:h18
         colorscheme Tomorrow-Night
     elseif has('win32') || has('win64')
         set guifont=lucida_console:h14:cRUSSIAN
