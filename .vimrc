@@ -472,8 +472,19 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
-"map <F4> :execute "noa vim /" . expand("<cword>") . "/gj **/*" . (expand("%:e")=="" ? "" : "." . expand("%:e")) <Bar> cw<CR>
-map <F4> :execute "noa vim /" . expand("<cword>") . "/gj **/*.h **/*.c **/*.cpp" <Bar> cw<CR>
+map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
+command! GrepWordInFiles :call s:GrepInFiles()
+function! s:GrepInFiles()
+    let s:ext = expand("%:e")
+    if s:ext == "cpp" || s:ext == "c" || s:ext == "h"
+        let s:mask = "**/*.h **/*.c **/*.cpp"
+    else
+        let s:mask = "**/*" . (s:ext == "" ? "" : ".") . s:ext
+    endif
+
+    let s:word = expand("<cword>")
+    execute "noa vim /" . s:word . "/gj " . s:mask
+endfunction
 
 " --- copy definition in to implementation file -------------------------------
 "nmap <F5> :CopyDefinition<CR>
@@ -844,6 +855,9 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_linecolumn_prefix = '¶'
 let g:airline_branch_prefix = ''
 let g:airline_readonly_symbol = ''
+if has('win32') || has('win64')
+    let g:airline_symbols.linenr = ''
+endif
 
 let g:airline_enable_branch = 1
 let g:airline_enable_tagbar = 1
