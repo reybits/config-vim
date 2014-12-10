@@ -130,7 +130,7 @@ if has("gui_running")
 
     " Русский текст для теста начертания символов
     if has("gui_macvim")
-        set guifont=Pragmata:h18
+        set guifont=Melno:h18
         colorscheme Tomorrow-Night
     elseif has('win32') || has('win64')
         set guifont=lucida_console:h14:cRUSSIAN
@@ -862,6 +862,9 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_linecolumn_prefix = '¶'
 let g:airline_branch_prefix = ''
 let g:airline_readonly_symbol = ''
+if has('win32') || has('win64')
+    let g:airline_symbols.linenr = ''
+endif
 
 let g:airline_enable_branch = 1
 let g:airline_enable_tagbar = 1
