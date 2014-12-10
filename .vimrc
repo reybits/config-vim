@@ -75,6 +75,7 @@ NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'a.vim'
 " very useful
+"NeoBundle 'ervandew/screen'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'spacehi.vim'
@@ -107,7 +108,7 @@ NeoBundleCheck
 
 " -----------------------------------------------------------------------------
 
-"set t_Co=256
+set t_Co=256
 
 if v:version >= 704
     " The new Vim regex engine is currently slooooow as hell which makes syntax
@@ -405,11 +406,17 @@ nnoremap <leader>tw :ToggleWord<CR>
 " --- clears the search register ----------------------------------------------
 nmap <silent> <space> :nohlsearch<CR>
 
+" --- disable arrow keys ------------------------------------------------------
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
 " --- useful movement in wrap mode --------------------------------------------
-nnoremap <down> gj
-nnoremap <up>   gk
 nnoremap j      gj
 nnoremap k      gk
+"nnoremap <down> gj
+"nnoremap <up>   gk
 
 " --- перемещение по элементам в quickfix -------------------------------------
 nnoremap <A-j>      :cn<CR>zvzz:cc<CR>
@@ -483,7 +490,7 @@ function! s:GrepInFiles()
     endif
 
     let s:word = expand("<cword>")
-    execute "noa vim /" . s:word . "/gj " . s:mask
+    execute "noa vim /\\<" . s:word . "\\>/gj " . s:mask
 endfunction
 
 " --- copy definition in to implementation file -------------------------------
