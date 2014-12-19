@@ -7,12 +7,19 @@ scriptencoding utf-8
 ""
 "" ----------------------------------------------------------------------------
 
+let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
+
+" on Windows use .vim instead vimfiles
+if s:MSWindows
+    set runtimepath = $VIM/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/after
+endif
+
 if has('vim_starting')
     " --- Use vim settings, rather then vi settings (much better!) ----------------
     " --- This must be first, because it changes other options as a side effect ---
     set nocompatible
 
-    if has('win32') || has('win64')
+    if s:MSWindows
         lan mes en_EN.UTF-8
         set langmenu=en_EN.UTF-8
     endif
@@ -50,20 +57,22 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "NeoBundle 'tpope/vim-git'
 " must have
 NeoBundle 'bling/vim-airline'
-if has('win32') || has('win64')
+if s:MSWindows
+    NeoBundle 'Shougo/vimproc.vim', {
+        \ 'build' : {
+        \     'windows' : 'tools\\update-dll-mingw',
+        \     'cygwin' : 'make -f make_cygwin.mak',
+        \     'mac' : 'make -f make_mac.mak',
+        \     'linux' : 'make',
+        \     'unix' : 'gmake',
+        \    },
+        \ }
     NeoBundle 'Shougo/neocomplete.vim'
 else
     NeoBundle 'Valloric/YouCompleteMe' , {
         \ 'build' : {
         \   'mac' : './install.sh --clang-completer --system-libclang',
         \   'unix' : './install.sh --clang-completer --system-libclang',
-        \   },
-        \ }
-
-    NeoBundle 'Shougo/vimproc.vim', {
-        \ 'build' : {
-        \   'mac' : 'make -f make_mac.mak',
-        \   'unix' : 'make -f make_unix.mak',
         \   },
         \ }
 endif
@@ -75,7 +84,6 @@ NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'a.vim'
 " very useful
-"NeoBundle 'ervandew/screen'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'spacehi.vim'
@@ -85,6 +93,7 @@ NeoBundle 'emezeske/manpageview.git'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'mhinz/vim-signify'
+"NeoBundle 'ervandew/screen'
 "NeoBundle 'vim-scripts/Conque-GDB.git'
 "NeoBundle 'maxbrunsfeld/vim-yankstack'
 "NeoBundle 'DoxygenToolkit.vim'
@@ -132,7 +141,7 @@ if has("gui_running")
     if has("gui_macvim")
         set guifont=Melno:h18
         colorscheme Tomorrow-Night
-    elseif has('win32') || has('win64')
+    elseif s:MSWindows
         set guifont=lucida_console:h14:cRUSSIAN
         colorscheme asmdev
     else
@@ -333,7 +342,7 @@ if v:version >= 703
     set undofile " enable persistent undo
 
     " сделаем так, чтобы файлы undo появлялись не в текущей директории, а в нашей
-    "if has('win32') || has('win64')
+    "if s:MSWindows
         "let s:undodir=$VIM.'/undofiles'
     "else
         let s:undodir=$HOME.'/.vim/undofiles'
@@ -431,12 +440,6 @@ imap <S-Insert> <C-o><C-Insert>
 
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
-
-"function! EnhanceCppSyntax()
-    "syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
-    "hi def link cppFuncDef Special
-"endfunction
-
 function! EnhanceCppSyntax()
     syn match    cCustomParen    "(" contains=cParen contains=cCppParen
     syn match    cCustomFunc     "\w\+\s*(" contains=cCustomParen
@@ -625,7 +628,7 @@ let g:UltiSnipsExpandTrigger = '<c-\>'
 " -----------------------------------------------------------------------------
 " neocomplete related config
 " -----------------------------------------------------------------------------
-if has('win32') || has('win64')
+if s:MSWindows
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -673,21 +676,19 @@ if has('win32') || has('win64')
     " AutoComplPop like behavior.
     "let g:neocomplete#enable_auto_select = 1
 
-    " Enable omni completion.
-    "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
+    if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
     endif
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#force_overwrite_completefunc = 1
+    let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+    let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+    let g:neocomplete#force_omni_input_patterns.objc = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
+    let g:neocomplete#force_omni_input_patterns.objcpp = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
+    let g:clang_complete_auto = 0
+    let g:clang_auto_select = 0
+    let g:clang_use_library = 1
 endif
 " -----------------------------------------------------------------------------
-
 
 
 
@@ -696,10 +697,13 @@ endif
 " -----------------------------------------------------------------------------
 let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_echo_current_diagnostic = 0
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_echo_current_diagnostic = 1
 let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_min_num_identifier_candidate_chars = 0
 " -----------------------------------------------------------------------------
 
 
@@ -807,14 +811,14 @@ let g:DoxygenToolkit_authorName="Andrey A. Ugolnik"
       "instead of from the directory of the current file (default). Only applies
       "when "r" is also present.
   "0 or <empty> - disable this feature.
-let g:ctrlp_working_path_mode = 'ra'
+"let g:ctrlp_working_path_mode = 'ra'
 
 " Set this to 1 to enable the lazy-update feature: only update the match window
 " after typing's been stopped for a certain amount of time:
 let g:ctrlp_lazy_update = 0
 
 " Set this to 1 to set searching by filename (as opposed to full path)
-let g:ctrlp_by_filename = 0
+let g:ctrlp_by_filename = 1
 
 "let g:ctrlp_mruf_include = '\.h$|\.c$\|\.cpp$|\.m$|\.mm$'
 let g:ctrlp_extensions = ['mixed', 'bookmarkdir', 'funky']
@@ -862,7 +866,7 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_linecolumn_prefix = '¶'
 let g:airline_branch_prefix = ''
 let g:airline_readonly_symbol = ''
-if has('win32') || has('win64')
+if s:MSWindows
     let g:airline_symbols.linenr = ''
 endif
 
