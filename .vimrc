@@ -140,7 +140,7 @@ if has("gui_running")
 
     " Русский текст для теста начертания символов
     if has("gui_macvim")
-        set guifont=Melno:h18
+        set guifont=Menlo:h18
         colorscheme Tomorrow-Night
     elseif s:MSWindows
         set guifont=lucida_console:h14:cRUSSIAN
@@ -857,6 +857,14 @@ let g:yankring_replace_n_nkey = '<m-n>'
 "  ErrorMarker related config
 " -----------------------------------------------------------------------------
 let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
+" -----------------------------------------------------------------------------
+
+
+
+" -----------------------------------------------------------------------------
+" Java error format support by walker from LOR
+" -----------------------------------------------------------------------------
+set efm^=\ %#[javac]\ %#%f:%l:\ %m
 " -----------------------------------------------------------------------------
 
 
