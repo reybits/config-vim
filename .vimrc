@@ -137,6 +137,7 @@ if has("gui_running")
     set guioptions-=R " disable right scroolbar
     set guioptions-=m " remove menubar
     set guioptions+=c " use console dialogs instead of popup dialogs for simple choices.
+    set guioptions-=e " disable gui tabs
 
     " Русский текст для теста начертания символов
     if has("gui_macvim")
