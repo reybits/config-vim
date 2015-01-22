@@ -258,9 +258,6 @@ set laststatus=2 " always put a status line in, even if there is only one window
 "set tags+=~/.vimtags
 set tags+=./tags
 
-" --- error format for java ---------------------------------------------------
-"set efm=\ %#[javac]\ %#%f:%l:\ %m,%+Z%p^,%+C%.%#,%-G%.%#
-
 " --- force filetype for some files -------------------------------------------
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
