@@ -37,24 +37,6 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"NeoBundle 'MarcWeber/vim-addon-mw-utils'
-"NeoBundle 'Rip-Rip/clang_complete.git'
-"NeoBundle 'TwitVim.git'
-"NeoBundle 'bufexplorer.zip'
-"NeoBundle 'calendar.vim'
-"NeoBundle 'cscope.vim'
-"NeoBundle 'errormarker.vim'
-"NeoBundle 'ervandew/supertab'
-"NeoBundle 'file-line'
-"NeoBundle 'garbas/vim-snipmate'
-"NeoBundle 'gregsexton/gitv'
-"NeoBundle 'honza/vim-snippets'
-"NeoBundle 'ifdef.vim'
-"NeoBundle 'inccomplete'
-"NeoBundle 'jceb/vim-orgmode'
-"NeoBundle 'spolu/dwm.vim.git'
-"NeoBundle 'tomtom/tlib_vim'
-"NeoBundle 'tpope/vim-git'
 " must have
 NeoBundle 'bling/vim-airline'
 if s:MSWindows
@@ -93,16 +75,35 @@ NeoBundle 'emezeske/manpageview.git'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'mhinz/vim-signify'
-"NeoBundle 'ervandew/screen'
-"NeoBundle 'vim-scripts/Conque-GDB.git'
-"NeoBundle 'maxbrunsfeld/vim-yankstack'
+"NeoBundle 'mtth/scratch.vim'
 "NeoBundle 'DoxygenToolkit.vim'
-"NeoBundle 'scrooloose/syntastic'
+"NeoBundle 'MarcWeber/vim-addon-mw-utils'
+"NeoBundle 'Rip-Rip/clang_complete.git'
+"NeoBundle 'TwitVim.git'
 "NeoBundle 'YankRing.vim'
 "NeoBundle 'airblade/vim-gitgutter.git'
-"NeoBundle 'sjl/gundo.vim.git'
-"NeoBundle 'toggle_words.vim'
+"NeoBundle 'bufexplorer.zip'
+"NeoBundle 'calendar.vim'
+"NeoBundle 'cscope.vim'
+"NeoBundle 'errormarker.vim'
+"NeoBundle 'ervandew/screen'
+"NeoBundle 'ervandew/supertab'
+"NeoBundle 'file-line'
+"NeoBundle 'garbas/vim-snipmate'
+"NeoBundle 'gregsexton/gitv'
+"NeoBundle 'honza/vim-snippets'
+"NeoBundle 'ifdef.vim'
+"NeoBundle 'inccomplete'
+"NeoBundle 'jceb/vim-orgmode'
+"NeoBundle 'maxbrunsfeld/vim-yankstack'
 "NeoBundle 'mhinz/vim-startify'
+"NeoBundle 'scrooloose/syntastic'
+"NeoBundle 'sjl/gundo.vim.git'
+"NeoBundle 'spolu/dwm.vim.git'
+"NeoBundle 'toggle_words.vim'
+"NeoBundle 'tomtom/tlib_vim'
+"NeoBundle 'tpope/vim-git'
+"NeoBundle 'vim-scripts/Conque-GDB.git'
 
 " -----------------------------------------------------------------------------
 
@@ -256,6 +257,9 @@ set laststatus=2 " always put a status line in, even if there is only one window
 "set tags+=~/.vim/tags/hgex
 "set tags+=~/.vimtags
 set tags+=./tags
+
+" --- error format for java ---------------------------------------------------
+"set efm=\ %#[javac]\ %#%f:%l:\ %m,%+Z%p^,%+C%.%#,%-G%.%#
 
 " --- force filetype for some files -------------------------------------------
 autocmd BufNewFile,BufRead *.m set filetype=objc
