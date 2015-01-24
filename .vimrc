@@ -264,7 +264,11 @@ autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
 
 " --- higlight word under cursor ----------------------------------------------
-autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+augroup AutoHighlight
+    au!
+    au CursorHold * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+    setlocal updatetime=300
+augroup END
 
 " --- enable cursor line only for current buffer ------------------------------
 augroup CursorLine
