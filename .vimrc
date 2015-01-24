@@ -66,6 +66,7 @@ NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'a.vim'
 " very useful
+NeoBundle 'godlygeek/tabular'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'spacehi.vim'
