@@ -263,6 +263,9 @@ set tags+=./tags
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
 
+" --- higlight word under cursor ----------------------------------------------
+autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
 " --- enable cursor line only for current buffer ------------------------------
 augroup CursorLine
     au!
