@@ -885,10 +885,17 @@ let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
 let g:airline_paste_symbol = 'ρ'
 let g:airline_linecolumn_prefix = '¶'
-let g:airline_branch_prefix = ''
-let g:airline_readonly_symbol = ''
 if s:MSWindows
+    let g:airline_branch_prefix = 'b'
+    let g:airline_readonly_symbol = '-'
+
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
     let g:airline_symbols.linenr = ''
+else
+    let g:airline_branch_prefix = ''
+    let g:airline_readonly_symbol = ''
 endif
 
 let g:airline_enable_branch = 1
