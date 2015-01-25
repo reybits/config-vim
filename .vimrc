@@ -11,10 +11,11 @@ let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
 
 " on Windows use .vim instead vimfiles
 if s:MSWindows
-    set runtimepath=$VIM/.vim
+    set runtimepath=$HOME/.vim
+    set runtimepath+=$VIM/vimfiles
     set runtimepath+=$VIMRUNTIME
     set runtimepath+=$VIM/vimfiles/after
-    set runtimepath+=$VIM/after
+    set runtimepath+=$HOME/.vim/after
 endif
 
 if has('vim_starting')
@@ -43,15 +44,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " must have
 NeoBundle 'bling/vim-airline'
 if s:MSWindows
-    NeoBundle 'Shougo/vimproc.vim', {
-        \ 'build' : {
-        \     'windows' : 'tools\\update-dll-mingw',
-        \     'cygwin' : 'make -f make_cygwin.mak',
-        \     'mac' : 'make -f make_mac.mak',
-        \     'linux' : 'make',
-        \     'unix' : 'gmake',
-        \    },
-        \ }
+    "NeoBundle 'Shougo/vimproc.vim', {
+        "\ 'build' : {
+        "\     'windows' : 'tools\\update-dll-mingw',
+        "\     'cygwin' : 'make -f make_cygwin.mak',
+        "\     'mac' : 'make -f make_mac.mak',
+        "\     'linux' : 'make',
+        "\     'unix' : 'gmake',
+        "\    },
+        "\ }
     NeoBundle 'Shougo/neocomplete.vim'
 else
     NeoBundle 'Valloric/YouCompleteMe' , {
@@ -170,7 +171,11 @@ if has("gui_running")
     "colorscheme solarized
 
 elseif (&t_Co == 256 || &t_Co == 88)
-    colorscheme Tomorrow-Night
+    if s:MSWindows
+        colorscheme asmdev
+    else
+        colorscheme Tomorrow-Night
+    endif
 else
     "colorscheme asmdev
 endif
@@ -288,7 +293,12 @@ autocmd FileType help NoSpaceHi
 
 " --- show git diff in split window -------------------------------------------
 "autocmd FileType gitcommit DiffGitCached | wincmd p
-autocmd FileType gitcommit if ! &previewwindow && expand('%:t') !~# 'index' | :DiffGitCached | endif
+autocmd FileType gitcommit
+    \ if exists(':DiffGitCached') |
+    \   if ! &previewwindow && expand('%:t') !~# 'index' |
+    \     :DiffGitCached |
+    \   endif |
+    \ endif
 
 "autocmd! BufRead,BufWrite,BufWritePost,BufNewFile *.org
 "autocmd BufEnter *.org call org#SetOrgFileType()
@@ -901,4 +911,3 @@ endif
 let g:airline_enable_branch = 1
 let g:airline_enable_tagbar = 1
 " -----------------------------------------------------------------------------
-
