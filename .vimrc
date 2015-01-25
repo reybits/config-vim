@@ -11,7 +11,10 @@ let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
 
 " on Windows use .vim instead vimfiles
 if s:MSWindows
-    set runtimepath = $VIM/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/after
+    set runtimepath=$VIM/.vim
+    set runtimepath+=$VIMRUNTIME
+    set runtimepath+=$VIM/vimfiles/after
+    set runtimepath+=$VIM/after
 endif
 
 if has('vim_starting')
