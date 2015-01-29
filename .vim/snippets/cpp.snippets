@@ -1,0 +1,63 @@
+snippet Copy
+	/**********************************************\
+	*
+	*  Andrey A. Ugolnik
+	*  Tiny Orange
+	*  http://www.tinyorange.com
+	*  andrey@ugolnik.info
+	*
+	*  created: `strftime("%d.%m.%Y")`
+	*
+	\**********************************************/
+##
+## Class
+# class
+snippet cl
+	class ${1:`vim_snippets#Filename('$1', 'name')`}
+	{
+	public:
+		$1(${2});
+		virtual ~$1();
+
+	private:
+		${0:/* data */}
+	};
+# member function implementation
+snippet mfun
+	${4:void} ${1:`vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}(${3})
+	{
+		${0}
+	}
+# namespace
+snippet ns
+	namespace ${1:`vim_snippets#Filename('', 'my')`}
+	{
+		${0}
+	} /* namespace $1 */
+##
+## Iteration
+# for i
+snippet fori
+	for(int ${2:i} = 0; $2 < ${1:count}; $2${3:++})
+	{
+		${4}
+	}
+# foreach
+snippet fore
+	for(${1:auto} ${2:i} : ${3:container})
+	{
+		${4}
+	}
+# iterator
+snippet iter
+	for(${1:std::vector}<${2:type}>::${3:const_iterator} ${4:i} = ${5:container}.begin(); $4 != $5.end(); ++$4)
+	{
+		${6}
+	}
+
+# auto iterator
+snippet itera
+	for(auto ${1:i} = ${2:container}.begin(); $1 != $2.end(); ++$1)
+	{
+		${3:std::cout << *$1 << std::endl;}
+	}

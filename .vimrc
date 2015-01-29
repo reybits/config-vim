@@ -96,7 +96,6 @@ NeoBundle 'mhinz/vim-signify'
 "NeoBundle 'file-line'
 "NeoBundle 'garbas/vim-snipmate'
 "NeoBundle 'gregsexton/gitv'
-"NeoBundle 'honza/vim-snippets'
 "NeoBundle 'ifdef.vim'
 "NeoBundle 'inccomplete'
 "NeoBundle 'jceb/vim-orgmode'
@@ -639,7 +638,7 @@ let Grep_Skip_Dirs='.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-"let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
+let g:UltiSnipsSnippetsDir = '~/.vim/snippets'
 let g:UltiSnipsExpandTrigger = '<c-\>'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
