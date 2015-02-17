@@ -892,21 +892,21 @@ set efm^=\ %#[javac]\ %#%f:%l:\ %m
 " -----------------------------------------------------------------------------
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
-let g:airline_paste_symbol = 'ρ'
-let g:airline_linecolumn_prefix = '¶'
-if s:MSWindows
-    let g:airline_branch_prefix = 'b'
-    let g:airline_readonly_symbol = '-'
 
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.paste = 'ρ'
+if s:MSWindows || has("mac")
+    let g:airline_branch_prefix = 'b'
+    let g:airline_symbols.readonly = '-'
     let g:airline_symbols.linenr = ''
 else
     let g:airline_branch_prefix = ''
-    let g:airline_readonly_symbol = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = '¶'
 endif
 
-let g:airline_enable_branch = 1
-let g:airline_enable_tagbar = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 " -----------------------------------------------------------------------------
