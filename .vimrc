@@ -898,11 +898,11 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.paste = 'ρ'
 if s:MSWindows || has("mac")
-    let g:airline_branch_prefix = 'b'
+    let g:airline_symbols.branch = 'b'
     let g:airline_symbols.readonly = '-'
     let g:airline_symbols.linenr = ''
 else
-    let g:airline_branch_prefix = ''
+    let g:airline_symbols.branch = ''
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = '¶'
 endif
