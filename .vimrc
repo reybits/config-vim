@@ -572,7 +572,13 @@ endfunction
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
 " --- клавиши для компиляции --------------------------------------------------
-map <C-F9> <Esc>:make! linux<CR>
+if has("mac")
+    map <C-F9> <Esc>:make! osx<CR>
+elseif s:MSWindows
+    map <C-F9> <Esc>:make! win<CR>
+else
+    map <C-F9> <Esc>:make! linux<CR>
+endif
 
 " --- run program if supported in Makefile ------------------------------------
 map <C-F10> :!make run<CR>
@@ -585,7 +591,8 @@ map <C-F12> <Esc>:call MakeTags()<CR>
 command! Maketags call MakeTags()
 function! MakeTags()
     if has("gui_macvim")
-        !exuberant-ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
+        " ctags from brew
+        !/usr/local/bin/ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
     else
         !ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
     endif
