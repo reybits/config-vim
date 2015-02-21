@@ -43,21 +43,24 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " must have
 NeoBundle 'bling/vim-airline'
+NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build' : {
+    \     'windows' : 'tools\\update-dll-mingw',
+    \     'cygwin'  : 'make -f make_cygwin.mak',
+    \     'mac'     : 'make -f make_mac.mak',
+    \     'linux'   : 'make',
+    \     'unix'    : 'gmake',
+    \    },
+    \ }
 if s:MSWindows
-    "NeoBundle 'Shougo/vimproc.vim', {
-        "\ 'build' : {
-        "\     'windows' : 'tools\\update-dll-mingw',
-        "\     'cygwin' : 'make -f make_cygwin.mak',
-        "\     'mac' : 'make -f make_mac.mak',
-        "\     'linux' : 'make',
-        "\     'unix' : 'gmake',
-        "\    },
-        "\ }
     NeoBundle 'Shougo/neocomplete.vim'
 else
-    NeoBundle 'Valloric/YouCompleteMe' , {
+    NeoBundleLazy 'Valloric/YouCompleteMe' , {
+        \ 'autoload': {
+        \   'filetypes': ['c','cpp','objc','objcpp'],
+        \   },
         \ 'build' : {
-        \   'mac' : './install.sh --clang-completer --system-libclang',
+        \   'mac'  : './install.sh --clang-completer --system-libclang',
         \   'unix' : './install.sh --clang-completer --system-libclang',
         \   },
         \ }
@@ -113,12 +116,12 @@ NeoBundle 'mhinz/vim-signify'
 
 call neobundle#end()
 
-" --- enable detection, plugins and indenting in one step ---------------------
-filetype plugin indent on
-
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+
+" --- enable detection, plugins and indenting in one step ---------------------
+filetype plugin indent on
 
 " -----------------------------------------------------------------------------
 
@@ -444,8 +447,8 @@ nnoremap <left> <nop>
 nnoremap <right> <nop>
 
 " --- useful movement in wrap mode --------------------------------------------
-nnoremap j      gj
-nnoremap k      gk
+nnoremap j gj
+nnoremap k gk
 "nnoremap <down> gj
 "nnoremap <up>   gk
 
@@ -463,10 +466,10 @@ imap <S-Insert> <C-o><C-Insert>
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
 function! EnhanceCppSyntax()
-    syn match    cCustomParen    "(" contains=cParen contains=cCppParen
-    syn match    cCustomFunc     "\w\+\s*(" contains=cCustomParen
-    syn match    cppCustomScope    "::"
-    syn match    cppCustomClass    "\w\+\s*::" contains=cCustomScope
+    syn match cCustomParen   "(" contains=cParen contains=cCppParen
+    syn match cCustomFunc    "\w\+\s*(" contains=cCustomParen
+    syn match cppCustomScope "::"
+    syn match cppCustomClass "\w\+\s*::" contains=cCustomScope
     hi def link cCustomFunc  Function
 endfunction
 
@@ -636,7 +639,7 @@ map <F8> :emenu Encoding.<TAB>
 " -----------------------------------------------------------------------------
 "  common config
 " -----------------------------------------------------------------------------
-let Grep_Skip_Dirs='.git .svn CVS .sass-cache'
+let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 
 
@@ -645,7 +648,7 @@ let Grep_Skip_Dirs='.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-let g:UltiSnipsSnippetsDir = '~/.vim/snippets'
+let g:UltiSnipsSnippetsDir   = '~/.vim/snippets'
 let g:UltiSnipsExpandTrigger = '<c-\>'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
@@ -724,15 +727,15 @@ endif
 " -----------------------------------------------------------------------------
 " youcompleteme related config
 " -----------------------------------------------------------------------------
-let g:ycm_global_ycm_extra_conf = $HOME.'/.vim/ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_echo_current_diagnostic = 1
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_global_ycm_extra_conf               = $HOME.'/.vim/ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf                  = 0
+let g:ycm_complete_in_comments                = 1
+let g:ycm_complete_in_strings                 = 1
+let g:ycm_echo_current_diagnostic             = 1
+let g:ycm_enable_diagnostic_signs             = 1
+let g:ycm_enable_diagnostic_highlighting      = 0
 let g:ycm_collect_identifiers_from_tags_files = 0
-let g:ycm_min_num_identifier_candidate_chars = 0
+let g:ycm_min_num_identifier_candidate_chars  = 0
 " -----------------------------------------------------------------------------
 
 
@@ -741,11 +744,15 @@ let g:ycm_min_num_identifier_candidate_chars = 0
 " -----------------------------------------------------------------------------
 " syntastic related config
 " -----------------------------------------------------------------------------
-let g:syntastic_error_symbol = 'x'
-let g:syntastic_warning_symbol = 'w'
-let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes': ['c', 'cpp', 'objc', 'objcpp'],
-            \ 'passive_filetypes': [''] }
+let g:syntastic_error_symbol         = '✗'
+let g:syntastic_warning_symbol       = '⚠'
+let g:syntastic_style_error_symbol   = '⚡'
+let g:syntastic_style_warning_symbol = '⚡'
+let g:syntastic_mode_map             = {
+            \ 'mode' : 'passive',
+            \ 'active_filetypes' : ['c', 'cpp', 'objc', 'objcpp'],
+            \ 'passive_filetypes': ['']
+            \ }
 "let g:syntastic_c_include_dirs = [ 'include', '../include', '/usr/src/include/hgex' ]
 "let g:syntastic_cpp_include_dirs = [ 'include', '../include', '/usr/src/include/hgex' ]
 "let g:syntastic_cpp_remove_include_errors = 1
@@ -759,10 +766,10 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 " -----------------------------------------------------------------------------
 "  Task List related config
 " -----------------------------------------------------------------------------
-let g:tlTokenList = ['todo', 'fixme']
-let Tlist_Auto_Update = 1
-let Tlist_Close_On_Select = 1
-let Tlist_Exit_OnlyWindow = 1
+let g:tlTokenList                 = ['todo', 'fixme']
+let Tlist_Auto_Update             = 1
+let Tlist_Close_On_Select         = 1
+let Tlist_Exit_OnlyWindow         = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 " -----------------------------------------------------------------------------
 
@@ -772,10 +779,10 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 " NERDTree related config
 " -----------------------------------------------------------------------------
 let NERDTreeIgnore = ['.*\.o$', '.*\~$', '.*\.out$', '.*\.so$', '.*\.a$']
-let NERDTreeQuitOnOpen = 1          " Quit on opening files from the tree
+let NERDTreeQuitOnOpen          = 1 " Quit on opening files from the tree
 let NERDTreeHighlightCursorline = 1 " Highlight the selected entry in the tree
-let NERDTreeChDirMode = 2           " change working directory
-let NERDTreeMinimalUI = 1
+let NERDTreeChDirMode           = 2 " change working directory
+let NERDTreeMinimalUI           = 1
 " -----------------------------------------------------------------------------
 
 
@@ -783,7 +790,7 @@ let NERDTreeMinimalUI = 1
 " -----------------------------------------------------------------------------
 " manpageview related options
 " -----------------------------------------------------------------------------
-let g:manpageview_options = '-a'
+let g:manpageview_options      = '-a'
 let g:manpageview_multimanpage = 1
 " -----------------------------------------------------------------------------
 
@@ -792,9 +799,9 @@ let g:manpageview_multimanpage = 1
 " -----------------------------------------------------------------------------
 "  Session related config
 " -----------------------------------------------------------------------------
-let g:session_directory = '~/.vim/sessions'
-let g:session_autoload = 'yes'
-let g:session_autosave = 'yes'
+let g:session_directory       = '~/.vim/sessions'
+let g:session_autoload        = 'yes'
+let g:session_autosave        = 'yes'
 let g:session_default_to_last = 1
 let g:session_command_aliases = 1 " Session commands starts from 'Session'
 set sessionoptions-=help     " If you don't want help windows to be restored:
@@ -807,11 +814,11 @@ set sessionoptions-=options  " Don't persist options and mappings because it can
 " -----------------------------------------------------------------------------
 "  TagBar related config
 " -----------------------------------------------------------------------------
-let g:tagbar_left = 1
-let g:tagbar_width = 30
+let g:tagbar_left      = 1
+let g:tagbar_width     = 30
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-let g:tagbar_compact = 1
+let g:tagbar_compact   = 1
 " -----------------------------------------------------------------------------
 
 
@@ -819,7 +826,7 @@ let g:tagbar_compact = 1
 " -----------------------------------------------------------------------------
 " doxygentoolkit related config
 " -----------------------------------------------------------------------------
-let g:DoxygenToolkit_authorName="Andrey A. Ugolnik"
+let g:DoxygenToolkit_authorName = "Andrey A. Ugolnik"
 " -----------------------------------------------------------------------------
 
 
@@ -869,11 +876,11 @@ let g:ctrlp_mruf_relative = 1
 " -----------------------------------------------------------------------------
 "  YankRing related config
 " -----------------------------------------------------------------------------
-let g:yankring_paste_using_g = 0
+let g:yankring_paste_using_g       = 0
 let g:yankring_manage_numbered_reg = 1
-let g:yankring_history_dir = $HOME.'/.vim'
-let g:yankring_replace_n_pkey = '<m-p>'
-let g:yankring_replace_n_nkey = '<m-n>'
+let g:yankring_history_dir         = $HOME.'/.vim'
+let g:yankring_replace_n_pkey      = '<m-p>'
+let g:yankring_replace_n_nkey      = '<m-n>'
 " -----------------------------------------------------------------------------
 
 
