@@ -274,6 +274,9 @@ set tags+=./tags
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
 
+" --- add header for new file -------------------------------------------------
+au! BufNewFile *.c,*.cpp,*.h,*.m,*.mm 0r ~/.vim/snippets/header.cpp
+
 " --- higlight word under cursor ----------------------------------------------
 augroup AutoHighlight
     au!
