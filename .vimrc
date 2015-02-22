@@ -27,105 +27,56 @@ if has('vim_starting')
         lan mes en_EN.UTF-8
         set langmenu=en_EN.UTF-8
     endif
-
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
 filetype off " required before vundle or pathogen
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-
 " -----------------------------------------------------------------------------
-" neobundle managed plugins
-" -----------------------------------------------------------------------------
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" must have
-NeoBundle 'bling/vim-airline'
-NeoBundle 'Shougo/vimproc.vim', {
-    \ 'build' : {
-    \     'windows' : 'tools\\update-dll-mingw',
-    \     'cygwin'  : 'make -f make_cygwin.mak',
-    \     'mac'     : 'make -f make_mac.mak',
-    \     'linux'   : 'make',
-    \     'unix'    : 'gmake',
-    \    },
-    \ }
-if s:MSWindows
-    NeoBundle 'Shougo/neocomplete.vim'
-else
-    NeoBundleLazy 'Valloric/YouCompleteMe', {
-        \ 'autoload': {
-        \   'filetypes': ['c','cpp','objc','objcpp'],
-        \   },
-        \ 'build' : {
-        \   'mac'  : './install.sh --clang-completer --system-libclang',
-        \   'unix' : './install.sh --clang-completer --system-libclang',
-        \   },
-        \ }
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
 endif
 
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'a.vim'
+call plug#begin('~/.vim/bundle')
+
+" must have
+Plug 'bling/vim-airline'
+Plug 'Shougo/vimproc.vim'
+Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'kien/ctrlp.vim'
+if s:MSWindows
+    Plug 'Shougo/neocomplete.vim'
+else
+    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
+endif
+Plug 'honza/vim-snippets', { 'on': [] }
+Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'scrooloose/nerdcommenter'
 " very useful
-NeoBundle 'emezeske/manpageview.git'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mhinz/vim-signify'
-NeoBundle 'renamer.vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'spacehi.vim'
-NeoBundle 'TaskList.vim'
-NeoBundleLazy 'tpope/vim-fugitive', {
-    \ 'autoload': {
-    \   'augroup': 'fugitive',
-    \   'commands': [
-    \     'Git', 'Gdiff', 'Gstatus', 'Gwrite', 'Gcd', 'Glcd',
-    \     'Ggrep', 'Glog', 'Gcommit', 'Gblame', 'Gbrowse'
-    \   ]
-    \ }}
-NeoBundle 'xolox/vim-misc'
-NeoBundle 'xolox/vim-session'
-"NeoBundle 'mtth/scratch.vim'
-"NeoBundle 'DoxygenToolkit.vim'
-"NeoBundle 'MarcWeber/vim-addon-mw-utils'
-"NeoBundle 'Rip-Rip/clang_complete.git'
-"NeoBundle 'TwitVim.git'
-"NeoBundle 'YankRing.vim'
-"NeoBundle 'airblade/vim-gitgutter.git'
-"NeoBundle 'bufexplorer.zip'
-"NeoBundle 'calendar.vim'
-"NeoBundle 'cscope.vim'
-"NeoBundle 'errormarker.vim'
-"NeoBundle 'ervandew/screen'
-"NeoBundle 'ervandew/supertab'
-"NeoBundle 'file-line'
-"NeoBundle 'garbas/vim-snipmate'
-"NeoBundle 'gregsexton/gitv'
-"NeoBundle 'ifdef.vim'
-"NeoBundle 'inccomplete'
-"NeoBundle 'jceb/vim-orgmode'
-"NeoBundle 'maxbrunsfeld/vim-yankstack'
-"NeoBundle 'mhinz/vim-startify'
-"NeoBundle 'sjl/gundo.vim.git'
-"NeoBundle 'spolu/dwm.vim.git'
-"NeoBundle 'toggle_words.vim'
-"NeoBundle 'tomtom/tlib_vim'
-"NeoBundle 'tpope/vim-git'
-"NeoBundle 'vim-scripts/Conque-GDB.git'
+Plug 'https://github.com/emezeske/manpageview.git'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'mhinz/vim-signify'
+Plug 'renamer.vim'
+Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'spacehi.vim'
+Plug 'TaskList.vim'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tpope/vim-fugitive'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+"Plug 'mtth/scratch.vim'
+"Plug 'DoxygenToolkit.vim'
 
+call plug#end()
+
+augroup load_us_ycm
+    autocmd!
+    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets', 'YouCompleteMe')
+                \| call youcompleteme#Enable() | autocmd! load_us_ycm
+augroup END
 " -----------------------------------------------------------------------------
-
-call neobundle#end()
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
 
 " --- enable detection, plugins and indenting in one step ---------------------
 filetype plugin indent on

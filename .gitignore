@@ -6,3 +6,5 @@
 .vim/viminfo*
 .vim/viminfz.tmp
 .vim/ycm_extra_conf.pyc
+.vim/autoload/plug.vim
+.vim/.netrwhist
