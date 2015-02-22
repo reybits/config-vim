@@ -55,7 +55,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 if s:MSWindows
     NeoBundle 'Shougo/neocomplete.vim'
 else
-    NeoBundleLazy 'Valloric/YouCompleteMe' , {
+    NeoBundleLazy 'Valloric/YouCompleteMe', {
         \ 'autoload': {
         \   'filetypes': ['c','cpp','objc','objcpp'],
         \   },
@@ -73,16 +73,24 @@ NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'a.vim'
 " very useful
+NeoBundle 'emezeske/manpageview.git'
 NeoBundle 'godlygeek/tabular'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'mhinz/vim-signify'
+NeoBundle 'renamer.vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'spacehi.vim'
+NeoBundle 'TaskList.vim'
+NeoBundleLazy 'tpope/vim-fugitive', {
+    \ 'autoload': {
+    \   'augroup': 'fugitive',
+    \   'commands': [
+    \     'Git', 'Gdiff', 'Gstatus', 'Gwrite', 'Gcd', 'Glcd',
+    \     'Ggrep', 'Glog', 'Gcommit', 'Gblame', 'Gbrowse'
+    \   ]
+    \ }}
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
-NeoBundle 'spacehi.vim'
-NeoBundle 'renamer.vim'
-NeoBundle 'TaskList.vim'
-NeoBundle 'emezeske/manpageview.git'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'mhinz/vim-signify'
 "NeoBundle 'mtth/scratch.vim'
 "NeoBundle 'DoxygenToolkit.vim'
 "NeoBundle 'MarcWeber/vim-addon-mw-utils'
@@ -104,7 +112,6 @@ NeoBundle 'mhinz/vim-signify'
 "NeoBundle 'jceb/vim-orgmode'
 "NeoBundle 'maxbrunsfeld/vim-yankstack'
 "NeoBundle 'mhinz/vim-startify'
-"NeoBundle 'scrooloose/syntastic'
 "NeoBundle 'sjl/gundo.vim.git'
 "NeoBundle 'spolu/dwm.vim.git'
 "NeoBundle 'toggle_words.vim'
