@@ -765,6 +765,7 @@ let g:session_autoload        = 'yes'
 let g:session_autosave        = 'yes'
 let g:session_default_to_last = 1
 let g:session_command_aliases = 1 " Session commands starts from 'Session'
+let g:session_persist_colors  = 0 " Prevent save the color scheme and the ‘background’ option
 set sessionoptions-=help     " If you don't want help windows to be restored:
 set sessionoptions-=options  " Don't persist options and mappings because it can corrupt sessions.
 "set sessionoptions-=tabpages " If you only want to save the current tab page.
