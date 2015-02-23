@@ -54,7 +54,7 @@ Plug 'honza/vim-snippets', { 'on': [] }
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
 " very useful
-Plug 'https://github.com/emezeske/manpageview.git'
+Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
@@ -270,13 +270,10 @@ autocmd FileType gitcommit
 "autocmd BufEnter *.org call org#SetOrgFileType()
 
 " --- switch to us keyboard layout when insert mode leaved --------------------
-autocmd InsertLeave * call SetUsLayout()
-
-function! SetUsLayout()
-    if has('unix') && &term == 'builtin_gui'
-        silent !qdbus ru.gentoo.KbddService /ru/gentoo/KbddService ru.gentoo.kbdd.set_layout 0 >/dev/null
-    endif
-endfunction
+autocmd InsertLeave *
+    \ if has('unix') && &term == 'builtin_gui' |
+    \   silent !qdbus ru.gentoo.KbddService /ru/gentoo/KbddService ru.gentoo.kbdd.set_layout 0 >/dev/null |
+    \ endif
 
 " --- always jump to the last cursor position "  ------------------------------
 autocmd BufReadPost *
