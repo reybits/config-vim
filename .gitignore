@@ -8,3 +8,4 @@
 .vim/ycm_extra_conf.pyc
 .vim/autoload/plug.vim
 .vim/.netrwhist
+.vim/.VimballRecord
