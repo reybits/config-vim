@@ -71,10 +71,15 @@ Plug 'xolox/vim-session'
 
 call plug#end()
 
-augroup load_us_ycm
+augroup load_snippets
     autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets', 'YouCompleteMe')
-                \| call youcompleteme#Enable() | autocmd! load_us_ycm
+    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
+                \| autocmd! load_snippets
+augroup END
+augroup load_ycm
+    autocmd!
+    autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm call plug#load('YouCompleteMe')
+                \| call youcompleteme#Enable() | autocmd! load_ycm
 augroup END
 " -----------------------------------------------------------------------------
 
