@@ -259,12 +259,12 @@ autocmd FileType help NoSpaceHi
 
 " --- show git diff in split window -------------------------------------------
 "autocmd FileType gitcommit DiffGitCached | wincmd p
-autocmd FileType gitcommit
-    \ if exists(':DiffGitCached') |
-    \   if ! &previewwindow && expand('%:t') !~# 'index' |
-    \     :DiffGitCached |
-    \   endif |
-    \ endif
+"autocmd FileType gitcommit
+    "\ if exists(':DiffGitCached') |
+    "\   if ! &previewwindow && expand('%:t') !~# 'index' |
+    "\     :DiffGitCached |
+    "\   endif |
+    "\ endif
 
 "autocmd! BufRead,BufWrite,BufWritePost,BufNewFile *.org
 "autocmd BufEnter *.org call org#SetOrgFileType()
