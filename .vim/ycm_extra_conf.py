@@ -34,6 +34,8 @@ import ycm_core
 import subprocess
 xcode_cpp11headers = subprocess.Popen("xcode-select -p", stdout = subprocess.PIPE, shell=True).communicate()[0].rstrip('\n') + '/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
 
+users_home = os.environ['HOME'];
+
 # These are the compilation flags that will be used in case there's no
 # compilation database set (by default, one is not set).
 # CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
@@ -74,6 +76,12 @@ flags = [
 '/Users/andrey/projects/hgex/include',
 '-I',
 '/home/andrey/projects/libs/hgex/include',
+# android support
+'-I',
+users_home + '/tools/android-ndk/platforms/android-21/arch-arm/usr/include',
+'-I',
+users_home + '/tools/android-ndk/sources/android/native_app_glue',
+# xcode support
 '-isystem',
 xcode_cpp11headers,
 #'-I',
