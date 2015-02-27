@@ -3,9 +3,10 @@
 .vim/sessions/
 .vim/tags/
 .vim/undofiles/
+.vim/.VimballRecord
+.vim/.netrwhist
+.vim/autoload/plug.vim
+.vim/doc/tags
 .vim/viminfo*
 .vim/viminfz.tmp
 .vim/ycm_extra_conf.pyc
-.vim/autoload/plug.vim
-.vim/.netrwhist
-.vim/.VimballRecord
