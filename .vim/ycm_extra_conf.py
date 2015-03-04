@@ -62,38 +62,14 @@ flags = [
 # For a C project, you would set this to 'c' instead of 'c++'.
 '-x',
 'c++',
-#'-isystem',
-#'../BoostParts',
-#'-isystem',
-## This path will only work on OS X, but extra paths that don't exist are not
-## harmful
-#'/System/Library/Frameworks/Python.framework/Headers',
-#'-isystem',
-#'../llvm/include',
-#'-isystem',
-#'../llvm/tools/clang/include',
-'-I',
-'/Users/andrey/projects/hgex/include',
-'-I',
-'/home/andrey/projects/libs/hgex/include',
+# Extra paths that don't exist are not harmful
+'-I', '/Users/andrey/projects/hgex/include',
+'-I', '/home/andrey/projects/libs/hgex/include',
 # android support
-'-I',
-users_home + '/tools/android-ndk/platforms/android-21/arch-arm/usr/include',
-'-I',
-users_home + '/tools/android-ndk/sources/android/native_app_glue',
+'-I', users_home + '/tools/android-ndk/platforms/android-21/arch-arm/usr/include',
+'-I', users_home + '/tools/android-ndk/sources/android/native_app_glue',
 # xcode support
-'-isystem',
-xcode_cpp11headers,
-#'-I',
-#'./ClangCompleter',
-#'-isystem',
-#'./tests/gmock/gtest',
-#'-isystem',
-#'./tests/gmock/gtest/include',
-#'-isystem',
-#'./tests/gmock',
-#'-isystem',
-#'./tests/gmock/include'
+'-isystem', xcode_cpp11headers,
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
