@@ -50,7 +50,6 @@ if s:MSWindows
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
 endif
-Plug 'honza/vim-snippets', { 'on': [] }
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
 " very useful
@@ -75,7 +74,7 @@ call plug#end()
 
 augroup load_snippets
     autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
+    autocmd InsertEnter * call plug#load('ultisnips')
                 \| autocmd! load_snippets
 augroup END
 augroup load_ycm
@@ -619,8 +618,8 @@ let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-let g:UltiSnipsSnippetsDir   = '~/.vim/snippets'
-let g:UltiSnipsExpandTrigger = '<c-\>'
+let g:UltiSnipsExpandTrigger      = '<c-\>'
+let g:UltiSnipsEnableSnipMate     = 1
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " -----------------------------------------------------------------------------
@@ -707,6 +706,7 @@ let g:ycm_enable_diagnostic_signs             = 1
 let g:ycm_enable_diagnostic_highlighting      = 0
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_min_num_identifier_candidate_chars  = 0
+let g:ycm_use_ultisnips_completer             = 1
 " -----------------------------------------------------------------------------
 
 
