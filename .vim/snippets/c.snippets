@@ -16,7 +16,7 @@ snippet mainn "main() {}"
 ##
 ## Preprocessor
 snippet inc "#include "filename.h""
-	#include "${1:name.h}"
+	#include "${1:`expand("%:t:r")`.h}"
 snippet Inc "#include <stdio.h>"
 	#include <${1:stdio.h}>
 snippet ndef "#ifndef #define #endif"
@@ -38,7 +38,7 @@ snippet guard "#pragma once"
 
 	${0}
 snippet once "#ifndef UNTITLED_H"
-	#ifndef ${1:UNTITLED_H}
+	#ifndef ${1:`toupper(expand("%:t:r")."_H_".(localtime() * 31421 + 6927) % 0x10000)`}
 	#define $1
 
 	${0}
