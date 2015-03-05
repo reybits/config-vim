@@ -9,8 +9,11 @@ snippet Copy
 	*  created: `strftime("%d.%m.%Y")`
 	*
 	\**********************************************/
-##
-## Class
+# header guard
+snippet guard
+	#pragma once
+
+	${0}
 # class
 snippet cl
 	class ${1:`vim_snippets#Filename('$1', 'name')`}

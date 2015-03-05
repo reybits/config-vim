@@ -557,6 +557,8 @@ map <C-F10> :!make run<CR>
 " --- switch header / release -------------------------------------------------
 "map <F11> <Esc>:A<CR>
 map <F11> <Esc>:FSHere<CR>
+au! BufEnter *.cpp let b:fswitchdst = 'h,hpp'
+au! BufEnter *.h let b:fswitchdst = 'cpp'
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:call MakeTags()<CR>
