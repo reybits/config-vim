@@ -70,18 +70,18 @@ snippet mu
 ## Class
 # class
 snippet cl "class {}"
-	class ${1:Class}
+	class ${1:c`expand("%:t:r")`}
 	{
 	public:
 		$1(${2});
 		~$1();
 
 	private:
-		${0:/* data */}
+		${0}
 	};
 # member function implementation
 snippet mfun "Class::fn() {}"
-	${4:void} ${1:Class}::${2:memberFunction}(${3})
+	${4:void} ${1:c`expand("%:t:r")`}::${2:memberFunction}(${3})
 	{
 		${0}
 	}
