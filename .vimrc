@@ -620,6 +620,7 @@ let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 let g:UltiSnipsExpandTrigger      = '<c-\>'
 let g:UltiSnipsEnableSnipMate     = 1
+let g:UltiSnipsSnippetsDir        = $HOME.'/.vim/snippets'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " -----------------------------------------------------------------------------
