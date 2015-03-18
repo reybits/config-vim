@@ -67,6 +67,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
 Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'chrisbra/vim-diff-enhanced'
 "Plug 'mtth/scratch.vim'
 "Plug 'DoxygenToolkit.vim'
 
