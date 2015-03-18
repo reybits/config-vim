@@ -43,7 +43,7 @@ call plug#begin('~/.vim/bundle')
 " must have
 Plug 'bling/vim-airline'
 Plug 'Shougo/vimproc.vim'
-"Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'kien/ctrlp.vim'
 if s:MSWindows
     Plug 'Shougo/neocomplete.vim'
@@ -65,9 +65,8 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
-Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
-Plug 'chrisbra/vim-diff-enhanced'
+"Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
+"Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
 "Plug 'mtth/scratch.vim'
 "Plug 'DoxygenToolkit.vim'
 
@@ -555,10 +554,11 @@ endif
 map <C-F10> :!make run<CR>
 
 " --- switch header / release -------------------------------------------------
-"map <F11> <Esc>:A<CR>
-map <F11> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'h,hpp'
-au! BufEnter *.h let b:fswitchdst = 'cpp'
+map <F11> <Esc>:A<CR>
+"map <F11> <Esc>:FSHere<CR>
+"au! BufEnter *.cpp let b:fswitchdst = 'h,hpp'
+"au! BufEnter *.h let b:fswitchdst = 'cpp,mm,m'
+"au! BufEnter *.m,*.mm let b:fswitchdst = 'h'
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:call MakeTags()<CR>
