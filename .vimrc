@@ -713,6 +713,22 @@ let g:ycm_use_ultisnips_completer             = 1
 
 
 
+" -----------------------------------------------------------------------------
+" A.vim related config
+" -----------------------------------------------------------------------------
+let g:alternateExtensions_cpp = "h,H,hpp,HPP"
+let g:alternateExtensions_CPP = "h,H,hpp,HPP"
+let g:alternateExtensions_mm  = "h"
+let g:alternateExtensions_m   = "h"
+let g:alternateExtensions_c   = "h,H"
+let g:alternateExtensions_C   = "h,H"
+let g:alternateExtensions_h   = "cpp,mm,c,m,CPP,C"
+let g:alternateExtensions_H   = "cpp,mm,c,m,CPP,C"
+let g:alternateExtensions_hpp = "cpp,mm,c,CPP"
+let g:alternateExtensions_HPP = "cpp,mm,c,CPP"
+" -----------------------------------------------------------------------------
+
+
 
 " -----------------------------------------------------------------------------
 " syntastic related config
