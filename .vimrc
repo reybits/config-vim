@@ -65,6 +65,9 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
+
+"Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
 "Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
 "Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
 "Plug 'mtth/scratch.vim'
