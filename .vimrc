@@ -7,7 +7,7 @@ scriptencoding utf-8
 ""
 "" ----------------------------------------------------------------------------
 
-let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
+let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64') + has('win32unix') + has('win64unix')
 
 " on Windows use .vim instead vimfiles
 if s:MSWindows
@@ -80,11 +80,16 @@ augroup load_snippets
     autocmd InsertEnter * call plug#load('ultisnips')
                 \| autocmd! load_snippets
 augroup END
+
+if s:MSWindows
+else
 augroup load_ycm
     autocmd!
     autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm call plug#load('YouCompleteMe')
                 \| call youcompleteme#Enable() | autocmd! load_ycm
 augroup END
+endif
+
 " -----------------------------------------------------------------------------
 
 " --- enable detection, plugins and indenting in one step ---------------------
@@ -116,10 +121,8 @@ if has("gui_running")
     " Русский текст для теста начертания символов
     if has("gui_macvim")
         set guifont=Menlo:h18
-        colorscheme Tomorrow-Night
     elseif s:MSWindows
         set guifont=lucida_console:h14:cRUSSIAN
-        colorscheme asmdev
     else
         "set guifont=Pragmata\ 13
         set guifont=Droid\ Sans\ Mono\ 12
@@ -127,8 +130,8 @@ if has("gui_running")
         "set guifont=Inconsolata\ 13
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
         "set guifont=Monospace\ 9
-        colorscheme Tomorrow-Night
     endif
+    colorscheme Tomorrow-Night
 
     " nice theme collection available at
     " http://vimcolorschemetest.googlecode.com/svn/html/index-c.html
@@ -140,13 +143,9 @@ if has("gui_running")
     "colorscheme solarized
 
 elseif (&t_Co == 256 || &t_Co == 88)
-    if s:MSWindows
-        colorscheme asmdev
-    else
-        colorscheme Tomorrow-Night
-    endif
+    colorscheme Tomorrow-Night
 else
-    "colorscheme asmdev
+    colorscheme asmdev
 endif
 
 syntax on               " allow syntax highlighting
