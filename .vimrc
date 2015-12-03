@@ -241,10 +241,10 @@ autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
 
 " --- add header for new file -------------------------------------------------
-autocmd BufNewFile *.c,*.cpp,*.h,*.m,*.mm
-    \ if !empty(glob('~/.vim/snippets/header.cpp')) |
-    \   0r ~/.vim/snippets/header.cpp |
-    \ endif
+"autocmd BufNewFile *.c,*.cpp,*.h,*.m,*.mm
+    "\ if !empty(glob('~/.vim/snippets/header.cpp')) |
+    "\   0r ~/.vim/snippets/header.cpp |
+    "\ endif
 
 " --- higlight word under cursor ----------------------------------------------
 augroup AutoHighlight
