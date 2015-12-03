@@ -42,10 +42,10 @@ call plug#begin('~/.vim/bundle')
 
 " must have
 Plug 'bling/vim-airline'
-Plug 'Shougo/vimproc.vim'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'kien/ctrlp.vim'
 if s:MSWindows
+    Plug 'Shougo/vimproc.vim'
     Plug 'Shougo/neocomplete.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
@@ -66,6 +66,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
+Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
 "Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
 "Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
@@ -239,12 +240,6 @@ set tags+=./tags
 " --- force filetype for some files -------------------------------------------
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
-
-" --- add header for new file -------------------------------------------------
-"autocmd BufNewFile *.c,*.cpp,*.h,*.m,*.mm
-    "\ if !empty(glob('~/.vim/snippets/header.cpp')) |
-    "\   0r ~/.vim/snippets/header.cpp |
-    "\ endif
 
 " --- higlight word under cursor ----------------------------------------------
 augroup AutoHighlight
