@@ -410,6 +410,10 @@ nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
 
+" --- navigate in command mode ------------------------------------------------
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " --- useful movement in wrap mode --------------------------------------------
 nnoremap j gj
 nnoremap k gk
