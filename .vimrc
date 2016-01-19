@@ -849,7 +849,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 "unlet g:ctrlp_custom_ignore
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn|build)$|\v[\/](gen|bin|obj|build|libs|assets)$',
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$|\v[\/](gen|bin|obj|build|libs|assets|tmp|temp)$',
             \ 'file': '\v\.(o|o\.d|so|dll|exe)$@<!$'
             \ }
 let g:ctrlp_mruf_exclude = '/tmp/.*\|/temp/.*' " MacOSX/Linux
