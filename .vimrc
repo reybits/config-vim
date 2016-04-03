@@ -45,13 +45,14 @@ Plug 'bling/vim-airline'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'kien/ctrlp.vim'
 if s:MSWindows
-    Plug 'Shougo/vimproc.vim'
     Plug 'Shougo/neocomplete.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+"Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
 " very useful
 Plug 'tpope/vim-dispatch'
 Plug 'andreyugolnik/manpageview'
@@ -473,7 +474,11 @@ function! QFixToggle(forced)
     if exists("g:qfix_win") && a:forced == 0
         cclose
     else
-        execute "copen " . g:jah_Quickfix_Win_Height
+        if !exists(":Copen")
+            execute "copen " . g:jah_Quickfix_Win_Height
+        else
+            execute "Copen!"
+        endif
     endif
 endfunction
 
@@ -553,17 +558,28 @@ endfunction
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
-" --- клавиши для компиляции --------------------------------------------------
-if has("mac")
-    map <C-F9> <Esc>:make! osx<CR>
-elseif s:MSWindows
-    map <C-F9> <Esc>:make! win<CR>
-else
-    map <C-F9> <Esc>:make! linux<CR>
-endif
+" --- Makefile support --------------------------------------------------------
+if !exists(":Make")
+    if has("mac")
+        map <C-F9> <Esc>:make! osx<CR>
+    elseif s:MSWindows
+        map <C-F9> <Esc>:make! win<CR>
+    else
+        map <C-F9> <Esc>:make! linux<CR>
+    endif
 
-" --- run program if supported in Makefile ------------------------------------
-map <C-F10> :!make run<CR>
+    map <C-F10> :make! run<CR>
+else
+    if has("mac")
+        map <C-F9> <Esc>:Make! osx<CR>
+    elseif s:MSWindows
+        map <C-F9> <Esc>:Make! win<CR>
+    else
+        map <C-F9> <Esc>:Make! linux<CR>
+    endif
+
+    map <C-F10> :Make! run<CR>
+endif
 
 " --- switch header / release -------------------------------------------------
 map <F11> <Esc>:A<CR>
@@ -573,9 +589,9 @@ map <F11> <Esc>:A<CR>
 "au! BufEnter *.m,*.mm let b:fswitchdst = 'h'
 
 " --- create tags -------------------------------------------------------------
-map <C-F12> <Esc>:call MakeTags()<CR>
-command! Maketags call MakeTags()
-function! MakeTags()
+map <C-F12> <Esc>:MakeTags<CR>
+command! MakeTags call MakeTagsFunction()
+function! MakeTagsFunction()
     if has("gui_macvim")
         " ctags from brew
         !/usr/local/bin/ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
