@@ -45,16 +45,14 @@ Plug 'bling/vim-airline'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'kien/ctrlp.vim'
 if s:MSWindows
+    Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
 " very useful
-Plug 'tpope/vim-dispatch'
 Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
@@ -70,6 +68,8 @@ Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
+"Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
+"Plug 'tpope/vim-dispatch'
 "Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
 "Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
 "Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
@@ -559,27 +559,15 @@ endfunction
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
 " --- Makefile support --------------------------------------------------------
-if !exists(":Make")
-    if has("mac")
-        map <C-F9> <Esc>:make! osx<CR>
-    elseif s:MSWindows
-        map <C-F9> <Esc>:make! win<CR>
-    else
-        map <C-F9> <Esc>:make! linux<CR>
-    endif
-
-    map <C-F10> :make! run<CR>
+if has("mac")
+    map <C-F9> <Esc>:make! osx<CR>
+elseif s:MSWindows
+    map <C-F9> <Esc>:make! win<CR>
 else
-    if has("mac")
-        map <C-F9> <Esc>:Make! osx<CR>
-    elseif s:MSWindows
-        map <C-F9> <Esc>:Make! win<CR>
-    else
-        map <C-F9> <Esc>:Make! linux<CR>
-    endif
-
-    map <C-F10> :Make! run<CR>
+    map <C-F9> <Esc>:make! linux<CR>
 endif
+
+map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
 map <F11> <Esc>:A<CR>
@@ -607,11 +595,6 @@ endfunction
 " map <S-Tab> :s/^	//<CR>
 
 " --- next / previous buffer by Ctrl+Tab / Ctrl+Shift+Tab ---------------------
-set <F13>=[27;5;9~
-set <F14>=[27;6;9~
-nmap <F13> <Esc>:bn<CR>
-nmap <F14> <Esc>:bp<CR>
-" works in Gvim
 map <C-Tab>   <Esc>:bn<CR>
 map <C-S-Tab> <Esc>:bp<CR>
 
