@@ -45,7 +45,7 @@ Plug 'bling/vim-airline'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'kien/ctrlp.vim'
 if s:MSWindows
-    Plug 'Shougo/vimproc.vim'
+    Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
@@ -68,6 +68,8 @@ Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
+"Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
+"Plug 'tpope/vim-dispatch'
 "Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
 "Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
 "Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
@@ -86,7 +88,7 @@ if s:MSWindows
 else
 augroup load_ycm
     autocmd!
-    autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm call plug#load('YouCompleteMe')
+    autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
                 \| call youcompleteme#Enable() | autocmd! load_ycm
 augroup END
 endif
@@ -240,6 +242,7 @@ set tags+=./tags
 " --- force filetype for some files -------------------------------------------
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
+autocmd BufNewFile,BufRead *.ino set filetype=cpp
 
 " --- higlight word under cursor ----------------------------------------------
 augroup AutoHighlight
@@ -392,6 +395,9 @@ endfunction
 "nnoremap <Space> za
 "vnoremap <Space> za
 
+" --- use jk as <Esc> ---------------------------------------------------------
+inoremap jk <Esc>
+
 " --- clean trailing whitespace -----------------------------------------------
 nmap <silent> <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 
@@ -434,6 +440,12 @@ inoremap <A-j> <Esc>:cn<CR>zvzz:cc<CR>a
 nnoremap <A-k>      :cp<CR>zvzz:cc<CR>
 inoremap <A-k> <Esc>:cp<CR>zvzz:cc<CR>a
 
+" --- simplified window navigation --------------------------------------------
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
 " --- общение с буфером обмена X-сервера --------------------------------------
 vmap <C-c> "+y
 nmap <S-Insert> "+p
@@ -470,7 +482,11 @@ function! QFixToggle(forced)
     if exists("g:qfix_win") && a:forced == 0
         cclose
     else
-        execute "copen " . g:jah_Quickfix_Win_Height
+        if !exists(":Copen")
+            execute "copen " . g:jah_Quickfix_Win_Height
+        else
+            execute "Copen!"
+        endif
     endif
 endfunction
 
@@ -487,8 +503,8 @@ map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
 command! GrepWordInFiles :call s:GrepInFiles()
 function! s:GrepInFiles()
     let s:ext = expand("%:e")
-    if s:ext == "cpp" || s:ext == "c" || s:ext == "h"
-        let s:mask = "**/*.h **/*.c **/*.cpp"
+    if s:ext == "cpp" || s:ext == "c" || s:ext == "h" || s:ext == "ino"
+        let s:mask = "**/*.h **/*.c **/*.cpp **/*.ino"
     else
         let s:mask = "**/*" . (s:ext == "" ? "" : ".") . s:ext
     endif
@@ -550,7 +566,7 @@ endfunction
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
-" --- клавиши для компиляции --------------------------------------------------
+" --- Makefile support --------------------------------------------------------
 if has("mac")
     map <C-F9> <Esc>:make! osx<CR>
 elseif s:MSWindows
@@ -559,8 +575,7 @@ else
     map <C-F9> <Esc>:make! linux<CR>
 endif
 
-" --- run program if supported in Makefile ------------------------------------
-map <C-F10> :!make run<CR>
+map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
 map <F11> <Esc>:A<CR>
@@ -570,9 +585,9 @@ map <F11> <Esc>:A<CR>
 "au! BufEnter *.m,*.mm let b:fswitchdst = 'h'
 
 " --- create tags -------------------------------------------------------------
-map <C-F12> <Esc>:call MakeTags()<CR>
-command! Maketags call MakeTags()
-function! MakeTags()
+map <C-F12> <Esc>:MakeTags<CR>
+command! MakeTags call MakeTagsFunction()
+function! MakeTagsFunction()
     if has("gui_macvim")
         " ctags from brew
         !/usr/local/bin/ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
@@ -588,11 +603,6 @@ endfunction
 " map <S-Tab> :s/^	//<CR>
 
 " --- next / previous buffer by Ctrl+Tab / Ctrl+Shift+Tab ---------------------
-set <F13>=[27;5;9~
-set <F14>=[27;6;9~
-nmap <F13> <Esc>:bn<CR>
-nmap <F14> <Esc>:bp<CR>
-" works in Gvim
 map <C-Tab>   <Esc>:bn<CR>
 map <C-S-Tab> <Esc>:bp<CR>
 
@@ -731,10 +741,10 @@ let g:alternateExtensions_mm  = "h"
 let g:alternateExtensions_m   = "h"
 let g:alternateExtensions_c   = "h,H"
 let g:alternateExtensions_C   = "h,H"
-let g:alternateExtensions_h   = "cpp,mm,c,m,CPP,C"
-let g:alternateExtensions_H   = "cpp,mm,c,m,CPP,C"
-let g:alternateExtensions_hpp = "cpp,mm,c,CPP"
-let g:alternateExtensions_HPP = "cpp,mm,c,CPP"
+let g:alternateExtensions_h   = "cpp,mm,c,m,ino,CPP,C,INO"
+let g:alternateExtensions_H   = "cpp,mm,c,m,ino,CPP,C,INO"
+let g:alternateExtensions_hpp = "cpp,mm,c,ino,CPP,INO"
+let g:alternateExtensions_HPP = "cpp,mm,c,ino,CPP,INO"
 " -----------------------------------------------------------------------------
 
 
@@ -747,7 +757,7 @@ let g:syntastic_warning_symbol       = '⚠'
 let g:syntastic_style_error_symbol   = '⚡'
 let g:syntastic_style_warning_symbol = '⚡'
 let g:syntastic_mode_map             = {
-            \ 'mode' : 'passive',
+            \ 'mode' : 'active',
             \ 'active_filetypes' : ['c', 'cpp', 'objc', 'objcpp'],
             \ 'passive_filetypes': ['']
             \ }
@@ -756,7 +766,24 @@ let g:syntastic_mode_map             = {
 "let g:syntastic_cpp_remove_include_errors = 1
 "let g:syntastic_cpp_compiler = 'clang++'
 "let g:syntastic_cpp_config_file = '/home/andrey/.config/syntastic_cpp_config'
-"" -----------------------------------------------------------------------------
+
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
+let g:syntastic_tex_checkers = ['lacheck']
+let g:syntastic_c_compiler_options = "-std=gnu11
+            \  -Wall -Wextra -Wshadow -Wpointer-arith
+            \  -Wcast-align -Wwrite-strings -Wmissing-prototypes
+            \  -Wmissing-declarations -Wredundant-decls -Wnested-externs
+            \  -Winline -Wno-long-long -Wuninitialized -Wconversion
+            \  -Wstrict-prototypes -pedantic"
+let g:syntastic_stl_format = '[=> ln:%F (%t)]'
+let g:syntastic_aggregate_errors=1
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=2
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_c_no_include_search = 1
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_check_header = 1
+" -----------------------------------------------------------------------------
 
 
 
