@@ -52,6 +52,7 @@ else
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
+Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
 " very useful
 Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
@@ -397,6 +398,9 @@ endfunction
 
 " --- use jk as <Esc> ---------------------------------------------------------
 inoremap jk <Esc>
+
+" --- delete current buffer ---------------------------------------------------
+nnoremap <leader>D :BD<CR>
 
 " --- clean trailing whitespace -----------------------------------------------
 nmap <silent> <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
@@ -950,3 +954,12 @@ endif
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 " -----------------------------------------------------------------------------
+
+
+
+" -----------------------------------------------------------------------------
+"  vim-bufkill related config
+" -----------------------------------------------------------------------------
+let g:BufKillOverrideCtrlCaret = 1
+" -----------------------------------------------------------------------------
+
