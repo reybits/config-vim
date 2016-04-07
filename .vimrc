@@ -53,6 +53,7 @@ endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
+Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 " very useful
 Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
