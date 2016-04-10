@@ -509,13 +509,13 @@ command! GrepWordInFiles :call s:GrepInFiles()
 function! s:GrepInFiles()
     let s:ext = expand("%:e")
     if s:ext == "cpp" || s:ext == "c" || s:ext == "h" || s:ext == "ino"
-        let s:mask = "**/*.h **/*.c **/*.cpp **/*.ino"
+        let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
     else
-        let s:mask = "**/*" . (s:ext == "" ? "" : ".") . s:ext
+        let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
     endif
 
     let s:word = expand("<cword>")
-    execute "noa vim /\\<" . s:word . "\\>/gj " . s:mask
+    execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
 endfunction
 
 " --- copy definition in to implementation file -------------------------------
