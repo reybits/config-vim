@@ -48,7 +48,7 @@ if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
 else
-    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
+    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer' }
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
@@ -298,58 +298,16 @@ autocmd BufWritePre * silent! execute '%s/\s\+$//'
 " --- redraw window at startup because lazyredraw prevent screen redraw -------
 autocmd VimEnter * redraw
 
-" --- redate file headers automatically ---------------------------------------
-"autocmd BufWritePre * call RedateHeader()
-
-"function! RedateHeader()
-    "" Mark the current position, and find the end of the header (if possible)
-    "silent! normal! msHmtgg$%
-
-    "if &modified
-        "set nomodified
-
-        "let lastline = line('.')
-        "if lastline == 1
-            "" Header not found, so use fifteen lines or the full file
-            "let lastline = Min(15, line('$'))
-        "endif
-        "" Replace any timestamps discovered, in whatever format
-        "silent! execute '1,' . lastline . 's/\m\%(date\|changed\?\|modifi\w\+\):\s\+"\?\zs\%(\a\|\d\|[/, :-.]\)*/\=strftime("%d.%m.%Y")/ie'
-        "" Increment the version marker
-        "silent! execute '1,' . lastline . "g/[Vv]ersion:/normal! $\<C-a>"
-    "endif
-
-    "" Restore the marked position
-    "silent! normal! 'tzt`s
-"endf
-
-"function! Min(number, ...)
-    "let result = a:number
-    "let index = a:0
-    "while index > 0
-        "let result = (a:{index} > result) ? result : a:{index}
-        "let index = index - 1
-    "endwhile
-    "return result
-"endf
-" -----------------------------------------------------------------------------
-
 " --- persistent undo ---------------------------------------------------------
 if v:version >= 703
-    set undofile " enable persistent undo
+    let s:undodir=$HOME.'/.vim/undofiles'
 
-    " сделаем так, чтобы файлы undo появлялись не в текущей директории, а в нашей
-    "if s:MSWindows
-        "let s:undodir=$VIM.'/undofiles'
-    "else
-        let s:undodir=$HOME.'/.vim/undofiles'
-    "endif
-    let &undodir=s:undodir
-
-    "" если каталог не существует, создадим его рекурсивно
     if !isdirectory(s:undodir)
         call mkdir(s:undodir, 'p', 0700)
     endif
+
+    set undofile " enable persistent undo
+    let &undodir=s:undodir
 endif
 " -----------------------------------------------------------------------------
 
@@ -439,25 +397,16 @@ cnoremap <C-n> <Down>
 " --- useful movement in wrap mode --------------------------------------------
 nnoremap j gj
 nnoremap k gk
-"nnoremap <down> gj
-"nnoremap <up>   gk
 
 " --- перемещение по элементам в quickfix -------------------------------------
-nnoremap <A-j>      :cn<CR>zvzz:cc<CR>
-inoremap <A-j> <Esc>:cn<CR>zvzz:cc<CR>a
-nnoremap <A-k>      :cp<CR>zvzz:cc<CR>
-inoremap <A-k> <Esc>:cp<CR>zvzz:cc<CR>a
+nnoremap <C-J> :cn<CR>zvzz:cc<CR>
+nnoremap <C-K> :cp<CR>zvzz:cc<CR>
 
 " --- simplified window navigation --------------------------------------------
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
-" --- общение с буфером обмена X-сервера --------------------------------------
-vmap <C-c> "+y
-nmap <S-Insert> "+p
-imap <S-Insert> <C-o><C-Insert>
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
@@ -490,11 +439,7 @@ function! QFixToggle(forced)
     if exists("g:qfix_win") && a:forced == 0
         cclose
     else
-        if !exists(":Copen")
-            execute "copen " . g:jah_Quickfix_Win_Height
-        else
-            execute "Copen!"
-        endif
+        execute "copen " . g:jah_Quickfix_Win_Height
     endif
 endfunction
 
@@ -521,56 +466,6 @@ map <F4> <Esc>:Ag<CR>
     "let s:word = expand("<cword>")
     "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
 "endfunction
-
-" --- copy definition in to implementation file -------------------------------
-"nmap <F5> :CopyDefinition<CR>
-"nmap <S-F5> :ImplementDefinition<CR>
-"command! CopyDefinition :call s:GetDefinitionInfo()
-"command! ImplementDefinition :call s:ImplementDefinition()
-"function! s:GetDefinitionInfo()
-    "exe 'normal ma'
-    "" Get class
-    "call search('^\s*\<class\>', 'b')
-    "exe 'normal ^w"ayw'
-    "let s:class = @a
-    "let l:ns = search('^\s*\<namespace\>', 'b')
-    "" Get namespace
-    "if l:ns != 0
-        "exe 'normal ^w"ayw'
-        "let s:namespace = @a
-    "else
-        "let s:namespace = ''
-    "endif
-    "" Go back to definition
-    "exe 'normal `a'
-    "exe 'normal "aY'
-    "let s:defline = substitute(@a, ';\n', '', '')
-"endfunction
-
-"function! s:ImplementDefinition()
-    "call append('.', s:defline)
-    "exe 'normal j'
-    "" Remove keywords
-    "s/\<virtual\>\s*//e
-    "s/\<static\>\s*//e
-    "if s:namespace == ''
-        "let l:classString = s:class . "::"
-    "else
-        "let l:classString = s:namespace . "::" . s:class . "::"
-    "endif
-    "" Remove default parameters
-    "s/\s\{-}=\s\{-}[^,)]\{1,}//e
-    "" Add class qualifier
-    "exe 'normal ^f(bi' . l:classString
-    "" Add brackets
-    "exe "normal $o{\<CR>\<TAB>\<CR>}\<CR>\<ESC>kkkk"
-    "" Fix indentation
-    "exe 'normal =4j^'
-"endfunction
-" -----------------------------------------------------------------------------
-
-" --- show marks browser window -----------------------------------------------
-"map <F6> <Esc>:MarksBrowser<CR>
 
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
@@ -604,16 +499,6 @@ function! MakeTagsFunction()
         !ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
     endif
 endfunction
-
-" --- indent / unindent lines by Tab / Shift+Tab ------------------------------
-"vmap   <Tab> :s/^/	/<CR>
-" map   <Tab> :s/^/	/<CR>
-"vmap <S-Tab> :s/^	//<CR>
-" map <S-Tab> :s/^	//<CR>
-
-" --- next / previous buffer by Ctrl+Tab / Ctrl+Shift+Tab ---------------------
-map <C-Tab>   <Esc>:bn<CR>
-map <C-S-Tab> <Esc>:bp<CR>
 
 " --- automaticaly insert a closing parenthesis when typing an opening --------
 " --- parenthesis  ------------------------------------------------------------
@@ -900,22 +785,10 @@ let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$|\v[\/](gen|bin|obj|build|libs|assets|tmp|temp)$',
             \ 'file': '\v\.(o|o\.d|so|dll|exe)$@<!$'
             \ }
-let g:ctrlp_mruf_exclude = '/tmp/.*\|/temp/.*' " MacOSX/Linux
 
-" Set this to 1 to show only MRU files in the current working directory: >
-let g:ctrlp_mruf_relative = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  YankRing related config
-" -----------------------------------------------------------------------------
-let g:yankring_paste_using_g       = 0
-let g:yankring_manage_numbered_reg = 1
-let g:yankring_history_dir         = $HOME.'/.vim'
-let g:yankring_replace_n_pkey      = '<m-p>'
-let g:yankring_replace_n_nkey      = '<m-n>'
+let g:ctrlp_mruf_relative = 1 " MRU only in the current working directory.
+let g:ctrlp_mruf_exclude = '' " exclude all MRU mask
+let g:ctrlp_mruf_save_on_update = 0
 " -----------------------------------------------------------------------------
 
 
