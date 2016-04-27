@@ -452,7 +452,7 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
-map <F4> <Esc>:Ag<CR>
+map <F4> <Esc>:Ag!<CR>
 "map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
 "command! GrepWordInFiles :call s:GrepInFiles()
 "function! s:GrepInFiles()
