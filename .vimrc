@@ -452,20 +452,25 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
-map <F4> <Esc>:Ag!<CR>
-"map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
-"command! GrepWordInFiles :call s:GrepInFiles()
-"function! s:GrepInFiles()
-    "let s:ext = expand("%:e")
-    "if s:ext == "cpp" || s:ext == "c" || s:ext == "h" || s:ext == "ino"
-        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
-    "else
-        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-    "endif
+map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
+command! GrepWordInFiles :call s:GrepInFiles()
+function! s:GrepInFiles()
+    let s:word = expand("<cword>")
 
-    "let s:word = expand("<cword>")
+    let s:cft = &filetype
+
+    if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
+        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+        let s:mask = "--cpp --cc --objcpp --objc"
+    else
+        "let s:ext = expand("%:e")
+        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        let s:mask = "--" . s:cft
+    endif
+
     "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
-"endfunction
+    execute "Ag! " . s:mask . " " . s:word
+endfunction
 
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
