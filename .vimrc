@@ -646,8 +646,8 @@ let g:alternateExtensions_HPP = "cpp,mm,c,ino,CPP,INO"
 " -----------------------------------------------------------------------------
 " syntastic related config
 " -----------------------------------------------------------------------------
-let g:syntastic_error_symbol         = '✗'
-let g:syntastic_warning_symbol       = '⚠'
+let g:syntastic_error_symbol         = '✖' " '✗'
+let g:syntastic_warning_symbol       = '►' " '⚠'
 let g:syntastic_style_error_symbol   = '⚡'
 let g:syntastic_style_warning_symbol = '⚡'
 let g:syntastic_mode_map             = {
