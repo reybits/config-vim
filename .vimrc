@@ -53,8 +53,9 @@ endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
+Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 " very useful
+Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
@@ -68,6 +69,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
+Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
 "Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
@@ -245,6 +247,7 @@ set tags+=./tags
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
 autocmd BufNewFile,BufRead *.ino set filetype=cpp
+autocmd BufNewFile,BufRead *.as set filetype=actionscript
 
 " --- higlight word under cursor ----------------------------------------------
 augroup AutoHighlight
@@ -452,15 +455,21 @@ augroup END
 map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
 command! GrepWordInFiles :call s:GrepInFiles()
 function! s:GrepInFiles()
-    let s:ext = expand("%:e")
-    if s:ext == "cpp" || s:ext == "c" || s:ext == "h" || s:ext == "ino"
-        let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+    let s:word = expand("<cword>")
+
+    let s:cft = &filetype
+
+    if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
+        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+        let s:mask = "--cpp --cc --objcpp --objc"
     else
-        let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        "let s:ext = expand("%:e")
+        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        let s:mask = "--" . s:cft
     endif
 
-    let s:word = expand("<cword>")
-    execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
+    "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
+    execute "Ag! " . s:mask . " " . s:word
 endfunction
 
 " --- apell checking ----------------------------------------------------------
@@ -642,8 +651,8 @@ let g:alternateExtensions_HPP = "cpp,mm,c,ino,CPP,INO"
 " -----------------------------------------------------------------------------
 " syntastic related config
 " -----------------------------------------------------------------------------
-let g:syntastic_error_symbol         = '✗'
-let g:syntastic_warning_symbol       = '⚠'
+let g:syntastic_error_symbol         = '✖' " '✗'
+let g:syntastic_warning_symbol       = '►' " '⚠'
 let g:syntastic_style_error_symbol   = '⚡'
 let g:syntastic_style_warning_symbol = '⚡'
 let g:syntastic_mode_map             = {
