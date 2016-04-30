@@ -48,7 +48,7 @@ if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
 else
-    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer' }
+    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer' }
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
