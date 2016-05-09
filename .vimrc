@@ -358,6 +358,9 @@ endfunction
 "nnoremap <Space> za
 "vnoremap <Space> za
 
+" --- new undo sequence on enter ----------------------------------------------
+inoremap <CR> <c-g>u<CR>
+
 " --- use jk as <Esc> ---------------------------------------------------------
 inoremap jk <Esc>
 
