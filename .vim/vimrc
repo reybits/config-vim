@@ -374,7 +374,7 @@ nmap <silent> <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " --- toggle word under cursor ------------------------------------------------
-nnoremap <leader>tw :ToggleWord<CR>
+" nnoremap <leader>tw :ToggleWord<CR>
 
 " --- clears the search register ----------------------------------------------
 nmap <silent> <space> :nohlsearch<CR>
@@ -426,7 +426,7 @@ imap <F1> <Esc>:set<Space>nu!<CR>a
 nmap <F1>      :set<Space>nu!<CR>
 
 " --- show / hide TagBar window ----------------------------------------------
-nnoremap <silent> <S-F1> :TagbarToggle<CR>
+nnoremap <leader>tb :TagbarToggle<CR>
 
 " --- show / hide NERDTree window ---------------------------------------------
 map <S-F2> <Esc>:NERDTreeToggle<CR>
