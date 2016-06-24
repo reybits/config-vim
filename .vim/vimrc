@@ -66,8 +66,9 @@ Plug 'spacehi.vim'
 Plug 'TaskList.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
-Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-session'
+Plug 'Chiel92/vim-autoformat'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
@@ -293,7 +294,10 @@ autocmd BufReadPost *
     \ endif
 
 " --- clean trailing whitespace before write buffer ---------------------------
-autocmd BufWritePre * silent! execute '%s/\s\+$//'
+" autocmd BufWritePre * silent! execute '%s/\s\+$//'
+
+" --- autoformat before write buffer ------------------------------------------
+" autocmd BufWrite * :Autoformat
 
 " --- redraw window at startup because lazyredraw prevent screen redraw -------
 autocmd VimEnter * redraw
@@ -368,7 +372,7 @@ inoremap jk <Esc>
 nnoremap <leader>D :BD<CR>
 
 " --- clean trailing whitespace -----------------------------------------------
-nmap <silent> <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
+nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
 " --- go to defenition by semantic --------------------------------------------
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
