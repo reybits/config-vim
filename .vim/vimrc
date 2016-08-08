@@ -43,7 +43,8 @@ call plug#begin('~/.vim/bundle')
 " must have
 Plug 'bling/vim-airline'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
 if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
@@ -799,8 +800,11 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
 let g:ctrlp_by_filename = 1
 
 "let g:ctrlp_mruf_include = '\.h$|\.c$\|\.cpp$|\.m$|\.mm$'
-let g:ctrlp_extensions = ['mixed', 'bookmarkdir', 'funky']
+let g:ctrlp_extensions = ['mixed']
 let g:ctrlp_cmd = 'CtrlPMixed'
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 "unlet g:ctrlp_custom_ignore
 let g:ctrlp_custom_ignore = {
