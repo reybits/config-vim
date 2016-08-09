@@ -423,7 +423,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " --- map ctrl-p to FZF file search -------------------------------------------
-noremap <C-p> :Files<CR>
+noremap <C-p> :FzfFiles<CR>
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_history_dir = '~/.fzf-history'
+let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
 
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
