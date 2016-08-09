@@ -43,18 +43,19 @@ call plug#begin('~/.vim/bundle')
 " must have
 Plug 'bling/vim-airline'
 Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
 if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer' }
+    Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
 endif
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+" Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 " very useful
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'andreyugolnik/manpageview'
@@ -245,6 +246,11 @@ set laststatus=2 " always put a status line in, even if there is only one window
 "set tags+=~/.vimtags
 set tags+=./tags
 
+" --- The Silver Searcher -----------------------------------------------------
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+endif
+
 " --- force filetype for some files -------------------------------------------
 autocmd BufNewFile,BufRead *.m set filetype=objc
 autocmd BufNewFile,BufRead *.mm set filetype=objcpp
@@ -416,6 +422,9 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" --- map ctrl-p to FZF file search -------------------------------------------
+noremap <C-p> :Files<CR>
+
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
 function! EnhanceCppSyntax()
@@ -460,25 +469,25 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
-map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
-command! GrepWordInFiles :call s:GrepInFiles()
-function! s:GrepInFiles()
-    let s:word = expand("<cword>")
+" map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
+" command! GrepWordInFiles :call s:GrepInFiles()
+" function! s:GrepInFiles()
+    " let s:word = expand("<cword>")
 
-    let s:cft = &filetype
+    " let s:cft = &filetype
 
-    if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
-        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
-        let s:mask = "--cpp --cc --objcpp --objc"
-    else
-        "let s:ext = expand("%:e")
-        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-        let s:mask = "--" . s:cft
-    endif
+    " if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
+        " "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+        " let s:mask = "--cpp --cc --objcpp --objc"
+    " else
+        " "let s:ext = expand("%:e")
+        " "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        " let s:mask = "--" . s:cft
+    " endif
 
-    "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
-    execute "Ag! " . s:mask . " " . s:word
-endfunction
+    " "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
+    " execute "Ag! " . s:mask . " " . s:word
+" endfunction
 
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
@@ -802,9 +811,6 @@ let g:ctrlp_by_filename = 1
 "let g:ctrlp_mruf_include = '\.h$|\.c$\|\.cpp$|\.m$|\.mm$'
 let g:ctrlp_extensions = ['mixed']
 let g:ctrlp_cmd = 'CtrlPMixed'
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 "unlet g:ctrlp_custom_ignore
 let g:ctrlp_custom_ignore = {
@@ -816,11 +822,7 @@ let g:ctrlp_mruf_relative = 1 " MRU only in the current working directory.
 let g:ctrlp_mruf_exclude = '' " exclude all MRU mask
 let g:ctrlp_mruf_save_on_update = 0
 
-" The Silver Searcher
 if executable('ag')
-    " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor
-
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
