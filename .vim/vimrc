@@ -48,7 +48,7 @@ if s:MSWindows
     Plug 'Shougo/neocomplete.vim'
     Plug 'ctrlpvim/ctrlp.vim'
 else
-    Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer' }
+    Plug 'Valloric/YouCompleteMe', { 'for': [ 'c','cpp','objc','objcpp' ], 'do': './install.py --clang-completer' }
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
 endif
@@ -91,14 +91,14 @@ augroup load_snippets
                 \| autocmd! load_snippets
 augroup END
 
-if s:MSWindows
-else
-augroup load_ycm
-    autocmd!
-    autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
-                \| call youcompleteme#Enable() | autocmd! load_ycm
-augroup END
-endif
+" if s:MSWindows
+" else
+" augroup load_ycm
+    " autocmd!
+    " autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
+                " \| call youcompleteme#Enable() | autocmd! load_ycm
+" augroup END
+" endif
 
 " -----------------------------------------------------------------------------
 
@@ -217,36 +217,18 @@ set foldmethod=marker
 set popt+=syntax:y      " syntax when printing
 set pastetoggle=<F10>   " mode that allow to paste text from clipboard without formating
 set scrolloff=5         " rows number to show while scrolling
+set laststatus=2        " always show status line
 
 " complete options (disable preview scratch window)
 "set completeopt=menuone,menu,longest,preview
 set completeopt=menu,menuone,longest
 set pumheight=15        " Limit popup menu height
 
-" --- format od status line ---------------------------------------------------
-set laststatus=2 " always put a status line in, even if there is only one window
-"set statusline=
-"set statusline+=%-3.3n\                      " buffer number
-"set statusline+=%f\                          " file name
-"set statusline+=%h%m%r%w                     " flags
-"set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
-"set statusline+=%{&encoding},                " encoding
-"set statusline+=%{&fileformat}]              " file format
-"set statusline+=%=                           " right align
-"set statusline+=%k\                          " show current keymap
-"set statusline+=0x%-8B\                      " current char
-"set statusline+=%-14.(%l,%c%V,%{strlen(getline('.'))}%)\  " row / column position
-"set statusline+=%<%P                         " position in percent
-
 " --- additional tags ---------------------------------------------------------
-"set tags+=~/.vim/tags/cpp
-"set tags+=~/.vim/tags/gl
-"set tags+=~/.vim/tags/sdl
-"set tags+=~/.vim/tags/hgex
-"set tags+=~/.vimtags
 set tags+=./tags
 
-" --- The Silver Searcher -----------------------------------------------------
+" --- grep using AG -----------------------------------------------------------
+" https://github.com/ggreer/the_silver_searcher
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
 endif
@@ -370,10 +352,10 @@ endfunction
 "vnoremap <Space> za
 
 " --- new undo sequence on enter ----------------------------------------------
-inoremap <CR> <c-g>u<CR>
+" inoremap <CR> <c-g>u<CR>
 
 " --- use jk as <Esc> ---------------------------------------------------------
-inoremap jk <Esc>
+" inoremap jk <Esc>
 
 " --- delete current buffer ---------------------------------------------------
 nnoremap <leader>D :BD<CR>
@@ -381,7 +363,7 @@ nnoremap <leader>D :BD<CR>
 " --- clean trailing whitespace -----------------------------------------------
 nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
-" --- go to defenition by semantic --------------------------------------------
+" --- YCM go to defenition by semantic ----------------------------------------
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " --- toggle word under cursor ------------------------------------------------
@@ -425,8 +407,21 @@ nnoremap <C-l> <C-w>l
 " --- map ctrl-p to FZF file search -------------------------------------------
 noremap <C-p> :FzfFiles<CR>
 let g:fzf_command_prefix = 'Fzf'
-let g:fzf_history_dir = '~/.fzf-history'
+let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
 let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
+
+if executable('ag')
+
+    let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+
+    map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
+    command! GrepWordInFiles :call s:GrepInFiles()
+    function! s:GrepInFiles()
+        let s:word = expand("<cword>")
+        execute "FzfAg " . s:word
+    endfunction
+
+endif
 
 " --- add highlighting for function definition in C++ -------------------------
 autocmd Syntax cpp call EnhanceCppSyntax()
@@ -508,17 +503,12 @@ map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
 map <F11> <Esc>:A<CR>
-"map <F11> <Esc>:FSHere<CR>
-"au! BufEnter *.cpp let b:fswitchdst = 'h,hpp'
-"au! BufEnter *.h let b:fswitchdst = 'cpp,mm,m'
-"au! BufEnter *.m,*.mm let b:fswitchdst = 'h'
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:MakeTags<CR>
 command! MakeTags call MakeTagsFunction()
 function! MakeTagsFunction()
-    if has("gui_macvim")
-        " ctags from brew
+    if executable('/usr/local/bin/ctags')
         !/usr/local/bin/ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
     else
         !ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q .
@@ -557,10 +547,10 @@ let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-let g:UltiSnipsExpandTrigger      = '<c-\>'
-let g:UltiSnipsEnableSnipMate     = 1
-let g:UltiSnipsSnippetsDir        = $HOME.'/.vim/snippets'
-"let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsExpandTrigger       = '<c-\>'
+let g:UltiSnipsEnableSnipMate      = 1
+let g:UltiSnipsSnippetsDir         = $HOME.'/.vim/snippets'
+"let g:UltiSnipsJumpForwardTrigger  = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " -----------------------------------------------------------------------------
 
@@ -680,28 +670,28 @@ let g:syntastic_mode_map             = {
             \ 'active_filetypes' : ['c', 'cpp', 'objc', 'objcpp'],
             \ 'passive_filetypes': ['']
             \ }
-"let g:syntastic_c_include_dirs = [ 'include', '../include', '/usr/src/include/hgex' ]
-"let g:syntastic_cpp_include_dirs = [ 'include', '../include', '/usr/src/include/hgex' ]
+"let g:syntastic_c_include_dirs            = [ 'include', '../include' ]
+"let g:syntastic_cpp_include_dirs          = [ 'include', '../include' ]
 "let g:syntastic_cpp_remove_include_errors = 1
-"let g:syntastic_cpp_compiler = 'clang++'
-"let g:syntastic_cpp_config_file = '/home/andrey/.config/syntastic_cpp_config'
+"let g:syntastic_cpp_compiler              = 'clang++'
+"let g:syntastic_cpp_config_file           = $HOME.'/.vim/syntastic_cpp_config'
 
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
-let g:syntastic_tex_checkers = ['lacheck']
-let g:syntastic_c_compiler_options = "-std=gnu11
-            \  -Wall -Wextra -Wshadow -Wpointer-arith
-            \  -Wcast-align -Wwrite-strings -Wmissing-prototypes
-            \  -Wmissing-declarations -Wredundant-decls -Wnested-externs
-            \  -Winline -Wno-long-long -Wuninitialized -Wconversion
-            \  -Wstrict-prototypes -pedantic"
-let g:syntastic_stl_format = '[=> ln:%F (%t)]'
-let g:syntastic_aggregate_errors=1
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=2
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_c_no_include_search = 1
-let g:syntastic_c_auto_refresh_includes = 1
-let g:syntastic_c_check_header = 1
+let g:syntastic_tex_checkers         = ['lacheck']
+let g:syntastic_c_compiler_options   = "-std=gnu11
+            \ -Wall -Wextra -Wshadow -Wpointer-arith
+            \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
+            \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
+            \ -Winline -Wno-long-long -Wuninitialized -Wconversion
+            \ -Wstrict-prototypes -pedantic"
+let g:syntastic_stl_format               = '[ = > ln:%F (%t)]'
+let g:syntastic_aggregate_errors         = 1
+let g:syntastic_enable_signs             = 1
+let g:syntastic_auto_loc_list            = 2
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_c_no_include_search      = 1
+let g:syntastic_c_auto_refresh_includes  = 1
+let g:syntastic_c_check_header           = 1
 " -----------------------------------------------------------------------------
 
 
@@ -751,7 +741,7 @@ let g:manpageview_multimanpage = 1
 " -----------------------------------------------------------------------------
 "  Session related config
 " -----------------------------------------------------------------------------
-let g:session_directory       = '~/.vim/sessions'
+let g:session_directory       = $HOME.'/.vim/sessions'
 let g:session_autoload        = 'yes'
 let g:session_autosave        = 'yes'
 let g:session_default_to_last = 1
@@ -866,14 +856,18 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_symbols.paste = 'ρ'
-if s:MSWindows || has("mac")
-    let g:airline_symbols.branch = 'b'
+if has("mac")
+    let g:airline_symbols.branch   = '∫'
+    let g:airline_symbols.readonly = '®'
+    let g:airline_symbols.linenr   = '¶'
+elseif s:MSWindows
+    let g:airline_symbols.branch   = 'b'
     let g:airline_symbols.readonly = '-'
-    let g:airline_symbols.linenr = ''
+    let g:airline_symbols.linenr   = ''
 else
-    let g:airline_symbols.branch = ''
+    let g:airline_symbols.branch   = ''
     let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.linenr   = '¶'
 endif
 
 let g:airline#extensions#tagbar#enabled = 1

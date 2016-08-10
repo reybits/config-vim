@@ -6,6 +6,7 @@
 .vim/bundle-disabled/
 .vim/bundle/
 .vim/doc/tags
+.vim/fzf-history/
 .vim/sessions/
 .vim/snippets/header.cpp
 .vim/tags/
