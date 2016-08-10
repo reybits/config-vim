@@ -676,14 +676,19 @@ let g:syntastic_mode_map             = {
 "let g:syntastic_cpp_compiler              = 'clang++'
 "let g:syntastic_cpp_config_file           = $HOME.'/.vim/syntastic_cpp_config'
 
-let g:syntastic_cpp_compiler_options = ' -std=c++11'
-let g:syntastic_tex_checkers         = ['lacheck']
-let g:syntastic_c_compiler_options   = "-std=gnu11
+let g:syntastic_cpp_compiler_options = '-std=c++11
             \ -Wall -Wextra -Wshadow -Wpointer-arith
             \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
             \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
             \ -Winline -Wno-long-long -Wuninitialized -Wconversion
-            \ -Wstrict-prototypes -pedantic"
+            \ -Wstrict-prototypes -pedantic'
+let g:syntastic_tex_checkers         = ['lacheck']
+let g:syntastic_c_compiler_options   = '-std=c11
+            \ -Wall -Wextra -Wshadow -Wpointer-arith
+            \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
+            \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
+            \ -Winline -Wno-long-long -Wuninitialized -Wconversion
+            \ -Wstrict-prototypes -pedantic'
 let g:syntastic_stl_format               = '[ = > ln:%F (%t)]'
 let g:syntastic_aggregate_errors         = 1
 let g:syntastic_enable_signs             = 1
