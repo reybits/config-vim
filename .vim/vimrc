@@ -52,10 +52,10 @@ else
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
 endif
-Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-" Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 " very useful
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'andreyugolnik/manpageview'
@@ -85,11 +85,11 @@ Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
 call plug#end()
 
-augroup load_snippets
-    autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips')
-                \| autocmd! load_snippets
-augroup END
+" augroup load_snippets
+    " autocmd!
+    " autocmd InsertEnter * call plug#load('ultisnips')
+                " \| autocmd! load_snippets
+" augroup END
 
 " if s:MSWindows
 " else
@@ -414,13 +414,6 @@ if executable('ag')
 
     let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 
-    map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
-    command! GrepWordInFiles :call s:GrepInFiles()
-    function! s:GrepInFiles()
-        let s:word = expand("<cword>")
-        execute "FzfAg " . s:word
-    endfunction
-
 endif
 
 " --- add highlighting for function definition in C++ -------------------------
@@ -467,25 +460,25 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
-" map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
-" command! GrepWordInFiles :call s:GrepInFiles()
-" function! s:GrepInFiles()
-    " let s:word = expand("<cword>")
+map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
+command! GrepWordInFiles :call s:GrepInFiles()
+function! s:GrepInFiles()
+    let s:word = expand("<cword>")
 
-    " let s:cft = &filetype
+    let s:cft = &filetype
 
-    " if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
-        " "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
-        " let s:mask = "--cpp --cc --objcpp --objc"
-    " else
-        " "let s:ext = expand("%:e")
-        " "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-        " let s:mask = "--" . s:cft
-    " endif
+    if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
+        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+        let s:mask = "--cpp --cc --objcpp --objc"
+    else
+        "let s:ext = expand("%:e")
+        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        let s:mask = "--" . s:cft
+    endif
 
-    " "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
-    " execute "Ag! " . s:mask . " " . s:word
-" endfunction
+    "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
+    execute "Ag! " . s:mask . " " . s:word
+endfunction
 
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
