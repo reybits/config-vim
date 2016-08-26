@@ -202,6 +202,9 @@ set diffopt+=iwhite     " Add ignorance of whitespace to diff
 set smarttab            " insert tabs on the start of a line according to shiftwidth, not tabstop
 set cino+=:0            " case: indent
 set cino+=g0            " public: indent
+set cino+=N-s           " namespace indent
+set cino+=t0            " function return declaration
+set cino+=(0            " unclosed prarntheses
 "set cursorline          " highlight current line
 set number              " show the line number for each line
 "set mouse=a             " have the mouse enabled all the time
@@ -870,5 +873,14 @@ endif
 
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+" -----------------------------------------------------------------------------
+
+
+
+" -----------------------------------------------------------------------------
+"  AirLine related config
+" -----------------------------------------------------------------------------
+let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatdef_astyle_cpp = g:formatdef_astyle_c
 " -----------------------------------------------------------------------------
 
