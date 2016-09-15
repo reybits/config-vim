@@ -58,7 +58,6 @@ Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
 Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 " very useful
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
-Plug 'andreyugolnik/manpageview'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
@@ -69,6 +68,7 @@ Plug 'TaskList.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'Chiel92/vim-autoformat'
+" Plug 'andreyugolnik/manpageview'
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
@@ -880,10 +880,21 @@ let g:airline#extensions#branch#enabled = 1
 " -----------------------------------------------------------------------------
 "  AirLine related config
 " -----------------------------------------------------------------------------
-let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+" let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_c = ['astyle_c', 'clangformat']
 
 let g:formatdef_astyle_cpp = g:formatdef_astyle_c
 let g:formatters_cpp = ['astyle_cpp', 'clangformat']
 " -----------------------------------------------------------------------------
 
+
+
+" -----------------------------------------------------------------------------
+"  Man related config
+" -----------------------------------------------------------------------------
+runtime! ftplugin/man.vim
+let g:ft_man_open_mode = 'tab'
+set keywordprg=:Man
+autocmd FileType man setlocal nolist nonumber
+" -----------------------------------------------------------------------------
