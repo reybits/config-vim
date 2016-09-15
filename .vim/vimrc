@@ -68,6 +68,7 @@ Plug 'TaskList.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'Chiel92/vim-autoformat'
+Plug 'chrisbra/vim-diff-enhanced'
 " Plug 'andreyugolnik/manpageview'
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-session'
@@ -898,3 +899,13 @@ let g:ft_man_open_mode = 'tab'
 set keywordprg=:Man
 autocmd FileType man setlocal nolist nonumber
 " -----------------------------------------------------------------------------
+
+
+
+" -----------------------------------------------------------------------------
+"  Man related config
+" -----------------------------------------------------------------------------
+" started In Diff-Mode set diffexpr (plugin not loaded yet)
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
