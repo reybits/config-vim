@@ -689,11 +689,15 @@ let g:syntastic_c_compiler_options   = '-std=c11
 let g:syntastic_stl_format               = '[ = > ln:%F (%t)]'
 let g:syntastic_aggregate_errors         = 1
 let g:syntastic_enable_signs             = 1
-let g:syntastic_auto_loc_list            = 2
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list            = 2
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
 let g:syntastic_c_no_include_search      = 1
 let g:syntastic_c_auto_refresh_includes  = 1
 let g:syntastic_c_check_header           = 1
+
+" let g:ycm_show_diagnostics_ui            = 0
 " -----------------------------------------------------------------------------
 
 
@@ -887,6 +891,12 @@ let g:formatters_c = ['astyle_c', 'clangformat']
 
 let g:formatdef_astyle_cpp = g:formatdef_astyle_c
 let g:formatters_cpp = ['astyle_cpp', 'clangformat']
+
+let g:formatdef_astyle_objc = g:formatdef_astyle_c
+let g:formatters_objcc = ['astyle_objc', 'clangformat']
+
+let g:formatdef_astyle_objcpp = g:formatdef_astyle_c
+let g:formatters_objccpp = ['astyle_objc', 'clangformat']
 " -----------------------------------------------------------------------------
 
 
