@@ -222,6 +222,7 @@ set popt+=syntax:y      " syntax when printing
 set pastetoggle=<F10>   " mode that allow to paste text from clipboard without formating
 set scrolloff=5         " rows number to show while scrolling
 set laststatus=2        " always show status line
+set clipboard=unnamedplus,unnamed
 
 " complete options (disable preview scratch window)
 "set completeopt=menuone,menu,longest,preview
