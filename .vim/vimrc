@@ -7,6 +7,10 @@ scriptencoding utf-8
 ""
 "" ----------------------------------------------------------------------------
 
+" --- Use vim settings, rather then vi settings (much better!) ----------------
+" --- This must be first, because it changes other options as a side effect ---
+set nocompatible
+
 let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64') + has('win32unix') + has('win64unix')
 
 " on Windows use .vim instead vimfiles
@@ -19,24 +23,21 @@ if s:MSWindows
 endif
 
 if has('vim_starting')
-    " --- Use vim settings, rather then vi settings (much better!) ----------------
-    " --- This must be first, because it changes other options as a side effect ---
-    set nocompatible
-
     if s:MSWindows
         lan mes en_EN.UTF-8
         set langmenu=en_EN.UTF-8
     endif
 endif
 
-filetype off " required before vundle or pathogen
-
 " -----------------------------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall
+    au VimEnter * PlugInstall
 endif
+
+" --- disable detection, plugins and indenting in one step --------------------
+filetype off
 
 call plug#begin('~/.vim/bundle')
 
@@ -69,12 +70,10 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'Chiel92/vim-autoformat'
 Plug 'chrisbra/vim-diff-enhanced'
-" Plug 'andreyugolnik/manpageview'
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-session'
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'justinmk/vim-syntax-extra'
 
 "Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
 "Plug 'tpope/vim-dispatch'
@@ -86,37 +85,27 @@ Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 
 call plug#end()
 
+" --- enable detection, plugins and indenting in one step ---------------------
+filetype plugin indent on
+
 " augroup load_snippets
-    " autocmd!
-    " autocmd InsertEnter * call plug#load('ultisnips')
-                " \| autocmd! load_snippets
+    " au!
+    " au InsertEnter * call plug#load('ultisnips')
+                " \| au! load_snippets
 " augroup END
 
 " if s:MSWindows
 " else
 " augroup load_ycm
-    " autocmd!
-    " autocmd InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
-                " \| call youcompleteme#Enable() | autocmd! load_ycm
+    " au!
+    " au InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
+                " \| call youcompleteme#Enable() | au! load_ycm
 " augroup END
 " endif
 
 " -----------------------------------------------------------------------------
 
-" --- enable detection, plugins and indenting in one step ---------------------
-filetype plugin indent on
-
-" -----------------------------------------------------------------------------
-
 set t_Co=256
-
-if v:version >= 704
-    " The new Vim regex engine is currently slooooow as hell which makes syntax
-    " highlighting slow, which introduces typing latency.
-    " Consider removing this in the future when the new regex engine becomes
-    " faster.
-    set regexpengine=1
-endif
 
 " --- font used in Gvim -------------------------------------------------------
 if has("gui_running")
@@ -135,29 +124,11 @@ if has("gui_running")
     elseif s:MSWindows
         set guifont=lucida_console:h14:cRUSSIAN
     else
-        "set guifont=Pragmata\ 13
         set guifont=Droid\ Sans\ Mono\ 12
-        "set guifont=Liberation\ Mono\ 12
-        "set guifont=Inconsolata\ 13
-        "set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
-        "set guifont=Monospace\ 9
     endif
-    colorscheme Tomorrow-Night
-
-    " nice theme collection available at
-    " http://vimcolorschemetest.googlecode.com/svn/html/index-c.html
-    "colorscheme torte
-    "colorscheme asu1dark
-    "colorscheme paintbox
-
-    "set background=dark
-    "colorscheme solarized
-
-elseif (&t_Co == 256 || &t_Co == 88)
-    colorscheme Tomorrow-Night
-else
-    colorscheme asmdev
 endif
+
+colorscheme Tomorrow-Night
 
 syntax on               " allow syntax highlighting
 
@@ -173,7 +144,6 @@ set list
 "set listchars=tab:→\ ,trail:·,extends:»,nbsp:·,eol:¶
 set listchars=tab:→\ ,trail:·,extends:»,nbsp:·
 let c_space_errors=1    " Highlight any spaces before tabs, and any whitespace at the end of a line
-
 set showmode            " always show what mode we're currently editing in
 set hidden              " hides buffers instead of closing them
 set switchbuf=useopen   " reveal already opened files from the quickfix window
@@ -183,13 +153,11 @@ set backspace=indent,eol,start          " allow backspacing over everything in i
 set ignorecase          " ignore case when searching
 set smartcase           " ignore case if search pattern is all lowercase, case-sensitive otherwise
 set incsearch           " show search matches as you type
-
 set encoding=utf-8
 set fencs=utf-8,ucs-bom,cp1251   " порядок перебора кодировок при открытии файла
 set ffs=unix,dos        " порядок перебора fileformats
 set cscopetag           " по Ctrl+] вести себя так же, как по g] (показывать варианты)
 set lazyredraw          " don't update the display while executing macros
-
 set tabstop=4           " number of spaces a <Tab> in the text stands for
 set shiftwidth=4        " number of spaces used for each step of (auto)indent
 set shiftround          " use multiple of shiftwidth when indenting with '<' and '>'
@@ -239,17 +207,17 @@ if executable('ag')
 endif
 
 " --- force filetype for some files -------------------------------------------
-autocmd BufNewFile,BufRead *.m set filetype=objc
-autocmd BufNewFile,BufRead *.mm set filetype=objcpp
-autocmd BufNewFile,BufRead *.ino set filetype=cpp
-autocmd BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.m set filetype=objc
+au BufNewFile,BufRead *.mm set filetype=objcpp
+au BufNewFile,BufRead *.ino set filetype=cpp
+au BufNewFile,BufRead *.as set filetype=actionscript
 
 " --- higlight word under cursor ----------------------------------------------
-augroup AutoHighlight
-    au!
-    au CursorHold * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
-    setlocal updatetime=300
-augroup END
+" augroup AutoHighlight
+    " au!
+    " au CursorHold * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+    " setlocal updatetime=300
+" augroup END
 
 " --- enable cursor line only for current buffer ------------------------------
 augroup CursorLine
@@ -260,41 +228,23 @@ augroup CursorLine
 augroup END
 
 " --- higlight redundant tabs / spaces ----------------------------------------
-autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
-autocmd FileType help NoSpaceHi
-
-" --- show git diff in split window -------------------------------------------
-"autocmd FileType gitcommit DiffGitCached | wincmd p
-"autocmd FileType gitcommit
-    "\ if exists(':DiffGitCached') |
-    "\   if ! &previewwindow && expand('%:t') !~# 'index' |
-    "\     :DiffGitCached |
-    "\   endif |
-    "\ endif
-
-"autocmd! BufRead,BufWrite,BufWritePost,BufNewFile *.org
-"autocmd BufEnter *.org call org#SetOrgFileType()
+au BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
+au FileType help NoSpaceHi
 
 " --- switch to us keyboard layout when insert mode leaved --------------------
-autocmd InsertLeave *
+au InsertLeave *
     \ if has('unix') && &term == 'builtin_gui' |
     \   silent !qdbus ru.gentoo.KbddService /ru/gentoo/KbddService ru.gentoo.kbdd.set_layout 0 >/dev/null |
     \ endif
 
 " --- always jump to the last cursor position "  ------------------------------
-autocmd BufReadPost *
+au BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \    exe "normal g'\"" |
     \ endif
 
-" --- clean trailing whitespace before write buffer ---------------------------
-" autocmd BufWritePre * silent! execute '%s/\s\+$//'
-
-" --- autoformat before write buffer ------------------------------------------
-" autocmd BufWrite * :Autoformat
-
 " --- redraw window at startup because lazyredraw prevent screen redraw -------
-autocmd VimEnter * redraw
+au VimEnter * redraw
 
 " --- persistent undo ---------------------------------------------------------
 if v:version >= 703
@@ -422,14 +372,14 @@ if executable('ag')
 endif
 
 " --- add highlighting for function definition in C++ -------------------------
-autocmd Syntax cpp call EnhanceCppSyntax()
-function! EnhanceCppSyntax()
-    syn match cCustomParen   "(" contains=cParen contains=cCppParen
-    syn match cCustomFunc    "\w\+\s*(" contains=cCustomParen
-    syn match cppCustomScope "::"
-    syn match cppCustomClass "\w\+\s*::" contains=cCustomScope
-    hi def link cCustomFunc  Function
-endfunction
+" au Syntax cpp call EnhanceCppSyntax()
+" function! EnhanceCppSyntax()
+    " syn match cCustomParen   "(" contains=cParen contains=cCppParen
+    " syn match cCustomFunc    "\w\+\s*(" contains=cCustomParen
+    " syn match cppCustomScope "::"
+    " syn match cppCustomClass "\w\+\s*::" contains=cCustomScope
+    " hi def link cCustomFunc  Function
+" endfunction
 
 " --- show / hide the line number for each line -------------------------------
 imap <F1> <Esc>:set<Space>nu!<CR>a
@@ -458,9 +408,9 @@ endfunction
 
 " used to track the quickfix window
 augroup QFixToggle
-    autocmd!
-    autocmd BufWinEnter quickfix let g:qfix_win = bufnr("$")
-    autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
+    au!
+    au BufWinEnter quickfix let g:qfix_win = bufnr("$")
+    au BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
 augroup END
 " -----------------------------------------------------------------------------
 
@@ -674,14 +624,14 @@ let g:syntastic_mode_map             = {
 "let g:syntastic_cpp_compiler              = 'clang++'
 "let g:syntastic_cpp_config_file           = $HOME.'/.vim/syntastic_cpp_config'
 
-let g:syntastic_cpp_compiler_options = '-std=c++11
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++
             \ -Wall -Wextra -Wshadow -Wpointer-arith
             \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
             \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
             \ -Winline -Wno-long-long -Wuninitialized -Wconversion
             \ -Wstrict-prototypes -pedantic'
 let g:syntastic_tex_checkers         = ['lacheck']
-let g:syntastic_c_compiler_options   = '-std=c11
+let g:syntastic_c_compiler_options   = '-std=c11 -stdlib=libc++
             \ -Wall -Wextra -Wshadow -Wpointer-arith
             \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
             \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
@@ -908,7 +858,7 @@ let g:formatters_objccpp = ['astyle_objc', 'clangformat']
 runtime! ftplugin/man.vim
 let g:ft_man_open_mode = 'tab'
 set keywordprg=:Man
-autocmd FileType man setlocal nolist nonumber
+au FileType man setlocal nolist nonumber
 " -----------------------------------------------------------------------------
 
 
