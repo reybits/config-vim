@@ -843,11 +843,11 @@ let g:formatters_c = ['astyle_c', 'clangformat']
 let g:formatdef_astyle_cpp = g:formatdef_astyle_c
 let g:formatters_cpp = ['astyle_cpp', 'clangformat']
 
-let g:formatdef_astyle_objc = g:formatdef_astyle_c
-let g:formatters_objcc = ['astyle_objc', 'clangformat']
+let g:formatdef_astyle_objc = '"astyle --mode=c -xM -xQ -xP2 --style=ansi -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatters_objc = ['astyle_objc', 'clangformat']
 
-let g:formatdef_astyle_objcpp = g:formatdef_astyle_c
-let g:formatters_objccpp = ['astyle_objc', 'clangformat']
+let g:formatdef_astyle_objcpp = g:formatdef_astyle_objc
+let g:formatters_objcpp = ['astyle_objcpp', 'clangformat']
 " -----------------------------------------------------------------------------
 
 
