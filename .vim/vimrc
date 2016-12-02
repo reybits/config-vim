@@ -171,7 +171,7 @@ set diffopt+=iwhite     " Add ignorance of whitespace to diff
 set smarttab            " insert tabs on the start of a line according to shiftwidth, not tabstop
 set cino+=:0            " case: indent
 set cino+=g0            " public: indent
-set cino+=N-s           " namespace indent
+" set cino+=N-s           " no namespace indent
 set cino+=t0            " function return declaration
 set cino+=(0            " unclosed prarntheses
 "set cursorline          " highlight current line
@@ -837,13 +837,13 @@ let g:airline#extensions#branch#enabled = 1
 "  AirLine related config
 " -----------------------------------------------------------------------------
 " let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
-let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_c = ['astyle_c', 'clangformat']
 
 let g:formatdef_astyle_cpp = g:formatdef_astyle_c
 let g:formatters_cpp = ['astyle_cpp', 'clangformat']
 
-let g:formatdef_astyle_objc = '"astyle --mode=c -xM -xQ -xP2 --style=ansi -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatdef_astyle_objc = '"astyle --mode=c --style=ansi -xM -xQ -xP2 -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_objc = ['astyle_objc', 'clangformat']
 
 let g:formatdef_astyle_objcpp = g:formatdef_astyle_objc
