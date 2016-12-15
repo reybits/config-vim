@@ -365,11 +365,11 @@ let g:fzf_command_prefix = 'Fzf'
 let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
 let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
 
-if executable('ag')
+let $FZF_DEFAULT_OPTS="--inline-info"
 
-    let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-
-endif
+" if executable('ag')
+    " let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+" endif
 
 " --- add highlighting for function definition in C++ -------------------------
 " au Syntax cpp call EnhanceCppSyntax()
