@@ -57,6 +57,7 @@ Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
 Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+Plug 'drmikehenry/vim-fixkey'
 " very useful
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'godlygeek/tabular'
