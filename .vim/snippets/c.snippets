@@ -33,23 +33,21 @@ snippet #if "#if #endif"
 	#if ${1:FOO}
 		${0}
 	#endif
-snippet guard "#pragma once"
+snippet once "#pragma once"
 	#pragma once
-
 	${0}
-snippet once "#ifndef UNTITLED_H"
+snippet guard "#ifndef UNTITLED_H"
 	#ifndef ${1:`toupper(expand("%:t:r")."_H_".(localtime() * 31421 + 6927) % 0x10000)`}
 	#define $1
 
 	${0}
 
 	#endif /* end of include guard: $1 */
-
 ##
 ## Control Statements
 # if
-snippet if "if() {}"
-	if(${1:/* condition */})
+snippet if "if () {}"
+	if (${1:/* condition */})
 	{
 		${2}
 	}
@@ -60,7 +58,7 @@ snippet el "else {}"
 		${1}
 	}
 # else if
-snippet elif "else if() {}"
+snippet elif "else if () {}"
 	else if (${1:/* condition */})
 	{
 		${2}
@@ -69,8 +67,8 @@ snippet elif "else if() {}"
 snippet t " ? : "
 	${1:/* condition */} ? ${2:a} : ${3:b}
 # switch
-snippet switch "switch() {}"
-	switch(${1:/* variable */})
+snippet switch "switch () {}"
+	switch (${1:/* variable */})
 	{
 	case ${2:/* variable case */}:
 		${3}
@@ -86,23 +84,23 @@ snippet case "case :"
 ##
 ## Loops
 # for
-snippet for "for() {}"
-	for(${2:i} = 0; $2 < ${1:count}; $2${3:++})
+snippet for "for () {}"
+	for (${2:i} = 0; $2 < ${1:count}; $2${3:++})
 	{
 		${4}
 	}
 # while
-snippet wh "while() {}"
+snippet wh "while () {}"
 	while (${1:/* condition */})
 	{
 		${2}
 	}
 # do... while
-snippet do "do {} while()"
+snippet do "do {} while ()"
 	do
 	{
 		${2}
-	} while(${1:/* condition */});
+	} while (${1:/* condition */});
 ##
 ## Functions
 # function definition
@@ -142,7 +140,7 @@ snippet fpr "fprintf()"
 # getopt
 snippet getopt "getopt"
 	int choice;
-	while(1)
+	while (1)
 	{
 		static struct option long_options[] =
 		{
@@ -163,12 +161,12 @@ snippet getopt "getopt"
 			optional_argument: "::" */
 
 		choice = getopt_long(argc, argv, "vh", long_options, &option_index);
-		if(choice == -1)
+		if (choice == -1)
 		{
 			break;
 		}
 
-		switch(choice)
+		switch (choice)
 		{
 		case 'v':
 			${2}
@@ -189,11 +187,10 @@ snippet getopt "getopt"
 	}
 
 	/* Deal with non-option arguments here */
-	if(optind < argc)
+	if (optind < argc)
 	{
-		while(optind < argc)
+		while (optind < argc)
 		{
 			${0}
 		}
 	}
-
