@@ -835,8 +835,12 @@ let g:airline#extensions#branch#enabled = 1
 
 
 " -----------------------------------------------------------------------------
-"  AirLine related config
+"  vim-autoformat related config
 " -----------------------------------------------------------------------------
+" json, javascript, html support:
+" $ pip install jsbeautifier
+
+" astyle for C#, C++, C and Java
 " let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_c = ['astyle_c', 'clangformat']
