@@ -833,14 +833,16 @@ let g:airline#extensions#branch#enabled = 1
 " -----------------------------------------------------------------------------
 
 
-
 " -----------------------------------------------------------------------------
 "  vim-autoformat related config
 " -----------------------------------------------------------------------------
+" use clang-format with G=gg or other = indent options.
+autocmd FileType c,cpp setlocal equalprg=clang-format
+
 " json, javascript, html support:
 " $ pip install jsbeautifier
 
-" astyle for C#, C++, C and Java
+" astyle for C++, C and ObjC
 " let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_c = ['clangformat', 'astyle_c']
