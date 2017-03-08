@@ -73,6 +73,7 @@ Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'justinmk/vim-syntax-extra'
+Plug 'jceb/vim-orgmode'
 
 " Plug 'drmikehenry/vim-fixkey'
 "Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
