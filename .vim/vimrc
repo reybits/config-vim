@@ -56,7 +56,7 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+" Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 " very useful
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'godlygeek/tabular'
@@ -205,7 +205,7 @@ set tags+=./tags
 " --- grep using AG -----------------------------------------------------------
 " https://github.com/ggreer/the_silver_searcher
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
+    set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep\ --smart-case
 endif
 
 " --- force filetype for some files -------------------------------------------
@@ -425,16 +425,16 @@ function! s:GrepInFiles()
     let s:cft = &filetype
 
     if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
-        "let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
-        let s:mask = "--cpp --cc --objcpp --objc"
+        let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
+        " let s:mask = "--cpp --cc --objcpp --objc"
     else
-        "let s:ext = expand("%:e")
-        "let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-        let s:mask = "--" . s:cft
+        let s:ext = expand("%:e")
+        let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
+        " let s:mask = "--" . s:cft
     endif
 
-    "execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
-    execute "Ag! " . s:mask . " " . s:word
+    execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
+    " execute "Ag! " . s:mask . " " . s:word
 endfunction
 
 " --- apell checking ----------------------------------------------------------
