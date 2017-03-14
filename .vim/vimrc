@@ -841,8 +841,6 @@ autocmd FileType c,cpp setlocal equalprg=clang-format
 
 " json, javascript, html support:
 " $ npm install -g js-beautify
-" or
-" $ pip install jsbeautifier
 
 " astyle for C++, C and ObjC
 " let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
