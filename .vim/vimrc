@@ -838,7 +838,7 @@ let g:airline#extensions#branch#enabled = 1
 "  vim-autoformat related config
 " -----------------------------------------------------------------------------
 " use clang-format with G=gg or other = indent options.
-autocmd FileType c,cpp setlocal equalprg=clang-format
+" autocmd FileType c,cpp,objc,objcpp setlocal equalprg=clang-format
 
 " json, javascript, html support:
 " $ npm install -g js-beautify
