@@ -840,6 +840,8 @@ let g:airline#extensions#branch#enabled = 1
 autocmd FileType c,cpp setlocal equalprg=clang-format
 
 " json, javascript, html support:
+" $ npm install -g js-beautify
+" or
 " $ pip install jsbeautifier
 
 " astyle for C++, C and ObjC
