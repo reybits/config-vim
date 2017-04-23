@@ -181,7 +181,7 @@ set number              " show the line number for each line
 "set mouse=a             " have the mouse enabled all the time
 set formatoptions-=t    " don't auto-indent plaintext
 set history=1024        " keep N lines of command history
-set cc=80,100
+set cc=81,101
 set ruler               " show the cursor position all the time
 set hlsearch            " highlight searches
 set showmatch           " проверка скобок
