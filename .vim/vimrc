@@ -371,9 +371,9 @@ let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --ex
 
 let $FZF_DEFAULT_OPTS="--inline-info"
 
-" if executable('ag')
-    " let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-" endif
+if executable('ag')
+    let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+endif
 
 " --- add highlighting for function definition in C++ -------------------------
 " au Syntax cpp call EnhanceCppSyntax()
