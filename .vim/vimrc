@@ -43,7 +43,7 @@ call plug#begin('~/.vim/bundle')
 
 " must have
 Plug 'bling/vim-airline'
-Plug 'a.vim', { 'for': ['c','cpp','objc','objcpp'] }
+Plug 'vim-scripts/a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
@@ -62,10 +62,10 @@ Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
-Plug 'renamer.vim'
+Plug 'vim-scripts/renamer.vim'
 Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
-Plug 'spacehi.vim'
-Plug 'TaskList.vim'
+Plug 'vim-scripts/spacehi.vim'
+Plug 'vim-scripts/TaskList.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'Chiel92/vim-autoformat'
 Plug 'chrisbra/vim-diff-enhanced'
