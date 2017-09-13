@@ -63,7 +63,7 @@ Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
 Plug 'vim-scripts/renamer.vim'
-Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
+" Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'vim-scripts/spacehi.vim'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'tpope/vim-fugitive'
