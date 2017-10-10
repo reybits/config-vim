@@ -50,7 +50,7 @@ if s:MSWindows
     Plug 'ctrlpvim/ctrlp.vim'
 else
     Plug 'Valloric/YouCompleteMe', { 'for': [ 'c','cpp','objc','objcpp' ], 'do': './install.py --clang-completer' }
-    Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
 Plug 'SirVer/ultisnips'
