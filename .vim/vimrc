@@ -266,6 +266,8 @@ endif
 
 
 " --- ex command for toggling hex mode - define mapping if desired ------------
+map <silent><F5> <Esc>:Hexmode<CR>
+
 command! -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
