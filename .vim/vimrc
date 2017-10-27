@@ -109,7 +109,9 @@ filetype plugin indent on
 
 " -----------------------------------------------------------------------------
 
-set t_Co=256
+if !has('gui_running')
+    set t_Co=256
+endif
 
 " --- font used in Gvim -------------------------------------------------------
 if has("gui_running")
