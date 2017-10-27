@@ -56,7 +56,8 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+" Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
+Plug 'mileszs/ack.vim'
 " very useful
 Plug 'tikhomirov/vim-glsl', { 'for': ['glsl'] }
 Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
@@ -208,7 +209,8 @@ set tags+=./tags
 " --- grep using AG -----------------------------------------------------------
 " https://github.com/ggreer/the_silver_searcher
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep\ --smart-case
+    " set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep\ --smart-case
+    let g:ackprg = 'ag --nogroup --nocolor --vimgrep --smart-case'
 endif
 
 " --- force filetype for some files -------------------------------------------
@@ -443,7 +445,7 @@ function! s:GrepInFiles()
     endif
 
     " execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
-    execute "Ag! " . s:mask . " " . s:word
+    execute "Ack! " . s:mask . " " . s:word
 endfunction
 
 " --- apell checking ----------------------------------------------------------
