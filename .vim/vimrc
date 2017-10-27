@@ -370,8 +370,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" --- map ctrl-p to FZF file search -------------------------------------------
-noremap <C-p> :FzfFiles<CR>
+" --- FZF related config ------------------------------------------------------
+nnoremap <C-p> :FzfFiles<CR>
+nnoremap ; :FzfBuffers<CR>
+
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
 let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
