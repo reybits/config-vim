@@ -53,6 +53,7 @@ else
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
+Plug 'Valloric/ListToggle', { 'for': [ 'c','cpp','objc','objcpp' ] } " toggle the display of the location and quickfix windows
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
@@ -406,30 +407,30 @@ nnoremap <leader>tb :TagbarToggle<CR>
 " map <S-F2> <Esc>:NERDTreeToggle<CR>
 
 " --- toggles the quickfix window ---------------------------------------------
-map <silent><F2> <Esc>:QFix<CR>
+" map <silent><F2> <Esc>:QFix<CR>
 
-let g:jah_Quickfix_Win_Height = 10
+" let g:jah_Quickfix_Win_Height = 10
 
-command! -bang -nargs=? QFix call QFixToggle(<bang>0)
+" command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 
-function! QFixToggle(forced)
-    if exists("g:qfix_win") && a:forced == 0
-        cclose
-    else
-        " if !exists("g:loaded_dispatch")
-            execute "copen " . g:jah_Quickfix_Win_Height
-        " else
-            " execute "Copen!"
-        " endif
-    endif
-endfunction
+" function! QFixToggle(forced)
+    " if exists("g:qfix_win") && a:forced == 0
+        " cclose
+    " else
+        " " if !exists("g:loaded_dispatch")
+            " execute "copen " . g:jah_Quickfix_Win_Height
+        " " else
+            " " execute "Copen!"
+        " " endif
+    " endif
+" endfunction
 
-" used to track the quickfix window
-augroup QFixToggle
-    au!
-    au BufWinEnter quickfix let g:qfix_win = bufnr("$")
-    au BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
-augroup END
+" " used to track the quickfix window
+" augroup QFixToggle
+    " au!
+    " au BufWinEnter quickfix let g:qfix_win = bufnr("$")
+    " au BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
+" augroup END
 " -----------------------------------------------------------------------------
 
 " --- search world under cursor in all files with current ext -----------------
