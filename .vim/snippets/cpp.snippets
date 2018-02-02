@@ -70,7 +70,7 @@ snippet mu
 ## Class
 # class
 snippet cl "class {}"
-	class ${1:`expand("%:t:r")`}
+	class ${1:c`expand("%:t:r")`}
 	{
 	public:
 		$1(${2});
