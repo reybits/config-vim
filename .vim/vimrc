@@ -332,7 +332,9 @@ nnoremap <leader>D :BD<CR>
 nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
 " --- YCM go to defenition by semantic ----------------------------------------
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>s :YcmCompleter GoToDeclaration<cr>
 
 " --- toggle word under cursor ------------------------------------------------
 " nnoremap <leader>tw :ToggleWord<CR>
