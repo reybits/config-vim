@@ -53,7 +53,7 @@ else
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
-Plug 'Valloric/ListToggle', { 'for': [ 'c','cpp','objc','objcpp' ] } " toggle the display of the location and quickfix windows
+Plug 'Valloric/ListToggle' " toggle the display of the location and quickfix windows
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
@@ -98,7 +98,7 @@ filetype plugin indent on
 " augroup load_snippets
     " au!
     " au InsertEnter * call plug#load('ultisnips')
-                " \| au! load_snippets
+    " \| au! load_snippets
 " augroup END
 
 " if s:MSWindows
@@ -245,15 +245,15 @@ au FileType help NoSpaceHi
 
 " --- switch to us keyboard layout when insert mode leaved --------------------
 au InsertLeave *
-    \ if has('unix') && &term == 'builtin_gui' |
-    \   silent !qdbus ru.gentoo.KbddService /ru/gentoo/KbddService ru.gentoo.kbdd.set_layout 0 >/dev/null |
-    \ endif
+            \ if has('unix') && &term == 'builtin_gui' |
+            \   silent !qdbus ru.gentoo.KbddService /ru/gentoo/KbddService ru.gentoo.kbdd.set_layout 0 >/dev/null |
+            \ endif
 
 " --- always jump to the last cursor position "  ------------------------------
 au BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \    exe "normal g'\"" |
-    \ endif
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \    exe "normal g'\"" |
+            \ endif
 
 " --- redraw window at startup because lazyredraw prevent screen redraw -------
 au VimEnter * redraw
@@ -423,8 +423,8 @@ nnoremap <leader>tb :TagbarToggle<CR>
         " " if !exists("g:loaded_dispatch")
             " execute "copen " . g:jah_Quickfix_Win_Height
         " " else
-            " " execute "Copen!"
-        " " endif
+        " " execute "Copen!"
+    " " endif
     " endif
 " endfunction
 
