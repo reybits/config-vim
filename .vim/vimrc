@@ -78,7 +78,7 @@ Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'justinmk/vim-syntax-extra'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-eunuch'
-Plug 'Valloric/MatchTagAlways' " always highlights the enclosing html/xml tags.
+" Plug 'Valloric/MatchTagAlways' " always highlights the enclosing html/xml tags.
 
 " Plug 'tpope/vim-dispatch'
 " Plug 'drmikehenry/vim-fixkey'
