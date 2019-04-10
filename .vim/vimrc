@@ -341,7 +341,7 @@ nnoremap <leader>s :YcmCompleter GoToDeclaration<cr>
 " nnoremap <leader>tw :ToggleWord<CR>
 
 " --- clears the search register ----------------------------------------------
-nmap <silent> <space> :nohlsearch<CR>
+nmap <silent> <leader><space> :nohlsearch<CR>
 
 " --- disable arrow keys ------------------------------------------------------
 nnoremap <up> <nop>
