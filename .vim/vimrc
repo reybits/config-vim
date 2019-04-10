@@ -183,6 +183,7 @@ set cino+=g0            " public: indent
 " set cino+=N-s           " no namespace indent
 set cino+=t0            " function return declaration
 set cino+=(0            " unclosed prarntheses
+set cino+=j1,(0,ws,Ws   " enable partial c++11 (lambda) support
 "set cursorline          " highlight current line
 set number              " show the line number for each line
 "set mouse=a             " have the mouse enabled all the time
