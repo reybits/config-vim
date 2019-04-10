@@ -378,7 +378,8 @@ nnoremap <C-l> <C-w>l
 
 " --- FZF related config ------------------------------------------------------
 nnoremap <C-p> :FzfFiles<CR>
-nnoremap ; :FzfBuffers<CR>
+" nnoremap ; :FzfBuffers<CR>
+nnoremap <space> :FzfBuffers<CR>
 
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
