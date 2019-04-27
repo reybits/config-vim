@@ -137,7 +137,16 @@ if has("gui_running")
     endif
 endif
 
-colorscheme Tomorrow-Night
+if has("termguicolors")
+    set termguicolors
+endif
+
+" colorscheme Tomorrow-Night
+" colorscheme Tomorrow-Night-Eighties
+
+
+let g:material_theme_style = 'dark'
+colorscheme material
 
 syntax on               " allow syntax highlighting
 
@@ -378,7 +387,6 @@ nnoremap <C-l> <C-w>l
 
 " --- FZF related config ------------------------------------------------------
 nnoremap <C-p> :FzfFiles<CR>
-" nnoremap ; :FzfBuffers<CR>
 nnoremap <space> :FzfBuffers<CR>
 
 let g:fzf_command_prefix = 'Fzf'
