@@ -157,6 +157,8 @@ set noswapfile
 set viminfo='100,<50,s10,h,n~/.vim/viminfo
 set autoread            " W11: autoread file after it changed outside vim
 
+set nomodeline
+
 " highlight whitespaces in a convenient way
 set list
 "set listchars=tab:→\ ,trail:·,extends:»,nbsp:·,eol:¶
@@ -201,7 +203,8 @@ set history=1024        " keep N lines of command history
 set cc=81,101
 set ruler               " show the cursor position all the time
 set hlsearch            " highlight searches
-set showmatch           " проверка скобок
+" set showmatch           " проверка скобок
+let g:loaded_matchparen=1
 set foldmethod=marker
 "set foldopen&
 "set foldclose=all
