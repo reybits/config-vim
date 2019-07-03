@@ -249,6 +249,9 @@ augroup CursorLine
     au WinLeave * setlocal nocursorline
 augroup END
 
+" --- refresh airline (sometimes it gone out)  --------------------------------
+au BufEnter,QuickFixCmdPost * AirlineRefresh
+
 " --- higlight redundant tabs / spaces ----------------------------------------
 au BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 au FileType help NoSpaceHi
@@ -861,6 +864,10 @@ endif
 
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+
+let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#error_symbol = 'E:'
+let g:airline#extensions#ycm#warning_symbol = 'W:'
 " -----------------------------------------------------------------------------
 
 
