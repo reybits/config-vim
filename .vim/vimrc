@@ -224,13 +224,6 @@ set pumheight=15        " Limit popup menu height
 " --- additional tags ---------------------------------------------------------
 set tags+=./tags
 
-" --- grep using AG -----------------------------------------------------------
-" https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-    " set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep\ --smart-case
-    let g:ackprg = 'ag --nogroup --nocolor --vimgrep --smart-case'
-endif
-
 " --- force filetype for some files -------------------------------------------
 au BufNewFile,BufRead *.m set filetype=objc
 au BufNewFile,BufRead *.mm set filetype=objcpp
@@ -401,8 +394,23 @@ let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --ex
 
 let $FZF_DEFAULT_OPTS="--inline-info"
 
-if executable('ag')
-    let $FZF_DEFAULT_COMMAND = 'ag -l -g "" -Q'
+" if executable('ag')
+    " let $FZF_DEFAULT_COMMAND = 'ag -l -g "" -Q -t'
+" endif
+if executable('rg')
+    let $FZF_DEFAULT_COMMAND = 'rg --files --vimgrep
+                \ --iglob \!*.png
+                \ --iglob \!*.jpg
+                \ --iglob \!*.psd
+                \ --iglob \!*.ico
+                \ --iglob \!*.wav
+                \ --iglob \!*.ogg
+                \ --iglob \!*.mp3
+                \ --iglob \!*.ttf
+                \ --iglob \!*.bin
+                \ --iglob \!*.jar
+                \ --iglob \!*.jks
+                \ --iglob \!*.so'
 endif
 
 " --- add highlighting for function definition in C++ -------------------------
@@ -452,24 +460,26 @@ nnoremap <leader>tb :TagbarToggle<CR>
 " augroup END
 " -----------------------------------------------------------------------------
 
+" --- grep using ripgrep -----------------------------------------------------------
+if executable('rg')
+    let g:ackprg = 'rg --vimgrep'
+endif
+
 " --- search world under cursor in all files with current ext -----------------
 map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
 command! GrepWordInFiles :call s:GrepInFiles()
 function! s:GrepInFiles()
     let s:word = expand("<cword>")
-
     let s:cft = &filetype
 
     if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
-        " let s:mask = "*.h *.c *.cpp **/*.h **/*.c **/*.cpp **/*.ino"
-        let s:mask = "--cpp --cc --objcpp --objc"
+        let s:mask = "-t cpp -t objcpp -t objc"
     else
         " let s:ext = expand("%:e")
         " let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-        let s:mask = "--" . s:cft
+        let s:mask = ""
     endif
 
-    " execute "silent! noa vim! /\\<" . s:word . "\\>/gj " . s:mask | copen
     execute "Ack! " . s:mask . " " . s:word
 endfunction
 
