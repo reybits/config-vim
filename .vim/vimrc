@@ -343,8 +343,10 @@ nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
 " --- YCM go to defenition by semantic ----------------------------------------
 " nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>a :YcmCompleter GoTo<cr>
 nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>s :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>o :YcmCompleter GetDoc<cr>
 
 " --- toggle word under cursor ------------------------------------------------
 " nnoremap <leader>tw :ToggleWord<CR>
@@ -633,6 +635,27 @@ let g:ycm_enable_diagnostic_highlighting      = 0
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_min_num_identifier_candidate_chars  = 0
 let g:ycm_use_ultisnips_completer             = 1
+
+" Move and resize widow on YcmDiags command
+function! s:CustomizeYcmLocationWindow()
+    " Move the window to the top of the screen.
+    wincmd K
+    " Set the window height to 5.
+    5wincmd _
+    " Switch back to working window.
+    wincmd p
+endfunction
+autocmd User YcmLocationOpened call s:CustomizeYcmLocationWindow()
+
+" Move and resize widow on YcmDiags command
+function! s:CustomizeYcmQuickFixWindow()
+    " Move the window to the top of the screen.
+    wincmd K
+    " Set the window height to 5.
+    5wincmd _
+endfunction
+
+autocmd User YcmQuickFixOpened call s:CustomizeYcmQuickFixWindow()
 " -----------------------------------------------------------------------------
 
 
