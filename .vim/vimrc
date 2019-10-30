@@ -42,7 +42,7 @@ filetype off
 call plug#begin('~/.vim/bundle')
 
 " must have
-Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'vim-scripts/a.vim', { 'for': ['c','cpp','objc','objcpp'] }
 if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -76,7 +76,7 @@ Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'justinmk/vim-syntax-extra'
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-eunuch'
 " Plug 'Valloric/MatchTagAlways' " always highlights the enclosing html/xml tags.
 
@@ -212,6 +212,7 @@ set popt+=syntax:y      " syntax when printing
 set pastetoggle=<F10>   " mode that allow to paste text from clipboard without formating
 set scrolloff=5         " rows number to show while scrolling
 set laststatus=2        " always show status line
+set noshowmode          " lightline: remove '-- INSERT --'
 if $TMUX == ''
     set clipboard=unnamedplus,unnamed
 endif
@@ -244,9 +245,6 @@ augroup CursorLine
     au VimEnter,WinEnter,BufWinEnter *.xml setlocal nocursorline
     au WinLeave * setlocal nocursorline
 augroup END
-
-" --- refresh airline (sometimes it gone out)  --------------------------------
-au BufEnter,QuickFixCmdPost * AirlineRefresh
 
 " --- higlight redundant tabs / spaces ----------------------------------------
 au BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
@@ -875,36 +873,32 @@ set efm^=\ %#[javac]\ %#%f:%l:\ %m
 
 
 " -----------------------------------------------------------------------------
-"  AirLine related config
+"  Lightline related config
 " -----------------------------------------------------------------------------
-let g:airline_left_sep  = ''
-let g:airline_right_sep = ''
+let g:lightline = {
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \ },
+            \ 'component_function': {
+            \   'fileformat': 'LightlineFileformat',
+            \   'filetype': 'LightlineFiletype',
+            \   'gitbranch': 'fugitive#head'
+            \ },
+            \ 'component': {
+            \   'lineinfo': '0x%02B : %3l:%-2v',
+            \ },
+            \ }
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.paste = 'ρ'
-if has("mac")
-    let g:airline_symbols.branch   = '∫'
-    let g:airline_symbols.readonly = '®'
-    let g:airline_symbols.linenr   = '¶'
-elseif s:MSWindows
-    let g:airline_symbols.branch   = 'b'
-    let g:airline_symbols.readonly = '-'
-    let g:airline_symbols.linenr   = ''
-else
-    let g:airline_symbols.branch   = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr   = '¶'
-endif
+function! LightlineFileformat()
+    return winwidth(0) > 80 ? &fileformat : ''
+endfunction
 
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-
-let g:airline#extensions#ycm#enabled = 1
-let g:airline#extensions#ycm#error_symbol = 'E:'
-let g:airline#extensions#ycm#warning_symbol = 'W:'
+function! LightlineFiletype()
+    return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
 " -----------------------------------------------------------------------------
+
 
 
 " -----------------------------------------------------------------------------
