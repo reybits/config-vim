@@ -230,6 +230,7 @@ au BufNewFile,BufRead *.m set filetype=objc
 au BufNewFile,BufRead *.mm set filetype=objcpp
 au BufNewFile,BufRead *.ino set filetype=cpp
 au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.vsh,*.fsh set filetype=glsl
 
 " --- higlight word under cursor ----------------------------------------------
 " augroup AutoHighlight
@@ -671,6 +672,8 @@ let g:alternateExtensions_h   = "cpp,cc,mm,c,m,ino,CPP,CC,C,INO"
 let g:alternateExtensions_H   = "cpp,cc,mm,c,m,ino,CPP,CC,C,INO"
 let g:alternateExtensions_hpp = "cpp,cc,mm,c,ino,CPP,CC,INO"
 let g:alternateExtensions_HPP = "cpp,cc,mm,c,ino,CPP,CC,INO"
+let g:alternateExtensions_fsh  = "vsh"
+let g:alternateExtensions_vsh  = "fsh"
 " -----------------------------------------------------------------------------
 
 
