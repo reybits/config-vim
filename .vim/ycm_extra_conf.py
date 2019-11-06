@@ -31,8 +31,8 @@
 import os
 import ycm_core
 
-# import subprocess
-# xcode_cpp11headers = subprocess.Popen("xcode-select -p", stdout = subprocess.PIPE, shell=True).communicate()[0].rstrip('\n') + '/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
+import subprocess
+xcode_cpp_headers = subprocess.Popen("xcode-select -p", stdout = subprocess.PIPE, shell=True).communicate()[0].rstrip('\n') + '/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
 
 # users_home = os.environ['HOME'];
 
@@ -55,7 +55,7 @@ flags = [
 # a "-std=<something>".
 # For a C project, you would set this to something like 'c99' instead of
 # 'c++11'.
-'-std=c++11',
+'-std=c++14',
 # ...and the same thing goes for the magic -x option which specifies the
 # language that the files to be compiled are written in. This is mostly
 # relevant for c++ headers.
@@ -63,13 +63,12 @@ flags = [
 '-x',
 'c++',
 # Extra paths that don't exist are not harmful
-# '-I', '/Users/andrey/projects/hgex/include',
-# '-I', '/home/andrey/projects/libs/hgex/include',
+'-Isrc',
 # android support
 # '-I', users_home + '/tools/android-ndk/platforms/android-21/arch-arm/usr/include',
 # '-I', users_home + '/tools/android-ndk/sources/android/native_app_glue',
 # xcode support
-# '-isystem', xcode_cpp11headers,
+'-isystem', xcode_cpp_headers,
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
