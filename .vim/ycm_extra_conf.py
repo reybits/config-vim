@@ -32,7 +32,9 @@ import os
 import ycm_core
 
 import subprocess
-xcode_cpp_headers = subprocess.Popen("xcode-select -p", stdout = subprocess.PIPE, shell=True).communicate()[0].rstrip('\n') + '/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
+process = subprocess.Popen("xcode-select -p", stdout=subprocess.PIPE, shell=True, encoding="utf-8")
+data = process.communicate()
+xcode_cpp_headers = data[0].rstrip('\n') + '/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
 
 # users_home = os.environ['HOME'];
 
