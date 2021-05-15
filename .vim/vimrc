@@ -41,44 +41,42 @@ filetype off
 
 call plug#begin('~/.vim/bundle')
 
-" must have
 Plug 'itchyny/lightline.vim'
-Plug 'vim-scripts/a.vim', { 'for': ['c','cpp','objc','objcpp'] }
+
 if s:MSWindows
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'Shougo/neocomplete.vim'
     Plug 'ctrlpvim/ctrlp.vim'
 else
-    Plug 'Valloric/YouCompleteMe', { 'for': [ 'c','cpp','objc','objcpp' ], 'do': './install.py --clang-completer' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
+
 Plug 'Valloric/ListToggle' " toggle the display of the location and quickfix windows
-Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-" Plug 'rking/ag.vim' " very fast grep in files, depends on https://github.com/ggreer/the_silver_searcher
 Plug 'mileszs/ack.vim'
-" very useful
-Plug 'tikhomirov/vim-glsl', { 'for': ['glsl'] }
-Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
+Plug 'Chiel92/vim-autoformat'
+Plug 'vim-scripts/renamer.vim'
+Plug 'chrisbra/vim-diff-enhanced'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
-Plug 'mhinz/vim-signify'
-Plug 'vim-scripts/renamer.vim'
-" Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'vim-scripts/spacehi.vim'
 Plug 'vim-scripts/TaskList.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'Chiel92/vim-autoformat'
-Plug 'chrisbra/vim-diff-enhanced'
+Plug 'SirVer/ultisnips'
+Plug 'tikhomirov/vim-glsl', { 'for': ['glsl'] }
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'justinmk/vim-syntax-extra'
-" Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-eunuch'
+" Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
+" Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
+" Plug 'tpope/vim-eunuch'
 " Plug 'Valloric/MatchTagAlways' " always highlights the enclosing html/xml tags.
+" Plug 'jceb/vim-orgmode'
 
 " Plug 'tpope/vim-dispatch'
 " Plug 'drmikehenry/vim-fixkey'
@@ -95,25 +93,11 @@ call plug#end()
 " --- enable detection, plugins and indenting in one step ---------------------
 filetype plugin indent on
 
-" augroup load_snippets
-    " au!
-    " au InsertEnter * call plug#load('ultisnips')
-    " \| au! load_snippets
-" augroup END
-
-" if s:MSWindows
-" else
-" augroup load_ycm
-    " au!
-    " au InsertEnter *.c,*.cpp,*.h,*.m,*.mm,*.ino call plug#load('YouCompleteMe')
-                " \| call youcompleteme#Enable() | au! load_ycm
-" augroup END
-" endif
-
 " -----------------------------------------------------------------------------
 
 if !has('gui_running')
     set t_Co=256
+    set termguicolors
 endif
 
 " --- font used in Gvim -------------------------------------------------------
@@ -153,6 +137,7 @@ syntax on               " allow syntax highlighting
 set title               " change the terminal's title
 set showcmd             " display incomplete commands
 set nobackup
+set nowritebackup
 set noswapfile
 set viminfo='100,<50,s10,h,n~/.vim/viminfo
 set autoread            " W11: autoread file after it changed outside vim
@@ -340,13 +325,6 @@ nnoremap <leader>D :BD<CR>
 " --- clean trailing whitespace -----------------------------------------------
 nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
-" --- YCM go to defenition by semantic ----------------------------------------
-" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>a :YcmCompleter GoTo<cr>
-nnoremap <leader>d :YcmCompleter GoToDefinition<cr>
-nnoremap <leader>s :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>o :YcmCompleter GetDoc<cr>
-
 " --- toggle word under cursor ------------------------------------------------
 " nnoremap <leader>tw :ToggleWord<CR>
 
@@ -368,16 +346,16 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " --- navigate in command mode ------------------------------------------------
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+" cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down>
 
 " --- useful movement in wrap mode --------------------------------------------
 nnoremap j gj
 nnoremap k gk
 
 " --- перемещение по элементам в quickfix -------------------------------------
-nnoremap <C-J> :cn<CR>zvzz:cc<CR>
-nnoremap <C-K> :cp<CR>zvzz:cc<CR>
+" nnoremap <C-J> :cn<CR>zvzz:cc<CR>
+" nnoremap <C-K> :cp<CR>zvzz:cc<CR>
 
 " --- simplified window navigation --------------------------------------------
 nnoremap <C-j> <C-w>j
@@ -389,6 +367,7 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-p> :FzfFiles<CR>
 nnoremap <space> :FzfBuffers<CR>
 
+let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.7, 'border': 'horizontal' } }
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
 let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
@@ -413,16 +392,6 @@ if executable('rg')
                 \ --iglob \!*.jks
                 \ --iglob \!*.so'
 endif
-
-" --- add highlighting for function definition in C++ -------------------------
-" au Syntax cpp call EnhanceCppSyntax()
-" function! EnhanceCppSyntax()
-    " syn match cCustomParen   "(" contains=cParen contains=cCppParen
-    " syn match cCustomFunc    "\w\+\s*(" contains=cCustomParen
-    " syn match cppCustomScope "::"
-    " syn match cppCustomClass "\w\+\s*::" contains=cCustomScope
-    " hi def link cCustomFunc  Function
-" endfunction
 
 " --- show / hide the line number for each line -------------------------------
 imap <F1> <Esc>:set<Space>nu!<CR>a
@@ -499,7 +468,8 @@ endif
 map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
-map <F11> <Esc>:A<CR>
+" map <F11> <Esc>:A<CR>
+map <F11> <Esc>:CocCommand clangd.switchSourceHeader<CR>
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:MakeTags<CR>
@@ -540,189 +510,27 @@ let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 
 
 
+" -----------------------------------------------------------------------------
+
+source $HOME/.vim/settings/coc.vim
+source $HOME/.vim/settings/lightline.vim
+source $HOME/.vim/settings/vim-autoformat.vim
+" source $HOME/.vim/settings/ctrlp.vim
+" source $HOME/.vim/settings/ycm.vim
+" source $HOME/.vim/settings/syntastic.vim
+" source $HOME/.vim/settings/a.vim
+
+
 
 " -----------------------------------------------------------------------------
 " UltiSnips related config
 " -----------------------------------------------------------------------------
-let g:UltiSnipsExpandTrigger       = '<C-\>'
-let g:UltiSnipsEnableSnipMate      = 1
-let g:UltiSnipsSnippetsDir         = $HOME.'/.vim/snippets'
+" let g:UltiSnipsExpandTrigger       = '<C-\>'
+" let g:UltiSnipsEnableSnipMate      = 1
+" let g:UltiSnipsSnippetsDir         = $HOME.'/.vim/snippets'
 "let g:UltiSnipsJumpForwardTrigger  = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " -----------------------------------------------------------------------------
-
-
-
-
-" -----------------------------------------------------------------------------
-" neocomplete related config
-" -----------------------------------------------------------------------------
-if s:MSWindows
-    " Disable AutoComplPop.
-    let g:acp_enableAtStartup = 0
-    " Use neocomplete.
-    let g:neocomplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " Recommended key-mappings.
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-        return neocomplete#close_popup() . "\<CR>"
-        " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplete#close_popup()
-    inoremap <expr><C-e>  neocomplete#cancel_popup()
-    " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-    " AutoComplPop like behavior.
-    "let g:neocomplete#enable_auto_select = 1
-
-    if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-    endif
-    let g:neocomplete#force_overwrite_completefunc = 1
-    let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-    let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-    let g:neocomplete#force_omni_input_patterns.objc = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
-    let g:neocomplete#force_omni_input_patterns.objcpp = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
-    let g:clang_complete_auto = 0
-    let g:clang_auto_select = 0
-    let g:clang_use_library = 1
-endif
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" youcompleteme related config
-" -----------------------------------------------------------------------------
-let g:ycm_global_ycm_extra_conf               = $HOME.'/.vim/ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf                  = 0
-let g:ycm_complete_in_comments                = 1
-let g:ycm_complete_in_strings                 = 1
-let g:ycm_echo_current_diagnostic             = 1
-let g:ycm_enable_diagnostic_signs             = 1
-let g:ycm_enable_diagnostic_highlighting      = 0
-let g:ycm_collect_identifiers_from_tags_files = 0
-let g:ycm_min_num_identifier_candidate_chars  = 0
-let g:ycm_use_ultisnips_completer             = 1
-
-" Move and resize widow on YcmDiags command
-function! s:CustomizeYcmLocationWindow()
-    " Move the window to the top of the screen.
-    wincmd K
-    " Set the window height to 5.
-    5wincmd _
-    " Switch back to working window.
-    wincmd p
-endfunction
-autocmd User YcmLocationOpened call s:CustomizeYcmLocationWindow()
-
-" Move and resize widow on YcmDiags command
-function! s:CustomizeYcmQuickFixWindow()
-    " Move the window to the top of the screen.
-    wincmd K
-    " Set the window height to 5.
-    5wincmd _
-endfunction
-
-autocmd User YcmQuickFixOpened call s:CustomizeYcmQuickFixWindow()
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" A.vim related config
-" -----------------------------------------------------------------------------
-let g:alternateExtensions_cpp = "h,H,hpp,HPP"
-let g:alternateExtensions_CPP = "h,H,hpp,HPP"
-let g:alternateExtensions_mm  = "h"
-let g:alternateExtensions_m   = "h"
-let g:alternateExtensions_c   = "h,H"
-let g:alternateExtensions_C   = "h,H"
-let g:alternateExtensions_h   = "cpp,cc,mm,c,m,ino,CPP,CC,C,INO"
-let g:alternateExtensions_H   = "cpp,cc,mm,c,m,ino,CPP,CC,C,INO"
-let g:alternateExtensions_hpp = "cpp,cc,mm,c,ino,CPP,CC,INO"
-let g:alternateExtensions_HPP = "cpp,cc,mm,c,ino,CPP,CC,INO"
-let g:alternateExtensions_fsh  = "vsh"
-let g:alternateExtensions_vsh  = "fsh"
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" syntastic related config
-" -----------------------------------------------------------------------------
-let g:syntastic_error_symbol         = '✖' " '✗'
-let g:syntastic_warning_symbol       = '►' " '⚠'
-let g:syntastic_style_error_symbol   = '⚡'
-let g:syntastic_style_warning_symbol = '⚡'
-let g:syntastic_mode_map             = {
-            \ 'mode' : 'active',
-            \ 'active_filetypes' : ['c', 'cpp', 'objc', 'objcpp'],
-            \ 'passive_filetypes': ['']
-            \ }
-"let g:syntastic_c_include_dirs            = [ 'include', '../include' ]
-"let g:syntastic_cpp_include_dirs          = [ 'include', '../include' ]
-"let g:syntastic_cpp_remove_include_errors = 1
-"let g:syntastic_cpp_compiler              = 'clang++'
-"let g:syntastic_cpp_config_file           = $HOME.'/.vim/syntastic_cpp_config'
-
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++
-            \ -Wall -Wextra -Wshadow -Wpointer-arith
-            \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
-            \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
-            \ -Winline -Wno-long-long -Wuninitialized -Wconversion
-            \ -Wstrict-prototypes -pedantic'
-let g:syntastic_tex_checkers         = ['lacheck']
-let g:syntastic_c_compiler_options   = '-std=c11 -stdlib=libc++
-            \ -Wall -Wextra -Wshadow -Wpointer-arith
-            \ -Wcast-align -Wwrite-strings -Wmissing-prototypes
-            \ -Wmissing-declarations -Wredundant-decls -Wnested-externs
-            \ -Winline -Wno-long-long -Wuninitialized -Wconversion
-            \ -Wstrict-prototypes -pedantic'
-let g:syntastic_stl_format               = '[ = > ln:%F (%t)]'
-let g:syntastic_aggregate_errors         = 1
-let g:syntastic_enable_signs             = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list            = 2
-let g:syntastic_check_on_open            = 1
-let g:syntastic_check_on_wq              = 0
-let g:syntastic_c_no_include_search      = 1
-let g:syntastic_c_auto_refresh_includes  = 1
-let g:syntastic_c_check_header           = 1
-
-" let g:ycm_show_diagnostics_ui            = 0
-" -----------------------------------------------------------------------------
-
 
 
 
@@ -734,18 +542,6 @@ let Tlist_Auto_Update             = 1
 let Tlist_Close_On_Select         = 1
 let Tlist_Exit_OnlyWindow         = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-" NERDTree related config
-" -----------------------------------------------------------------------------
-" let NERDTreeIgnore = ['.*\.o$', '.*\~$', '.*\.out$', '.*\.so$', '.*\.a$']
-" let NERDTreeQuitOnOpen          = 1 " Quit on opening files from the tree
-" let NERDTreeHighlightCursorline = 1 " Highlight the selected entry in the tree
-" let NERDTreeChDirMode           = 2 " change working directory
-" let NERDTreeMinimalUI           = 1
 " -----------------------------------------------------------------------------
 
 
@@ -763,22 +559,6 @@ let g:NERDSpaceDelims = 1
 " -----------------------------------------------------------------------------
 let g:manpageview_options      = '-a'
 let g:manpageview_multimanpage = 1
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  Session related config
-" -----------------------------------------------------------------------------
-let g:session_directory       = $HOME.'/.vim/sessions'
-let g:session_autoload        = 'yes'
-let g:session_autosave        = 'yes'
-let g:session_default_to_last = 1
-let g:session_command_aliases = 1 " Session commands starts from 'Session'
-let g:session_persist_colors  = 0 " Prevent save the color scheme and the ‘background’ option
-set sessionoptions-=help     " If you don't want help windows to be restored:
-set sessionoptions-=options  " Don't persist options and mappings because it can corrupt sessions.
-"set sessionoptions-=tabpages " If you only want to save the current tab page.
 " -----------------------------------------------------------------------------
 
 
@@ -804,62 +584,6 @@ let g:DoxygenToolkit_authorName = "Andrey A. Ugolnik"
 
 
 " -----------------------------------------------------------------------------
-" CtrlP related config
-" -----------------------------------------------------------------------------
-"let g:ctrlp_dotfiles = 0
-
-"When starting up, CtrlP sets its local working directory according to this
-"variable:
-  "c - the directory of the current file.
-  "a - like "c", but only applies when the current working directory outside of
-      "CtrlP isn't a direct ancestor of the directory of the current file.
-  "r - the nearest ancestor that contains one of these directories or files:
-      ".git .hg .svn .bzr _darcs
-  "w - begin finding a root from the current working directory outside of CtrlP
-      "instead of from the directory of the current file (default). Only applies
-      "when "r" is also present.
-  "0 or <empty> - disable this feature.
-"let g:ctrlp_working_path_mode = 'ra'
-
-" Set this to 1 to enable the lazy-update feature: only update the match window
-" after typing's been stopped for a certain amount of time:
-let g:ctrlp_lazy_update = 1
-
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
-
-" Set this to 1 to set searching by filename (as opposed to full path)
-let g:ctrlp_by_filename = 1
-
-"let g:ctrlp_mruf_include = '\.h$|\.c$\|\.cpp$|\.m$|\.mm$'
-let g:ctrlp_extensions = ['mixed']
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-"unlet g:ctrlp_custom_ignore
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$|\v[\/](gen|bin|obj|build|libs|assets|tmp|temp)$',
-            \ 'file': '\v\.(o|o\.d|so|dll|exe)$@<!$'
-            \ }
-
-let g:ctrlp_mruf_relative = 1 " MRU only in the current working directory.
-let g:ctrlp_mruf_exclude = '' " exclude all MRU mask
-let g:ctrlp_mruf_save_on_update = 0
-
-if executable('ag')
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
-else
-    " Ignore files in .gitignore
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-endif
-
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
 "  ErrorMarker related config
 " -----------------------------------------------------------------------------
 let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
@@ -871,61 +595,6 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 " Java error format support by walker from LOR
 " -----------------------------------------------------------------------------
 set efm^=\ %#[javac]\ %#%f:%l:\ %m
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  Lightline related config
-" -----------------------------------------------------------------------------
-let g:lightline = {
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-            \ },
-            \ 'component_function': {
-            \   'fileformat': 'LightlineFileformat',
-            \   'filetype': 'LightlineFiletype',
-            \   'gitbranch': 'fugitive#head'
-            \ },
-            \ 'component': {
-            \   'lineinfo': '0x%02B : %3l:%-2v',
-            \ },
-            \ }
-
-function! LightlineFileformat()
-    return winwidth(0) > 80 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-    return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-" -----------------------------------------------------------------------------
-
-
-
-" -----------------------------------------------------------------------------
-"  vim-autoformat related config
-" -----------------------------------------------------------------------------
-" use clang-format with G=gg or other = indent options.
-" autocmd FileType c,cpp,objc,objcpp setlocal equalprg=clang-format
-
-" json, javascript, html support:
-" $ npm install -g js-beautify
-
-" astyle for C++, C and ObjC
-" let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -xC80 -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
-let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
-let g:formatters_c = ['clangformat', 'astyle_c']
-
-let g:formatdef_astyle_cpp = g:formatdef_astyle_c
-let g:formatters_cpp = ['clangformat', 'astyle_cpp']
-
-let g:formatdef_astyle_objc = '"astyle --mode=c --style=ansi -xM -xQ -xP2 -N -U -j -k1 -m0 -xW -w -Y -pcH".(&expandtab ? "s".shiftwidth() : "t")'
-let g:formatters_objc = ['clangformat', 'astyle_objc']
-
-let g:formatdef_astyle_objcpp = g:formatdef_astyle_objc
-let g:formatters_objcpp = ['clangformat', 'astyle_objcpp']
 " -----------------------------------------------------------------------------
 
 

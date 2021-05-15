@@ -1,0 +1,29 @@
+{
+/*
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "rootPatterns": [".ccls-root", "compile_commands.json", ".git/", ".hg/"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls-cache"
+                },
+                // This will re-index the file on buffer change which is definitely a performance hit. See if it works for you
+                "index": {
+                    "onChange": true
+                }
+            },
+            "client": {
+                "snippetSupport": true
+            }
+        }
+    },
+*/
+    "clangd": {
+        "fallbackFlags": [
+            "-std=c++14"
+        ],
+        "path": "/Users/andrey/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
+    }
+}
