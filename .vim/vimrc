@@ -95,12 +95,6 @@ filetype plugin indent on
 
 " -----------------------------------------------------------------------------
 
-if !has('gui_running')
-    set t_Co=256
-    set termguicolors
-endif
-
-" --- font used in Gvim -------------------------------------------------------
 if has("gui_running")
     set guioptions-=T " disable toolbar
     set guioptions-=l " disable left scroolbar
@@ -119,18 +113,17 @@ if has("gui_running")
     else
         set guifont=Droid\ Sans\ Mono\ 12
     endif
+else
+    if &t_Co > 256 && has("termguicolors")
+        set termguicolors
+    endif
 endif
 
-if has("termguicolors")
-    set termguicolors
-endif
-
-" colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night
 " colorscheme Tomorrow-Night-Eighties
 
-
-let g:material_theme_style = 'dark'
-colorscheme material
+" let g:material_theme_style = 'dark'
+" colorscheme material
 
 syntax on               " allow syntax highlighting
 
