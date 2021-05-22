@@ -39,7 +39,21 @@ let g:ctrlp_mruf_relative = 1 " MRU only in the current working directory.
 let g:ctrlp_mruf_exclude = '' " exclude all MRU mask
 let g:ctrlp_mruf_save_on_update = 0
 
-if executable('ag')
+if executable('rg')
+    let g:ctrlp_user_command = 'rg --files --vimgrep
+                    \ --iglob \!*.png
+                    \ --iglob \!*.jpg
+                    \ --iglob \!*.psd
+                    \ --iglob \!*.ico
+                    \ --iglob \!*.wav
+                    \ --iglob \!*.ogg
+                    \ --iglob \!*.mp3
+                    \ --iglob \!*.ttf
+                    \ --iglob \!*.bin
+                    \ --iglob \!*.jar
+                    \ --iglob \!*.jks
+                    \ --iglob \!*.so'
+elseif executable('ag')
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 

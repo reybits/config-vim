@@ -11,10 +11,16 @@ scriptencoding utf-8
 " --- This must be first, because it changes other options as a side effect ---
 set nocompatible
 
-let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64') + has('win32unix') + has('win64unix')
+if !exists("g:os")
+    if has('win95') || has('win16') || has('win32') || has('win64') || has('win32unix') || has('win64unix')
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
 
 " on Windows use .vim instead vimfiles
-if s:MSWindows
+if g:os == "Windows"
     set runtimepath=$HOME/.vim
     set runtimepath+=$VIM/vimfiles
     set runtimepath+=$VIMRUNTIME
@@ -23,7 +29,7 @@ if s:MSWindows
 endif
 
 if has('vim_starting')
-    if s:MSWindows
+    if g:os == "Windows"
         lan mes en_EN.UTF-8
         set langmenu=en_EN.UTF-8
     endif
@@ -43,10 +49,13 @@ call plug#begin('~/.vim/bundle')
 
 Plug 'itchyny/lightline.vim'
 
-if s:MSWindows
-    Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+if g:os == "Haiku" || g:os == "Windows"
+    if g:os == "Windows"
+        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+    endif
     Plug 'Shougo/neocomplete.vim'
     Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'vim-scripts/a.vim'
 else
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
@@ -58,7 +67,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
+Plug 'airblade/vim-gitgutter'
+" Plug 'mhinz/vim-signify'
 Plug 'Chiel92/vim-autoformat'
 Plug 'vim-scripts/renamer.vim'
 Plug 'chrisbra/vim-diff-enhanced'
@@ -66,7 +76,9 @@ Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/spacehi.vim'
 Plug 'vim-scripts/TaskList.vim'
-Plug 'SirVer/ultisnips'
+if g:os != "Haiku"
+    Plug 'SirVer/ultisnips'
+endif
 Plug 'tikhomirov/vim-glsl', { 'for': ['glsl'] }
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
@@ -106,12 +118,14 @@ if has("gui_running")
     set guioptions-=e " disable gui tabs
 
     " Русский текст для теста начертания символов
-    if has("gui_macvim")
+    if g:os == "Darwin"
         set guifont=Menlo:h18
-    elseif s:MSWindows
-        set guifont=lucida_console:h14:cRUSSIAN
-    else
+    elseif g:os == "Linux"
         set guifont=Droid\ Sans\ Mono\ 12
+    elseif g:os == "Windows"
+        set guifont=lucida_console:h14:cRUSSIAN
+    elseif g:os == "Haiku"
+        set guifont=Noto\ Sans\ Mono\ 16
     endif
 else
     if &t_Co > 256 && has("termguicolors")
@@ -356,36 +370,42 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" --- FZF related config ------------------------------------------------------
-nnoremap <C-p> :FzfFiles<CR>
-nnoremap <space> :FzfBuffers<CR>
+if g:os == "Haiku" || g:os == "Windows"
+    " --- CtrlP related config ------------------------------------------------------
+    nnoremap <C-p> :CtrlP<CR>
+    nnoremap <space> :CtrlPBuffer<CR>
+else
+    " --- FZF related config ------------------------------------------------------
+    nnoremap <C-p> :FzfFiles<CR>
+    nnoremap <space> :FzfBuffers<CR>
 
-if has("popupwin")
-    let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.7, 'border': 'horizontal' } }
-endif
-let g:fzf_command_prefix = 'Fzf'
-let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
-let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
+    if has("popupwin")
+        let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.7, 'border': 'horizontal' } }
+    endif
+    let g:fzf_command_prefix = 'Fzf'
+    let g:fzf_history_dir = $HOME.'/.vim/fzf-history'
+    let g:fzf_tags_command = 'ctags -R --sort=yes --c++-kinds=+p --fields=+liaS --extra=+q'
 
-let $FZF_DEFAULT_OPTS="--inline-info"
+    let $FZF_DEFAULT_OPTS="--inline-info"
 
-" if executable('ag')
-    " let $FZF_DEFAULT_COMMAND = 'ag -l -g "" -Q -t'
-" endif
-if executable('rg')
-    let $FZF_DEFAULT_COMMAND = 'rg --files --vimgrep
-                \ --iglob \!*.png
-                \ --iglob \!*.jpg
-                \ --iglob \!*.psd
-                \ --iglob \!*.ico
-                \ --iglob \!*.wav
-                \ --iglob \!*.ogg
-                \ --iglob \!*.mp3
-                \ --iglob \!*.ttf
-                \ --iglob \!*.bin
-                \ --iglob \!*.jar
-                \ --iglob \!*.jks
-                \ --iglob \!*.so'
+    " if executable('ag')
+        " let $FZF_DEFAULT_COMMAND = 'ag -l -g "" -Q -t'
+    " endif
+    if executable('rg')
+        let $FZF_DEFAULT_COMMAND = 'rg --files --vimgrep
+                    \ --iglob \!*.png
+                    \ --iglob \!*.jpg
+                    \ --iglob \!*.psd
+                    \ --iglob \!*.ico
+                    \ --iglob \!*.wav
+                    \ --iglob \!*.ogg
+                    \ --iglob \!*.mp3
+                    \ --iglob \!*.ttf
+                    \ --iglob \!*.bin
+                    \ --iglob \!*.jar
+                    \ --iglob \!*.jks
+                    \ --iglob \!*.so'
+    endif
 endif
 
 " --- show / hide the line number for each line -------------------------------
@@ -452,19 +472,22 @@ endfunction
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
 " --- Makefile support --------------------------------------------------------
-if has("mac")
+if g:os == "Darwin"
     map <C-F9> <Esc>:make! osx<CR>
-elseif s:MSWindows
+elseif g:os == "Windows"
     map <C-F9> <Esc>:make! win<CR>
-else
+elseif g:os == "Linux"
     map <C-F9> <Esc>:make! linux<CR>
 endif
 
 map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
-" map <F11> <Esc>:A<CR>
-map <F11> <Esc>:CocCommand clangd.switchSourceHeader<CR>
+if g:os == "Haiku" || g:os == "Windows"
+    map <F11> <Esc>:A<CR>
+else
+    map <F11> <Esc>:CocCommand clangd.switchSourceHeader<CR>
+endif
 
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:MakeTags<CR>
@@ -507,13 +530,17 @@ let Grep_Skip_Dirs = '.git .svn CVS .sass-cache'
 
 " -----------------------------------------------------------------------------
 
-source $HOME/.vim/settings/coc.vim
+if g:os == "Haiku" || g:os == "Windows"
+    source $HOME/.vim/settings/ctrlp.vim
+    source $HOME/.vim/settings/a.vim
+else
+    source $HOME/.vim/settings/coc.vim
+endif
+
 source $HOME/.vim/settings/lightline.vim
 source $HOME/.vim/settings/vim-autoformat.vim
-" source $HOME/.vim/settings/ctrlp.vim
 " source $HOME/.vim/settings/ycm.vim
 " source $HOME/.vim/settings/syntastic.vim
-" source $HOME/.vim/settings/a.vim
 
 
 
