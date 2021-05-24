@@ -20,10 +20,8 @@
         }
     },
 */
-    "clangd": {
-        "fallbackFlags": [
-            "-std=c++14"
-        ],
-        "path": "/Users/andrey/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
-    }
+    "clangd.fallbackFlags": [
+        "-std=c++14"
+    ],
+    "clangd.path": "/Users/andrey/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
 }
