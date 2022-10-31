@@ -58,7 +58,7 @@ if g:os == "Haiku" || g:os == "Windows"
     Plug 'vim-scripts/a.vim'
 else
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-zsh --no-fish' }
+    Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-bash --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
 
@@ -389,23 +389,8 @@ else
 
     let $FZF_DEFAULT_OPTS="--inline-info"
 
-    " if executable('ag')
-        " let $FZF_DEFAULT_COMMAND = 'ag -l -g "" -Q -t'
-    " endif
     if executable('rg')
-        let $FZF_DEFAULT_COMMAND = 'rg --files --vimgrep
-                    \ --iglob \!*.png
-                    \ --iglob \!*.jpg
-                    \ --iglob \!*.psd
-                    \ --iglob \!*.ico
-                    \ --iglob \!*.wav
-                    \ --iglob \!*.ogg
-                    \ --iglob \!*.mp3
-                    \ --iglob \!*.ttf
-                    \ --iglob \!*.bin
-                    \ --iglob \!*.jar
-                    \ --iglob \!*.jks
-                    \ --iglob \!*.so'
+        let $FZF_DEFAULT_COMMAND = 'rg --files --vimgrep'
     endif
 endif
 
