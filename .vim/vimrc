@@ -26,10 +26,8 @@ if g:os == "Windows"
     set runtimepath+=$VIMRUNTIME
     set runtimepath+=$VIM/vimfiles/after
     set runtimepath+=$HOME/.vim/after
-endif
 
-if has('vim_starting')
-    if g:os == "Windows"
+    if has('vim_starting')
         lan mes en_EN.UTF-8
         set langmenu=en_EN.UTF-8
     endif
@@ -177,7 +175,7 @@ set expandtab           " expand <Tab> to spaces in Insert mode
 set autoindent          " automatically set the indent of a new line
 set copyindent          " copy the previous indentation on autoindenting
 set smartindent         " do clever autoindenting
-set virtualedit=all     " allow virtual editing in all modes
+" set virtualedit=all     " allow virtual editing in all modes
 set cindent             " enable specific indenting for C code
 "set showfulltag         " When completing by tag, show the whole tag, not just the function name
 set diffopt+=iwhite     " Add ignorance of whitespace to diff
@@ -456,17 +454,6 @@ endfunction
 
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
-
-" --- Makefile support --------------------------------------------------------
-if g:os == "Darwin"
-    map <C-F9> <Esc>:make! osx<CR>
-elseif g:os == "Windows"
-    map <C-F9> <Esc>:make! win<CR>
-elseif g:os == "Linux"
-    map <C-F9> <Esc>:make! linux<CR>
-endif
-
-map <C-F10> :make! run<CR>
 
 " --- switch header / release -------------------------------------------------
 if g:os == "Haiku" || g:os == "Windows"
