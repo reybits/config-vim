@@ -1,5 +1,6 @@
 {
-    "suggest.noselect":true,
+    "suggest.noselect": true,
+    "clangd.inlayHints.enable": false,
     "clangd.fallbackFlags": [
         "-std=c++14"
     ],

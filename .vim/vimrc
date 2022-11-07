@@ -56,7 +56,7 @@ if g:os == "Haiku" || g:os == "Windows"
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'vim-scripts/a.vim'
 else
-    " configure coc.vim with clangd as described at ttps://github.com/clangd/coc-clangd
+    " configure coc.vim with clangd as described at https://github.com/clangd/coc-clangd
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-bash --no-fish' }
     Plug 'junegunn/fzf.vim'
