@@ -45,7 +45,8 @@ filetype off
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim' " one of the best status line
+Plug 'morhetz/gruvbox'       " pretty nice colorscheme gruvbox
 
 if g:os == "Haiku" || g:os == "Windows"
     if g:os == "Windows"
@@ -55,48 +56,50 @@ if g:os == "Haiku" || g:os == "Windows"
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'vim-scripts/a.vim'
 else
+    " configure coc.vim with clangd as described at ttps://github.com/clangd/coc-clangd
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-bash --no-fish' }
     Plug 'junegunn/fzf.vim'
 endif
 
-Plug 'Valloric/ListToggle' " toggle the display of the location and quickfix windows
+if g:os != "Haiku"
+    " Plug 'SirVer/ultisnips'
+endif
+
+Plug 'Valloric/ListToggle'    " toggle the display of the location and quickfix windows
 Plug 'scrooloose/nerdcommenter'
-Plug 'qpkorr/vim-bufkill' " delete buffer without killing windows layout
-Plug 'mileszs/ack.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-" Plug 'mhinz/vim-signify'
-Plug 'Chiel92/vim-autoformat'
-Plug 'vim-scripts/renamer.vim'
-Plug 'chrisbra/vim-diff-enhanced'
-Plug 'godlygeek/tabular'
-Plug 'majutsushi/tagbar'
+Plug 'qpkorr/vim-bufkill'     " delete buffer without killing windows layout
+Plug 'mileszs/ack.vim'        " runs ripgrep tool from Vim, with an enhanced results list
+Plug 'tpope/vim-fugitive'     " is the premier Vim plugin for Git
+Plug 'airblade/vim-gitgutter' " a git diff in the sign column
+Plug 'Chiel92/vim-autoformat' " clang-format for C, C++, Objective-C
+Plug 'godlygeek/tabular'      " useful to line up text
 Plug 'vim-scripts/spacehi.vim'
 Plug 'vim-scripts/TaskList.vim'
-if g:os != "Haiku"
-    Plug 'SirVer/ultisnips'
-endif
 Plug 'tikhomirov/vim-glsl', { 'for': ['glsl'] }
 Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
-Plug 'justinmk/vim-syntax-extra'
+Plug 'justinmk/vim-syntax-extra' " a collection of syntax definitions not yet shipped with stock vim
+
+" Plug 'majutsushi/tagbar'    " removed in favor to neoclide/coc.nvim plugin
+" Plug 'mhinz/vim-signify'    " similiar to vim-gitgutter
+" Plug 'vim-scripts/renamer.vim' " bulk file renamer
 " Plug 'scrooloose/syntastic', { 'for': ['c','cpp','objc','objcpp'] }
-" Plug 'arecarn/crunch.vim' " calculate math with looser syntax support
+" Plug 'arecarn/crunch.vim'      " calculate math with looser syntax support
 " Plug 'tpope/vim-eunuch'
 " Plug 'Valloric/MatchTagAlways' " always highlights the enclosing html/xml tags.
 " Plug 'jceb/vim-orgmode'
-
+" Plug 'chrisbra/vim-diff-enhanced' " no need anymore starting Vim 8.1.0360+
 " Plug 'tpope/vim-dispatch'
 " Plug 'drmikehenry/vim-fixkey'
-"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
-"Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
-"Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
-"Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
-"Plug 'mtth/scratch.vim'
-"Plug 'DoxygenToolkit.vim'
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Plug 'idanarye/vim-vebugger', { 'for': ['c','cpp','objc','objcpp'] }
+" Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install' }
+" Plug 'derekwyatt/vim-protodef', { 'for': ['c','cpp'] }
+" Plug 'derekwyatt/vim-fswitch', { 'for': ['c','cpp','objc','objcpp'] }
+" Plug 'mtth/scratch.vim'
+" Plug 'DoxygenToolkit.vim'
 
 call plug#end()
 
@@ -131,7 +134,8 @@ else
     endif
 endif
 
-colorscheme Tomorrow-Night
+colorscheme gruvbox
+" colorscheme Tomorrow-Night
 " colorscheme Tomorrow-Night-Eighties
 
 " let g:material_theme_style = 'dark'
@@ -154,20 +158,25 @@ set list
 "set listchars=tab:→\ ,trail:·,extends:»,nbsp:·,eol:¶
 set listchars=tab:→\ ,trail:·,extends:»,nbsp:·
 let c_space_errors=1    " Highlight any spaces before tabs, and any whitespace at the end of a line
-set showmode            " always show what mode we're currently editing in
 set hidden              " hides buffers instead of closing them
 set switchbuf=useopen   " reveal already opened files from the quickfix window
                         " instead of opening new buffers
 set nowrap              " don't wrap lines
-set backspace=indent,eol,start          " allow backspacing over everything in insert mode
+set sidescroll=5
+set listchars+=precedes:<,extends:>
+
 set ignorecase          " ignore case when searching
 set smartcase           " ignore case if search pattern is all lowercase, case-sensitive otherwise
 set incsearch           " show search matches as you type
-set encoding=utf-8
-set fencs=utf-8,ucs-bom,cp1251   " порядок перебора кодировок при открытии файла
-set ffs=unix,dos        " порядок перебора fileformats
-set cscopetag           " по Ctrl+] вести себя так же, как по g] (показывать варианты)
+set encoding=utf-8      " character encoding used inside Vim
+set fencs=utf-8,ucs-bom,cp1251   " a list of character encodings considered when starting to edit
+set ffs=unix,dos        " formats that will be tried when starting to edit
 set lazyredraw          " don't update the display while executing macros
+set number              " show the line number for each line
+
+set showfulltag         " When completing by tag, show the whole tag, not just the function name
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+
 set tabstop=4           " number of spaces a <Tab> in the text stands for
 set shiftwidth=4        " number of spaces used for each step of (auto)indent
 set shiftround          " use multiple of shiftwidth when indenting with '<' and '>'
@@ -175,35 +184,35 @@ set expandtab           " expand <Tab> to spaces in Insert mode
 set autoindent          " automatically set the indent of a new line
 set copyindent          " copy the previous indentation on autoindenting
 set smartindent         " do clever autoindenting
-" set virtualedit=all     " allow virtual editing in all modes
 set cindent             " enable specific indenting for C code
-"set showfulltag         " When completing by tag, show the whole tag, not just the function name
-set diffopt+=iwhite     " Add ignorance of whitespace to diff
 set smarttab            " insert tabs on the start of a line according to shiftwidth, not tabstop
+" set cino+=N-s           " no namespace indent
 set cino+=:0            " case: indent
 set cino+=g0            " public: indent
-" set cino+=N-s           " no namespace indent
 set cino+=t0            " function return declaration
 set cino+=(0            " unclosed prarntheses
 set cino+=j1,(0,ws,Ws   " enable partial c++11 (lambda) support
-"set cursorline          " highlight current line
-set number              " show the line number for each line
-"set mouse=a             " have the mouse enabled all the time
 set formatoptions-=t    " don't auto-indent plaintext
+
 set history=1024        " keep N lines of command history
 set cc=81,101
 set ruler               " show the cursor position all the time
 set hlsearch            " highlight searches
-" set showmatch           " проверка скобок
+" set mouse=a             " have the mouse enabled all the time
+" set virtualedit=all     " allow virtual editing in all modes
+set diffopt+=iwhite     " add ignorance of whitespace to diff
+set diffopt+=internal,algorithm:patience " handle diff internally (Vim 8.1.0360+)
 let g:loaded_matchparen=1
 set foldmethod=marker
-"set foldopen&
-"set foldclose=all
+" set foldopen&
+" set foldclose=all
 set popt+=syntax:y      " syntax when printing
 set pastetoggle=<F10>   " mode that allow to paste text from clipboard without formating
 set scrolloff=5         " rows number to show while scrolling
 set laststatus=2        " always show status line
 set noshowmode          " lightline: remove '-- INSERT --'
+set wildmenu            " enable command-line completion
+set wildoptions+=pum    " matches are shown in a popup menu
 if $TMUX == ''
     set clipboard=unnamedplus,unnamed
 endif
@@ -222,13 +231,6 @@ au BufNewFile,BufRead *.mm set filetype=objcpp
 au BufNewFile,BufRead *.ino set filetype=cpp
 au BufNewFile,BufRead *.as set filetype=actionscript
 au BufNewFile,BufRead *.vsh,*.fsh set filetype=glsl
-
-" --- higlight word under cursor ----------------------------------------------
-" augroup AutoHighlight
-    " au!
-    " au CursorHold * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
-    " setlocal updatetime=300
-" augroup END
 
 " --- enable cursor line only for current buffer ------------------------------
 augroup CursorLine
@@ -397,7 +399,7 @@ imap <F1> <Esc>:set<Space>nu!<CR>a
 nmap <F1>      :set<Space>nu!<CR>
 
 " --- show / hide TagBar window ----------------------------------------------
-nnoremap <leader>tb :TagbarToggle<CR>
+" nnoremap <leader>tb :TagbarToggle<CR>
 
 " --- show / hide NERDTree window ---------------------------------------------
 " map <S-F2> <Esc>:NERDTreeToggle<CR>
@@ -455,13 +457,6 @@ endfunction
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
-" --- switch header / release -------------------------------------------------
-if g:os == "Haiku" || g:os == "Windows"
-    map <F11> <Esc>:A<CR>
-else
-    map <F11> <Esc>:CocCommand clangd.switchSourceHeader<CR>
-endif
-
 " --- create tags -------------------------------------------------------------
 map <C-F12> <Esc>:MakeTags<CR>
 command! MakeTags call MakeTagsFunction()
@@ -482,7 +477,6 @@ endfunction
 
 
 " --- show encoding menu by F8 ------------------------------------------------
-set wildmenu
 set wcm=<Tab>
 menu Encoding.utf-8        :e ++enc=utf-8 <CR>
 menu Encoding.ucs-bom      :e ++enc=ucs-bom<CR>
@@ -523,8 +517,8 @@ source $HOME/.vim/settings/vim-autoformat.vim
 " let g:UltiSnipsExpandTrigger       = '<C-\>'
 " let g:UltiSnipsEnableSnipMate      = 1
 " let g:UltiSnipsSnippetsDir         = $HOME.'/.vim/snippets'
-"let g:UltiSnipsJumpForwardTrigger  = '<c-j>'
-"let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+" let g:UltiSnipsJumpForwardTrigger  = '<c-j>'
+" let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " -----------------------------------------------------------------------------
 
 
@@ -561,11 +555,12 @@ let g:manpageview_multimanpage = 1
 " -----------------------------------------------------------------------------
 "  TagBar related config
 " -----------------------------------------------------------------------------
-let g:tagbar_left      = 1
-let g:tagbar_width     = 30
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-let g:tagbar_compact   = 1
+" let g:tagbar_left      = 1
+" let g:tagbar_width     = 30
+" let g:tagbar_autoclose = 1
+" let g:tagbar_autofocus = 1
+" let g:tagbar_compact   = 1
+" let g:tagbar_silent    = 1
 " -----------------------------------------------------------------------------
 
 
@@ -606,12 +601,12 @@ au FileType man setlocal nolist nonumber
 
 
 " -----------------------------------------------------------------------------
-"  Man related config
-" -----------------------------------------------------------------------------
+" chrisbra/vim-diff-enhanced related config
 " started In Diff-Mode set diffexpr (plugin not loaded yet)
-if &diff
-    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-endif
+" -----------------------------------------------------------------------------
+" if &diff
+    " let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+" endif
 " -----------------------------------------------------------------------------
 
 

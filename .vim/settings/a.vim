@@ -13,3 +13,6 @@ let g:alternateExtensions_hpp = "cpp,cc,mm,c,ino,CPP,CC,INO"
 let g:alternateExtensions_HPP = "cpp,cc,mm,c,ino,CPP,CC,INO"
 let g:alternateExtensions_fsh  = "vsh"
 let g:alternateExtensions_vsh  = "fsh"
+
+" --- switch header / release -------------------------------------------------
+map <F11> <Esc>:A<CR>

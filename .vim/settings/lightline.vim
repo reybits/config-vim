@@ -4,12 +4,13 @@
 let g:lightline = {
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \             [ 'cocstatus', 'gitbranch', 'readonly', 'filename', 'modified' ] ],
             \ },
             \ 'component_function': {
             \   'fileformat': 'LightlineFileformat',
             \   'filetype': 'LightlineFiletype',
-            \   'gitbranch': 'fugitive#head'
+            \   'gitbranch': 'fugitive#head',
+            \   'cocstatus': 'coc#status'
             \ },
             \ 'component': {
             \   'lineinfo': '0x%02B : %3l:%-2v',
