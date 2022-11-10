@@ -134,6 +134,7 @@ else
     endif
 endif
 
+set background=dark
 colorscheme gruvbox
 " colorscheme Tomorrow-Night
 " colorscheme Tomorrow-Night-Eighties
