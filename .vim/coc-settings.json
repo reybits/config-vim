@@ -1,6 +1,6 @@
 {
     "suggest.noselect": true,
-    "clangd.inlayHints.enable": false,
+    "inlayHint.enable": false,
     "clangd.fallbackFlags": [
         "-std=c++14"
     ],
