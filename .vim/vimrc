@@ -11,6 +11,8 @@ scriptencoding utf-8
 " --- This must be first, because it changes other options as a side effect ---
 set nocompatible
 
+let g:mapleader = " "
+
 if !exists("g:os")
     if has('win95') || has('win16') || has('win32') || has('win64') || has('win32unix') || has('win64unix')
         let g:os = "Windows"
@@ -276,7 +278,7 @@ endif
 
 
 " --- ex command for toggling hex mode - define mapping if desired ------------
-map <silent><F5> <Esc>:Hexmode<CR>
+" nnoremap <silent> <leader>hex <Esc>:Hexmode<CR>
 
 command! -bar Hexmode call ToggleHex()
 
@@ -328,17 +330,14 @@ endfunction
 " --- use jk as <Esc> ---------------------------------------------------------
 " inoremap jk <Esc>
 
-" --- delete current buffer ---------------------------------------------------
-nnoremap <leader>D :BD<CR>
-
 " --- clean trailing whitespace -----------------------------------------------
-nmap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
+nnoremap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
 " --- toggle word under cursor ------------------------------------------------
 " nnoremap <leader>tw :ToggleWord<CR>
 
 " --- clears the search register ----------------------------------------------
-nmap <silent> <leader><space> :nohlsearch<CR>
+nnoremap <silent> <leader>H :nohlsearch<CR>
 
 " --- disable arrow keys ------------------------------------------------------
 nnoremap <up> <nop>
@@ -374,12 +373,13 @@ nnoremap <C-l> <C-w>l
 
 if g:os == "Haiku" || g:os == "Windows"
     " --- CtrlP related config ------------------------------------------------------
-    nnoremap <C-p> :CtrlP<CR>
-    nnoremap <space> :CtrlPBuffer<CR>
+    nnoremap <silent> <leader>bf :CtrlP<CR>
+    nnoremap <silent> <leader><space> :CtrlPBuffer<CR>
 else
     " --- FZF related config ------------------------------------------------------
-    nnoremap <C-p> :FzfFiles<CR>
-    nnoremap <space> :FzfBuffers<CR>
+    nnoremap <silent> <leader>bf      :FzfFiles<CR>
+    nnoremap <silent> <leader><space> :FzfBuffers<CR>
+    nnoremap <silent> <leader>bg      :execute 'FzfRg ' . expand("<cword>")<CR>
 
     if has("popupwin")
         let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.7, 'border': 'horizontal' } }
@@ -396,8 +396,7 @@ else
 endif
 
 " --- show / hide the line number for each line -------------------------------
-imap <F1> <Esc>:set<Space>nu!<CR>a
-nmap <F1>      :set<Space>nu!<CR>
+nnoremap <silent> <leader>n :set<Space>nu!<CR>
 
 " --- show / hide TagBar window ----------------------------------------------
 " nnoremap <leader>tb :TagbarToggle<CR>
@@ -437,29 +436,11 @@ if executable('rg')
     let g:ackprg = 'rg --vimgrep'
 endif
 
-" --- search world under cursor in all files with current ext -----------------
-map <F4> <Esc>:GrepWordInFiles<CR>:cw<CR>
-command! GrepWordInFiles :call s:GrepInFiles()
-function! s:GrepInFiles()
-    let s:word = expand("<cword>")
-    let s:cft = &filetype
-
-    if s:cft == "cpp" || s:cft == "c" || s:cft == "objc" || s:cft == "objcpp"
-        let s:mask = "-t cpp -t objcpp -t objc"
-    else
-        " let s:ext = expand("%:e")
-        " let s:mask = "*" . (s:ext == "" ? "" : ".") . s:ext . " **/*" . (s:ext == "" ? "" : ".") . s:ext
-        let s:mask = ""
-    endif
-
-    execute "Ack! " . s:mask . " " . s:word
-endfunction
-
 " --- apell checking ----------------------------------------------------------
 "map <F7> :w!<CR>:!aspell -c --encoding=utf-8 --lang=ru %<CR>:e! %<CR>
 
 " --- create tags -------------------------------------------------------------
-map <C-F12> <Esc>:MakeTags<CR>
+" map <C-F12> <Esc>:MakeTags<CR>
 command! MakeTags call MakeTagsFunction()
 function! MakeTagsFunction()
     if executable('/usr/local/bin/ctags')
@@ -537,8 +518,24 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 
 
 " -----------------------------------------------------------------------------
+" manpageview related options
+" -----------------------------------------------------------------------------
+" --- delete current buffer ---------------------------------------------------
+nnoremap <silent> <leader>bd :BD<cr>
+
+let g:BufKillCreateMappings = 0
+" -----------------------------------------------------------------------------
+
+
+
+" -----------------------------------------------------------------------------
 " NERDCommenter related config
 " -----------------------------------------------------------------------------
+noremap <silent> <leader>cc <plug>NERDCommenterAlignBoth
+noremap <silent> <leader>cu <plug>NERDCommenterUncomment
+
+let g:NERDCreateDefaultMappings = 0
+let g:NERDDefaultAlign = 'left'
 let g:NERDSpaceDelims = 1
 " -----------------------------------------------------------------------------
 
