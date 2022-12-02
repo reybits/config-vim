@@ -374,12 +374,13 @@ nnoremap <C-l> <C-w>l
 if g:os == "Haiku" || g:os == "Windows"
     " --- CtrlP related config ------------------------------------------------------
     nnoremap <silent> <leader>bf :CtrlP<CR>
-    nnoremap <silent> <leader><space> :CtrlPBuffer<CR>
+    nnoremap <silent> <leader>bb :CtrlPBuffer<CR>
 else
     " --- FZF related config ------------------------------------------------------
-    nnoremap <silent> <leader>bf      :FzfFiles<CR>
-    nnoremap <silent> <leader><space> :FzfBuffers<CR>
-    nnoremap <silent> <leader>bg      :execute 'FzfRg ' . expand("<cword>")<CR>
+    nnoremap <silent> <leader>bf :FzfFiles<CR>
+    nnoremap <silent> <leader>bb :FzfBuffers<CR>
+    nnoremap <silent> <leader>bw :execute 'FzfRg ' . expand("<cword>")<CR>
+    nnoremap <leader>bg :FzfRg 
 
     if has("popupwin")
         let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.7, 'border': 'horizontal' } }
