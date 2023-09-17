@@ -83,6 +83,7 @@ Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart'] }
 Plug 'endel/actionscript.vim', { 'for': ['actionscript'] }
 Plug 'noahfrederick/vim-skeleton', { 'for': ['c','cpp','objc','objcpp'] }
 Plug 'justinmk/vim-syntax-extra' " a collection of syntax definitions not yet shipped with stock vim
+Plug 'samsaga2/vim-z80', { 'for': ['asm'] }
 
 " Plug 'majutsushi/tagbar'    " removed in favor to neoclide/coc.nvim plugin
 " Plug 'mhinz/vim-signify'    " similiar to vim-gitgutter
@@ -234,6 +235,10 @@ au BufNewFile,BufRead *.mm set filetype=objcpp
 au BufNewFile,BufRead *.ino set filetype=cpp
 au BufNewFile,BufRead *.as set filetype=actionscript
 au BufNewFile,BufRead *.vsh,*.fsh set filetype=glsl
+
+" vim-z80 syntax format
+" au Filetype asm setlocal ts=8 sw=8 noexpandtab
+" au BufNewFile,BufRead *.asm set filetype=z80
 
 " --- enable cursor line only for current buffer ------------------------------
 augroup CursorLine
