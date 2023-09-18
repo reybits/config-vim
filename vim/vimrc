@@ -224,8 +224,8 @@ if $TMUX == ''
 endif
 
 " complete options (disable preview scratch window)
-"set completeopt=menuone,menu,longest,preview
-set completeopt=menu,menuone,longest
+set completeopt=menuone,menu,longest,preview
+" set completeopt=menu,menuone,longest
 set pumheight=15        " Limit popup menu height
 
 " --- additional tags ---------------------------------------------------------
