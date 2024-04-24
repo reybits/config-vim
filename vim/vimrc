@@ -346,6 +346,7 @@ nnoremap <silent> <leader>W :silent! %s/\s\+$//<CR>:let @/=''<CR>
 
 " --- clears the search register ----------------------------------------------
 nnoremap <silent> <leader>H :nohlsearch<CR>
+nnoremap <silent> <esc> :nohlsearch<CR>
 
 " --- disable arrow keys ------------------------------------------------------
 nnoremap <up> <nop>
