@@ -64,6 +64,7 @@ else
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " Disabled, install fzf using system package manager
     " Plug 'junegunn/fzf', { 'dir': '~/tools/fzf', 'do': './install --all --no-bash --no-fish' }
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 endif
 
