@@ -1,6 +1,7 @@
 " -----------------------------------------------------------------------------
 "  vim-autoformat related config
 " -----------------------------------------------------------------------------
+
 " use clang-format with G=gg or other = indent options.
 " autocmd FileType c,cpp,objc,objcpp setlocal equalprg=clang-format
 
@@ -20,3 +21,5 @@ let g:formatters_objc = ['clangformat', 'astyle_objc']
 
 let g:formatdef_astyle_objcpp = g:formatdef_astyle_objc
 let g:formatters_objcpp = ['clangformat', 'astyle_objcpp']
+
+nnoremap <silent><leader>bf <cmd>Autoformat<cr>
