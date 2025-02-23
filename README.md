@@ -7,3 +7,15 @@ This repository contains my custom Vim configuration for Linux, macOS, and Windo
 ```sh
 git clone https://github.com/andreyugolnik/config-vim.git ~/.config/vim
 ```
+
+## Features
+
+- Plugin management via plug.
+- Git integration via vim-fugitive.
+- Nice and lightweight statusline via airline.
+- Fuzzy finder via fzf.
+- Easy code commenting via tcomment.
+- Code formatting via vim-autoformat.
+- C++ support via coc.
+- Colorscheme via gruvbox.
+- And more...
