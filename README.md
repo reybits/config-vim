@@ -5,7 +5,7 @@ This repository contains my custom Vim configuration for Linux, macOS, and Windo
 ## Install
 
 ```sh
-git clone https://github.com/raybits/config-vim.git ~/.config/vim
+git clone https://github.com/reybits/config-vim.git ~/.config/vim
 ```
 
 ## Features
