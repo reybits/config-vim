@@ -21,6 +21,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" --- move selected line / block of text in visual mode -----------------------
+vnoremap J :m'>+1<CR>gv=`<my`>mzgv`yo`z
+vnoremap K :m'<-2<CR>gv=`>my`<mzgv`yo`z
+
 " --- useful movement in wrap mode --------------------------------------------
 nnoremap j gj
 nnoremap k gk
