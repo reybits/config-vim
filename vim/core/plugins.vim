@@ -18,6 +18,8 @@ Plug 'morhetz/gruvbox'        " pretty nice colorscheme
 
 Plug 'mhinz/vim-startify'
 
+Plug 'liuchengxu/vim-which-key' " vim port of emacs-which-key that displays available keybindings in popup
+
 " Plug 'itchyny/lightline.vim', { 'on': [] }  " one of the best status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'

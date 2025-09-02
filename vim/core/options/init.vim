@@ -11,6 +11,7 @@ source $HOME/.vim/core/options/autocmds.vim
 
 
 " --- plugin config ------------------------------------------------------------
+source $HOME/.vim/core/options/which-key.vim
 source $HOME/.vim/core/options/colorscheme.vim
 source $HOME/.vim/core/options/dashboard.vim
 source $HOME/.vim/core/options/statusbar.vim
