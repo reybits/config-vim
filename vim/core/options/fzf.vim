@@ -21,7 +21,9 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 if has("popupwin")
-    let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.8 } }
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
+    let g:fzf_vim = {}
+    let g:fzf_vim.preview_window = ['up,75%', 'ctrl-/']
 else
     let g:fzf_layout = { 'down': '30%' }
     autocmd! FileType fzf
