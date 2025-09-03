@@ -48,3 +48,9 @@ nnoremap <silent> <leader>wz <cmd>MaximizerToggle<cr>
 
 " --- clean trailing whitespace -----------------------------------------------
 nnoremap <silent> <leader>W :silent! %s/\s\+$//<cr>:let @/=''<cr>
+
+
+" --- session manipulaton -----------------------------------------------------
+" let g:session_dir = '~/.local/state/vim/sessions'
+" exec 'nnoremap <leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+" exec 'nnoremap <leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'

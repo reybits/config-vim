@@ -9,7 +9,7 @@
 " --- disable detection and indenting in one step ------------------------------
 filetype indent off
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.local/share/vim/bundle')
 
 " ------------------------------------------------------------------------------
 " --- the list of plugins starts here ------------------------------------------
@@ -41,6 +41,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+Plug 'tpope/vim-vinegar'
 
 Plug 'szw/vim-maximizer'      " maximizes and restores the current window in vim
 Plug 'Valloric/ListToggle'    " toggle the display of the location and quickfix windows

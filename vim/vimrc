@@ -70,8 +70,22 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " ------------------------------------------------------------------------------
 
 
-" --- common options -----------------------------------------------------------
-source $HOME/.vim/core/options/init.vim
+" --- common settings ----------------------------------------------------------
+source $HOME/.vim/core/options.vim
+
+
+" --- key mappings -------------------------------------------------------------
+source $HOME/.vim/core/keymaps.vim
+
+
+" --- key mappings -------------------------------------------------------------
+source $HOME/.vim/core/autocmds.vim
+
+
+" --- plugin config ------------------------------------------------------------
+for f in split(glob("$HOME/.vim/core/options/*.vim"), '\n')
+    execute 'source' f
+endfor
 
 
 " --- end of configuration, don't do anything else here ------------------------
