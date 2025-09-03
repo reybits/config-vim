@@ -34,6 +34,9 @@ Plug 'christoomey/vim-tmux-navigator' " easy vim/nvim + tmux pane navigation
 
 Plug 'Chiel92/vim-autoformat' " clang-format for C, C++, Objective-C
 
+Plug 'github/copilot.vim'
+Plug 'DanBradbury/copilot-chat.vim'
+
 " https://github.com/neoclide/coc.nvim
 " clangd: https://github.com/clangd/coc-clangd
 " snippets: https://github.com/neoclide/coc-snippets

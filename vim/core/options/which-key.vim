@@ -5,6 +5,10 @@
 nnoremap <silent> <leader> :WhichKey '<space>'<cr>
 let g:which_key_map = {}
 
+let g:which_key_map.a = { 'name' : '+AI' }
+let g:which_key_map.a.a = 'toggle copilot chat'
+let g:which_key_map.a.c = 'commit copilot message'
+
 let g:which_key_map.b = { 'name' : '+Buffer' }
 let g:which_key_map.b.f = 'Format'
 
