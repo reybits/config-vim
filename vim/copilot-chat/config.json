@@ -1,0 +1,9 @@
+{
+    "model": "gpt-4o",
+    "prompts": {
+        "explain": "Explain how this code works in detail:",
+        "refactor": "Suggest improvements and refactoring for this code:",
+        "docs": "Generate documentation for this code:",
+        "gitcommit": "Write commit message for the change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block. If user has COMMIT_EDITMSG opened, generate replacement block for whole buffer."
+    }
+}
