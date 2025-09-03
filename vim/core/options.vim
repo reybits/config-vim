@@ -103,4 +103,5 @@ let g:netrw_liststyle    = 1 " 3 - tree view
 " let g:netrw_list_hide   .= ',\(^\|\s\s\)\zs\.\S\+'
 
 autocmd FileType netrw setlocal bufhidden=delete
+autocmd FileType netrw nnoremap <buffer> gq :bd!<CR>
 
