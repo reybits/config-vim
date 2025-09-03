@@ -67,11 +67,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>cR <Plug>(coc-rename)
 
 " Formatting selected code
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
+xmap <leader>bf  <Plug>(coc-format-selected)
+nmap <leader>bf  <Plug>(coc-format-selected)
 
 augroup mygroup
     autocmd!
@@ -89,9 +89,9 @@ augroup end
 " Remap keys for applying code actions at the cursor position
 nmap <leader>ca  <Plug>(coc-codeaction-cursor)
 " Remap keys for apply code actions affect whole buffer
-nmap <leader>cs  <Plug>(coc-codeaction-source)
+" nmap <leader>cs  <Plug>(coc-codeaction-source)
 " Apply the most preferred quickfix action to fix diagnostic on the current line
-nmap <leader>cf  <Plug>(coc-fix-current)
+" nmap <leader>cf  <Plug>(coc-fix-current)
 
 " Remap keys for applying refactor code actions
 nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
@@ -138,7 +138,7 @@ nnoremap <silent> gs <cmd>CocCommand clangd.switchSourceHeader<cr>
 " --- Mappings for CoCList ----------------------------------------------------
 
 " Show all diagnostics.
-nnoremap <silent><nowait> <leader>xd  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>cd  :<C-u>CocList diagnostics<cr>
 
 " Manage extensions.
 " nnoremap <silent><nowait> <leader>e  :<C-u>CocList extensions<cr>
@@ -147,7 +147,7 @@ nnoremap <silent><nowait> <leader>xd  :<C-u>CocList diagnostics<cr>
 " nnoremap <silent><nowait> <leader>c  :<C-u>CocList commands<cr>
 
 " Find symbol of current document.
-nnoremap <silent><nowait> <leader>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>co  :<C-u>CocList outline<cr>
 
 " Search workspace symbols.
 " nnoremap <silent><nowait> <leader>s  :<C-u>CocList -I symbols<cr>
