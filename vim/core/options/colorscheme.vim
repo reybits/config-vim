@@ -10,5 +10,6 @@ set background=dark
 " let g:material_theme_style = 'dark'
 " colorscheme material
 
+" --- 'morhetz/gruvbox' -------------------------------------------------------
 " load colorscheme on VimEnter because gruvbox should be installed first
-silent! colorscheme gruvbox
+autocmd VimEnter * ++nested silent! colorscheme gruvbox
