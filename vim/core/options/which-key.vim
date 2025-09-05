@@ -25,6 +25,7 @@ let g:which_key_map["<spc>"] = 'Files'
 let g:which_key_map.g = { 'name' : '+Git' }
 let g:which_key_map.g.g = 'git'
 let g:which_key_map.g.b = 'blame'
+let g:which_key_map.g.b = 'diff'
 let g:which_key_map.g.l = 'log'
 
 let g:which_key_map.s = { 'name' : '+Search' }
